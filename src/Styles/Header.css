@@ -1,0 +1,61 @@
+header {
+  background-color: #606C38;
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h3 {
+  padding: 40px 5px;
+  color: #ffffff
+}
+
+.whitelogo {
+  max-width: 150px;
+  color:#d67607
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+  
+nav ul li {
+  display: inline;
+}
+  
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+  
+nav ul li a:hover {
+  color: #ffcc00;
+}
+
+.authLinks {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+  
+.authLinks a {
+  background-color: #DDA15E;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.authLinks a:hover {
+  background-color: #d67607;
+}
