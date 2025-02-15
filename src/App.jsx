@@ -13,11 +13,12 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home />}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
         <Route path="/cabin/:id" element={<CabinDetail/>}/>
       </Route>
 
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/register" element={<Register/>}/>
+
 
       {/* Contexto administrador */}
       <Route path="/admin" element={<AdminPanel/>}/>
