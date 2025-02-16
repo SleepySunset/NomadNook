@@ -19,11 +19,8 @@ header {
   color: white;
 }
 
-body {
-  padding-top: 80px;
-}
 
-h3 {
+.slogan {
   padding: 40px 5px;
   color: #ffffff;
 }
