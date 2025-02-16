@@ -12,6 +12,13 @@ header {
 }
 
 
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
 body {
   padding-top: 80px;
 }
@@ -69,4 +76,12 @@ nav ul li a:hover {
 
 .authLinksHeader a:hover {
   background-color: #d67607;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 10px 5%;
+    text-align: center;
+  }
 }

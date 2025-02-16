@@ -26,13 +26,16 @@ const Home = () => {
         </div>
       </div>
 
-      <div className={styles.imageGallery}>
+    <div className={styles.imageGallery}>
+      <div className={styles.imageContainerCampos}>
         <img src="/cabanasCampos.jpeg" alt="Lugar 1" className={styles.image} />
+        <p className={styles.imageText}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet vitae quibusdam soluta magnam earum ullam nisi quisquam? Repellendus, maxime inventore optio iure excepturi velit cum dicta architecto eveniet quasi aut.</p>
+        </div>
         <img src="/cabanasNevadas.jpeg" alt="Lugar 2" className={styles.image} />
-        <img src="/cabanasPlaya.jpeg" alt="Lugar 3" className={styles.image} />
-        <img src="/cabanasBosque.jpeg" alt="Lugar 4" className={styles.image} />
+        <img src="/cabanaPlaya.jpeg" alt="Lugar 3" className={styles.image} />
+        <img src="/cabanaBosque.jpeg" alt="Lugar 4" className={styles.image} />
         <img src="/cabanasMontanas.jpeg" alt="Lugar 5" className={styles.image} />
-        <img src="/cabanasSelva.jpeg" alt="Lugar 6" className={styles.image} />
+        <img src="/cabanasSelvas.jpeg" alt="Lugar 6" className={styles.image} />
       </div>
     </main>
   );
