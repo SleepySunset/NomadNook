@@ -1,4 +1,4 @@
-[{
+const response = [{
     "id": 1,
     "titulo": "Cabaña Rústica en el Bosque",
     "descripcion": "Hermosa cabaña de madera rodeada de naturaleza, perfecta para escapadas románticas. Cuenta con chimenea, cocina completa y vista panorámica al bosque.",
@@ -40,7 +40,7 @@
       "telefono": "987654321",
       "fechaRegistro": null
     },
-    "imagenes": ["https://i.pinimg.com/736x/1e/cd/62/1ecd6278162634cd0ce118b7d898a7aa.jpg", "https://i.pinimg.com/736x/6f/dd/a4/6fdda45dd8524561f631a308ed17c8f6.jpg", "https://i.pinimg.com/736x/61/09/c4/6109c40ed43e5e06b0b6591949402074.jpg", "https://i.pinimg.com/736x/1e/95/7b/1e957bca93ffd213fad7c818eceba3fd.jpg", "https://i.pinimg.com/736x/f4/b4/ea/f4b4ea73778d277a43e4d4926b95f55d.jpg", "https://i.pinimg.com/736x/9d/4a/ee/9d4aeec5a38633e30a2de812f473100f.jpg"]
+    "imagenes": ["https://i.pinimg.com/736x/6f/dd/a4/6fdda45dd8524561f631a308ed17c8f6.jpg", "https://i.pinimg.com/736x/1e/cd/62/1ecd6278162634cd0ce118b7d898a7aa.jpg", "https://i.pinimg.com/736x/61/09/c4/6109c40ed43e5e06b0b6591949402074.jpg", "https://i.pinimg.com/736x/1e/95/7b/1e957bca93ffd213fad7c818eceba3fd.jpg", "https://i.pinimg.com/736x/f4/b4/ea/f4b4ea73778d277a43e4d4926b95f55d.jpg", "https://i.pinimg.com/736x/9d/4a/ee/9d4aeec5a38633e30a2de812f473100f.jpg"]
   },
   {
     "id": 3,
@@ -62,7 +62,7 @@
       "telefono": "555666777",
       "fechaRegistro": null
     },
-    "imagenes": ["https://i.pinimg.com/736x/1e/cd/62/1ecd6278162634cd0ce118b7d898a7aa.jpg", "https://i.pinimg.com/736x/6f/dd/a4/6fdda45dd8524561f631a308ed17c8f6.jpg", "https://i.pinimg.com/736x/61/09/c4/6109c40ed43e5e06b0b6591949402074.jpg", "https://i.pinimg.com/736x/1e/95/7b/1e957bca93ffd213fad7c818eceba3fd.jpg", "https://i.pinimg.com/736x/f4/b4/ea/f4b4ea73778d277a43e4d4926b95f55d.jpg", "https://i.pinimg.com/736x/9d/4a/ee/9d4aeec5a38633e30a2de812f473100f.jpg"]
+    "imagenes": ["https://i.pinimg.com/736x/61/09/c4/6109c40ed43e5e06b0b6591949402074.jpg", "https://i.pinimg.com/736x/1e/95/7b/1e957bca93ffd213fad7c818eceba3fd.jpg", "https://i.pinimg.com/736x/f4/b4/ea/f4b4ea73778d277a43e4d4926b95f55d.jpg", "https://i.pinimg.com/736x/9d/4a/ee/9d4aeec5a38633e30a2de812f473100f.jpg", "https://i.pinimg.com/736x/1e/cd/62/1ecd6278162634cd0ce118b7d898a7aa.jpg", "https://i.pinimg.com/736x/6f/dd/a4/6fdda45dd8524561f631a308ed17c8f6.jpg",]
   },
   {
     "id": 4,
@@ -306,3 +306,5 @@
     "imagenes": ["https://i.pinimg.com/736x/1e/cd/62/1ecd6278162634cd0ce118b7d898a7aa.jpg", "https://i.pinimg.com/736x/6f/dd/a4/6fdda45dd8524561f631a308ed17c8f6.jpg", "https://i.pinimg.com/736x/61/09/c4/6109c40ed43e5e06b0b6591949402074.jpg", "https://i.pinimg.com/736x/1e/95/7b/1e957bca93ffd213fad7c818eceba3fd.jpg", "https://i.pinimg.com/736x/f4/b4/ea/f4b4ea73778d277a43e4d4926b95f55d.jpg", "https://i.pinimg.com/736x/9d/4a/ee/9d4aeec5a38633e30a2de812f473100f.jpg"]
   }
 ]
+
+export default response;
