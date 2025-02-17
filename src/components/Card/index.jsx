@@ -4,7 +4,7 @@ import styles from "./Card.module.css"
 const Card = ({id, title, description, images, pricePerNight}) => {
   return (
     <div className={styles.container}>
-      <Link className="card-link" to={`/cabin/${id}`}>
+      <Link to={`/cabin/${id}`}>
         <img
         className={styles.image}
           src={images[0]}
@@ -12,10 +12,10 @@ const Card = ({id, title, description, images, pricePerNight}) => {
         />
         </Link>
         <div className={styles.text}>  
-        <h3 className={styles.title}>{title}</h3>
-    
-        <p className={styles.description}>{description}</p>
-        <span className={styles.price}>Precio por noche ${pricePerNight}</span>
+          <h3 className={styles.title}>{title}</h3>
+      
+          <p className={styles.description}>{description}</p>
+          <span className={styles.price}>Precio por noche ${pricePerNight}</span>
         </div>
         
       

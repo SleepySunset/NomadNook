@@ -6,6 +6,7 @@ import Layout from "./layouts/Layout"
 import AdminPanel from "./pages/Admin/AdminPanel"
 import AdminCabinList from "./pages/Admin/CabinList"
 import CabinDetail from "./pages/CabinDetail"
+import NotFound from "./pages/NotFound"
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register/>}/>
         <Route path="/cabin/:id" element={<CabinDetail/>}/>
       </Route>
+      <Route path="*" element={<NotFound/>}/>
 
 
 
