@@ -1,6 +1,6 @@
 const response = [{
     "id": 1,
-    "titulo": "Cabaña Rústica en el Bosque",
+    "titulo": "Cabaña 1",
     "descripcion": "Hermosa cabaña de madera rodeada de naturaleza, perfecta para escapadas románticas. Cuenta con chimenea, cocina completa y vista panorámica al bosque.",
     "tipo": "CABAÑA",
     "capacidad": 4,
@@ -22,7 +22,7 @@ const response = [{
   },
   {
     "id": 2,
-    "titulo": "Casa Colonial en el Centro Histórico",
+    "titulo": "Cabaña 2",
     "descripcion": "Amplia casa colonial con patio interior, ubicada en el corazón del centro histórico. Ideal para familias numerosas. Incluye muebles antiguos restaurados y terraza con vista a la ciudad.",
     "tipo": "CASA",
     "capacidad": 8,
@@ -44,7 +44,7 @@ const response = [{
   },
   {
     "id": 3,
-    "titulo": "Apartamento Moderno con Vistas al Mar",
+    "titulo": "Cabaña 3",
     "descripcion": "Moderno apartamento en primera línea de playa con terraza panorámica. Perfecto para disfrutar del sol y el mar durante todo el año. Incluye acceso directo a la playa y piscina privada.",
     "tipo": "APARTAMENTO",
     "capacidad": 2,
@@ -66,7 +66,7 @@ const response = [{
   },
   {
     "id": 4,
-    "titulo": "Villa de Lujo en la Costa Amalfitana",
+    "titulo": "Cabaña 4",
     "descripcion": "Espléndida villa de estilo mediterráneo con piscina infinita y vistas espectaculares al mar. Ideal para vacaciones de lujo. Incluye servicio de chef privado y jardines exuberantes.",
     "tipo": "VILLA",
     "capacidad": 10,
@@ -88,7 +88,7 @@ const response = [{
   },
   {
     "id": 5,
-    "titulo": "Chalet Acogedor en los Alpes Suizos",
+    "titulo": "Cabaña 5",
     "descripcion": "Encantador chalet de madera con vistas a las montañas, perfecto para vacaciones de invierno. Incluye sauna privada y acceso directo a las pistas de esquí.",
     "tipo": "CHALET",
     "capacidad": 6,
@@ -110,7 +110,7 @@ const response = [{
   },
   {
     "id": 6,
-    "titulo": "Rancho Tradicional en el Desierto de Arizona",
+    "titulo": "Cabaña 6",
     "descripcion": "Auténtico rancho con decoración del viejo oeste y vistas panorámicas al desierto. Ideal para escapadas rurales y actividades al aire libre. Incluye establo y rutas de senderismo cercanas.",
     "tipo": "RANCHO",
     "capacidad": 12,
@@ -132,7 +132,7 @@ const response = [{
   },
   {
     "id": 7,
-    "titulo": "Piso Elegante en el Barrio de Salamanca",
+    "titulo": "Cabaña 7",
     "descripcion": "Elegante piso en uno de los barrios más exclusivos de Madrid. Ideal para estancias cortas y negocios. Incluye decoración de diseño y acceso a servicios de conserjería.",
     "tipo": "PISO",
     "capacidad": 3,
@@ -197,7 +197,7 @@ const response = [{
   },
   {
     "id": 10,
-    "titulo": "Cabaña 9",
+    "titulo": "Cabaña 10",
     "descripcion": "Moderno apartamento en primera línea de playa con terraza panorámica. Perfecto para disfrutar del sol y el mar durante todo el año. Incluye acceso directo a la playa y piscina privada.",
     "tipo": "SELVA",
     "capacidad": 2,
