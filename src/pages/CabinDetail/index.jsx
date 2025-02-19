@@ -1,6 +1,6 @@
 import styles from "./CabinDetail.module.css";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import response from "@/utils/response";
 import {Link} from "react-router-dom";
 import Gallery from "@/components/Gallery";
@@ -10,6 +10,21 @@ const CabinDetail = () => {
   const { id } = useParams();
   const cabin = response[id - 1];
   const [showModal, setShowModal] = useState(false);
+  
+  useEffect(() => {
+    // Al abrir el modal, oculta el scroll del body
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Al cerrar el modal, restablece el scroll del body
+      document.body.style.overflow = 'auto';
+    }
+
+    // Limpia el estilo del body al desmontar el componente
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showModal]);
 
   const handleShowModal = () => {
     setShowModal(true);
