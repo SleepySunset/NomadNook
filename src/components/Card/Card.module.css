@@ -1,13 +1,10 @@
 .container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: white;
     width: 450px;
     border-radius: 20px;
 
-}
-.container:nth-child(2n+1){
-    flex-direction: row-reverse;
 }
 
 .text{
@@ -26,4 +23,11 @@
 
 .image:hover {
     transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .container{
+        width: 100%;
+    }
+
 }
