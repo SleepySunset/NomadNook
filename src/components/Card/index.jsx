@@ -5,11 +5,13 @@ const Card = ({id, title, description, images, pricePerNight}) => {
   return (
     <div className={styles.container}>
       <Link to={`/cabin/${id}`}>
-        <img
-        className={styles.image}
-          src={images[0]}
-          alt={title}
-        />
+        <div className={styles.imageContainer}>
+          <img
+          className={styles.image}
+            src={images[0]}
+            alt={title}
+          />
+        </div>
         </Link>
         <div className={styles.text}>  
           <h3 className={styles.title}>{title}</h3>
