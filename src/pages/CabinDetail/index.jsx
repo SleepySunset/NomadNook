@@ -41,7 +41,7 @@ const CabinDetail = () => {
   return (
     <main className={styles.detail}>
       <div className={styles.container}>
-      <Link to="/" className={styles.backButton}>volver</Link>
+      <Link to="/" className={styles.back}></Link>
         <h1 className={styles.title}>{cabin.titulo}</h1>
         {cabin.imagenes && cabin.imagenes.length > 0 ? (
           <div className={styles.imagesContainer}>
