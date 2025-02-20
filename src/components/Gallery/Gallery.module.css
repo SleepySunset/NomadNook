@@ -66,13 +66,25 @@
             object-fit: cover;
             transition: all 100ms ease;
             border-radius: 2px;
-
+            opacity: 0;
+            animation: fadeIn 350ms forwards;
+            
             &:hover{
                 filter: brightness(.8);
             }
+            
         }
         .image:nth-child(3n+2), .image:nth-child(3n+3){
             width: calc(50% - .25rem);
         }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
