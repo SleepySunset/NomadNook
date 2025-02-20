@@ -1,0 +1,88 @@
+@import "@/styles/variables.css";
+header {
+  background-color: #606C38;
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: var(--headerHeight);
+}
+
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+
+.slogan {
+  padding: 40px 5px;
+  color: #ffffff;
+}
+
+.whitelogo {
+  max-width: 100px;
+  height: auto;
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+  
+nav ul li {
+  display: inline;
+}
+  
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+  
+nav ul li a:hover {
+  color: #ffcc00;
+}
+
+.authLinksHeader {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+  
+.authLinksHeader a {
+  background-color: #DDA15E;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.authLinksHeader a:hover {
+  background-color: #d67607;
+}
+
+@media (max-width: 768px) {
+  header {
+    width:100%;
+    flex-direction: column;
+    padding: 10px 5%;
+    text-align: center;
+    height: 185px;
+  }
+}

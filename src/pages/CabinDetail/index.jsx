@@ -1,34 +1,73 @@
 import styles from "./CabinDetail.module.css";
-import response from "../../utils/response.js"
-const CabinDetail = () => {
-  return (
-    <main
-   className= {styles.detallesCabina}>
-    <div className={styles.contenedortitulo}> 
-    <div>
-     <h1 className={styles.titulo}>cabaña 1
-    </h1>
-      </div> 
-      <div>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-      </div>
-    </div>
-    
-      
-      <div className={
-        styles.detalles
-      }> 
-        <div>
-        <img className={styles.imgproducto} src="https://i.pinimg.com/736x/1e/cd/62/1ecd6278162634cd0ce118b7d898a7aa.jpg"
-       alt="" />
-        </div>
-        <div><p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi quidem molestias maxime vitae, eum sint excepturi culpa consectetur suscipit quos earum veniam eaque molestiae, fugit eius reprehenderit accusamus nemo quibusdam.</p></div>
-      </div>
-     
-      
-       
-    </main>
-  )
-}
+import { useParams } from "react-router-dom";
+import { useState,useEffect } from "react";
+import response from "@/utils/response";
+import {Link} from "react-router-dom";
+import Gallery from "@/components/Gallery";
 
-export default CabinDetail
+
+const CabinDetail = () => {
+  const { id } = useParams();
+  const cabin = response[id - 1];
+  const [showModal, setShowModal] = useState(false);
+  
+  useEffect(() => {
+    // Al abrir el modal, oculta el scroll del body
+    if (showModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Al cerrar el modal, restablece el scroll del body
+      document.body.style.overflow = 'auto';
+    }
+
+    // Limpia el estilo del body al desmontar el componente
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [showModal]);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  }
+
+  if (!cabin) {
+    return <p className={styles.error}>Cabaña no encontrada.</p>;
+  }
+
+  return (
+    <main className={styles.detail}>
+      <div className={styles.container}>
+      <Link to="/" className={styles.backButton}>volver</Link>
+        <h1 className={styles.title}>{cabin.titulo}</h1>
+        {cabin.imagenes && cabin.imagenes.length > 0 ? (
+          <div className={styles.imagesContainer}>
+            <img className={styles.mainImage} onClick={handleShowModal} src={cabin.imagenes[0]} alt={`Imagen 1 de ${cabin.title}`}/>
+            <div className={styles.gallery}>
+              {cabin.imagenes.slice(1,5).map((image, index) => (
+                <img className={styles.galleryImg} onClick={handleShowModal} key={index} src={image} alt={`Imagen ${index + 2} de ${cabin.title}`} />
+              ))}
+            </div>
+            <button onClick={handleShowModal} className={styles.showAllImagesBtn}>
+              <p className={styles.allImagesText}>Mostrar todas las fotos</p>
+            </button>
+          </div>
+        ) : (
+          <p>No hay imágenes disponibles.</p>
+        )}
+        <div className={styles.text}>
+          <span className={styles.price}>${cabin.precioPorNoche} por noche</span>
+          <p className={styles.description}>{cabin.descripcion}</p>
+        </div>
+      </div>
+      {showModal && (
+        <Gallery images={cabin.imagenes} onClose={handleCloseModal} />
+      )}
+    </main>
+  );
+};
+
+export default CabinDetail;

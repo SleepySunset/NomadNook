@@ -1,27 +1,104 @@
-.detallesCabina{
-margin: 105px auto;
-width: 95%;
-padding-top: 15px;
-}
-.detalles{
-    display: flex;
-    gap: 15px;
-    padding: 15px 0px;
-}
-.imgproducto{
-width: 100%;
-height: 100%;
-border-radius: 6px;
 
+@import "@/styles/variables.css";
 
-}
-.titulo{
-    margin: 7px 0px;
-    font-size: xx-large;
-}
-.contenedortitulo{
+.detail{
+    margin-top: var(--headerHeight);
     display: flex;
-    justify-content: space-between;
-    margin: 7px 0px;
+    flex-direction: column;
     align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10rem;
+
+    
+    .container{
+        width: 80%;
+        max-width: 1200px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        
+        .backButton{
+            position: absolute;
+            top: -1.5rem;
+            left: 0;
+            text-decoration: underline;
+            font-weight: 600;
+            color: var(--color2);
+        }
+        .title{
+            text-align: left;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .imagesContainer{
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            display: flex;
+            flex-direction: row;
+            border-radius: .7rem;
+            overflow: hidden;
+            gap: .5rem;
+            position: relative;
+
+            .gallery{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                grid-gap: .5rem;
+                width: 50%;
+                height: 100%;
+                
+                .galleryImg{
+                    height: 100%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    aspect-ratio: 1 / 1;
+                    transition: all 100ms ease;
+
+                    &:hover{
+                        filter: brightness(.8);
+                    }
+                }
+            }
+            .mainImage{
+                width: 50%;
+                height: 100%;
+                object-fit: cover;
+                cursor: pointer;
+                transition: all 100ms ease;
+    
+                &:hover{
+                    filter: brightness(.8);
+                }
+            }
+            .showAllImagesBtn{
+                position: absolute;
+                bottom: .5rem;
+                right: .5rem;
+                padding: .4rem .8rem;
+                height: 1.7rem;
+                border-radius: .4rem;
+                border: 1px solid var(--color2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                font-size: .8rem;
+                font-weight: 500;
+            }
+        }
+        .text{
+
+            .description{
+                font-size: .9rem;
+            }
+            .price{
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+        }
+    }
+
 }

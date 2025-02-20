@@ -1,0 +1,32 @@
+.home {
+  text-align: center;
+  padding-top: 80px;
+  background-color: var(--color3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cabinGallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, auto);
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+   .cabinGallery {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(3, auto);
+  }
+
+  .home{
+    padding-top:120px;
+  }
+}
+

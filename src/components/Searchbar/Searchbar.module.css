@@ -1,0 +1,28 @@
+.form{
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    background-color: white;
+}
+.input{
+    width: 100%;
+    padding: 10px;
+    border: none;
+}
+.input:focus{
+    outline: none;
+}
+.icon{
+    background: none;
+    border: none;
+    margin: 0 6px;
+}
+
+@media (max-width: 768px) {
+    .form{
+        width:100%;
+        margin-top: 0px;
+    }
+}
