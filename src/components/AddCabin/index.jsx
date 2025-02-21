@@ -14,12 +14,30 @@ const AddCabin = ({ onClose }) => {
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
   const [images, setImages] = useState([]);
+  // const [responseStatus, setResponseStatus] = useState("");
 
+  const addImageInput = () => {
+    setImages([...images, ""]);
+  };
+
+  const deleteImageInput = (index) => {
+    if (images.length > 1) {
+      setImages(images.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleImageChange = (index, value) => {
+    const updatedImages = [...images];
+    updatedImages[index] = value;
+    setImages(updatedImages);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-     try {
+    const formattedImages = images.map((imageUrl) => ({ url: imageUrl }));
+
+    try {
       const response = axios({
         method: "post",
         url: END_POINT_CABIN,
@@ -27,20 +45,21 @@ const AddCabin = ({ onClose }) => {
           titulo: title,
           descripcion: description,
           tipo: type,
-          capacity: capacity,
+          capacidad: capacity,
           precioPorNoche: pricePerNight,
           ubicacion: location,
           direccion: address,
           disponible: true,
           propietario: {
-            id: 4,
+            id: 1,
           },
-          imagenes: images,
+          imagenes: formattedImages,
         },
       });
-      console.log("Respuesta del servidor: ", response.data);
+      // setResponseStatus(response.data.message);
+      console.log("Respuesta del servidor: ", response);
     } catch (err) {
-      console.log("Error al enviar la solicitud: ", err);
+        console.log(err)
     }
   };
 
@@ -137,17 +156,41 @@ const AddCabin = ({ onClose }) => {
           <label className={styles.label}>
             Cargue aquí las imágenes correspondientes a su cabaña
           </label>
-          <input
-          required
-            className={styles.input}
-            type="text"
-            value={images}
-            onChange={(e) => setImages(e.target.value, ...images)}
-          />
+          {images.map((image, index) => (
+            <div key={index} className={styles.imageInputContainer}>
+              <input
+                required
+                className={styles.input}
+                type="text"
+                value={image}
+                onChange={(e) => handleImageChange(index, e.target.value)}
+                placeholder={`URL de imagen ${index + 1}`}
+              />
+              <button
+                type="button"
+                className={styles.imgInputBtn}
+                onClick={() => deleteImageInput(index)}
+              >
+                -
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            className={styles.imgInputBtn}
+            onClick={addImageInput}
+          >
+            Agregar url
+          </button>
 
           <button className={styles.submitBtn} type="submit">
             Guardar cabaña
           </button>
+          {/* {responseStatus == "success" ? (
+            <div>Cabaña agregada con éxito</div>
+          ) : (
+            <div>No se ha podido agregar la cabaña</div>
+          )} */}
         </form>
       </div>
     </div>
