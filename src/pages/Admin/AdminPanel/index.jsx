@@ -7,8 +7,11 @@ const AdminPanel = () => {
       <main className={styles.main}>
         <AdminNav activeOpt="home" />
         <div className={styles.container}>
-          <h1>Bienvenido admin</h1>
-          <p>Este es tu panel de administración</p>
+          <h1 className={styles.title}>Bienvenido admin</h1>
+          <p className={styles.text}>Este es tu panel de administración. Aquí podrás gestionar de manera
+            eficiente las cabañas registradas, las reservas realizadas y los pagos. En el menú lateral encontrarás
+            las opciones correspondientes.
+          </p>
         </div>
       </main>
       <div className={styles.mobileWarning}>

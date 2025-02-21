@@ -1,12 +1,30 @@
 .main {
   display: flex;
+  justify-content: space-between;
   margin-top: var(--headerHeight);
   padding: 50px 60px;
   background-color: var(--color6);
 }
 .container {
+  width: 70%;
   padding: 30px 50px;
+  background-color: #FFF;
+  border-radius: 35px;
+  border: 1px solid rgb(255, 224, 201);
+  box-shadow: 0px 0px 13px 0px rgb(226, 208, 191);
+  min-height: 500px;
 }
+.title{
+  text-align: center;
+  color: #565656;
+  margin-bottom: 30px;
+}
+
+.text{
+  font-size: 1.2rem;
+  color: #565656;
+}
+
 .mobileWarning {
   display: none;
   text-align: center;
