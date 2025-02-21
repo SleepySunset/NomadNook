@@ -59,6 +59,7 @@
 
 .input,
 .select {
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -68,9 +69,9 @@
 
 .input:focus,
 .select:focus {
-  border: 1px solid var(--color1);
+  border: 1px solid var(--color5);
   outline: none;
-  box-shadow: 0 0 5px var(--color1);
+  box-shadow: 0 0 5px var(--color5);
 }
 
 .submitBtn {
@@ -90,46 +91,27 @@
   background: var(--color4);
 }
 
-.imagePreviewContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.imageItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.imagePreview {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.imageDescription {
-  margin-top: 5px;
-  padding: 5px;
-  width: 100px;
-  font-size: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.removeImageBtn {
-  background-color: red;
-  color: white;
+.imgInputBtn{
   border: none;
-  padding: 5px;
-  margin-top: 5px;
+  padding: 10px;
+  background-color: var(--color5);
+  transition: background 0.3s ease-in-out;
   cursor: pointer;
-  font-size: 12px;
-  border-radius: 5px;
+  color: white;
 }
-.removeImageBtn:hover {
-  background-color: darkred;
+
+.imgInputBtn:hover {
+  background: var(--color4);
 }
+
+.imageInputContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageInputContainer input{
+  margin: 0;
+  margin-right: 7px;
+}
+  
