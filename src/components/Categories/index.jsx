@@ -5,7 +5,7 @@ const Categories = () => {
     const categories = [
       { name: "Playa", icon: "/playas.png" },
       { name: "Montaña", icon: "/montana.png" },
-      { name: "Nevadas", icon: "/nevadas.png" },
+      { name: "Nevada", icon: "/nevadas.png" },
       { name: "Selva", icon: "/selva.png" },
       { name: "Bosques", icon: "/bosques.png" },
       { name: "Campo", icon: "/campo.png" },

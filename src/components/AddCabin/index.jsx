@@ -8,16 +8,18 @@ const AddCabin = ({ onClose }) => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [type, setType] = useState("CASA");
+  const [type, setType] = useState("PLAYA");
   const [capacity, setCapacity] = useState("");
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
   const [images, setImages] = useState([]);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+
+     try {
       const response = axios({
         method: "post",
         url: END_POINT_CABIN,
@@ -48,7 +50,7 @@ const AddCabin = ({ onClose }) => {
         <span className={styles.closeButton} onClick={onClose}>
           &times;
         </span>
-        <h2>Agregar nueva cabaña</h2>
+        <h2 className={styles.title}>Agregar una nueva cabaña</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label}>Ingrese el nombre de la cabaña</label>
           <input
@@ -59,7 +61,7 @@ const AddCabin = ({ onClose }) => {
             onChange={(e) => setTitle(e.target.value)}
           />
           <label className={styles.label}>
-            Ingrese la descripcion de la cabaña
+            Ingrese la descripción de la cabaña
           </label>
           <input
             required
@@ -76,14 +78,14 @@ const AddCabin = ({ onClose }) => {
             onChange={(e) => setType(e.target.value)}
           >
             <option value="" disabled>
-              Selecciona el tipo
+              Seleccione el tipo
             </option>
-            <option value="CASA">Casa</option>
-            <option value="DEPARTAMENTO">Departamento</option>
-            <option value="CABAÑA">Cabaña</option>
-            {/* <option value="SELVA">Selva</option>
-          <option value="BOSQUE">Bosque</option>
-          <option value="CAMPO">Campo</option> */}
+            <option value="PLAYA">Playa</option>
+            <option value="MONTANA">Montaña</option>
+            <option value="NEVADA">Nevada</option>
+            <option value="SELVA">Selva</option>
+            <option value="BOSQUE">Bosque</option>
+            <option value="CAMPO">Campo</option>
           </select>
           <label className={styles.label}>Ingrese el precio por noche</label>
           <input
@@ -103,7 +105,7 @@ const AddCabin = ({ onClose }) => {
             onChange={(e) => setCapacity(e.target.value)}
           >
             <option value="" disabled>
-              Selecciona la capacidad
+              Seleccione la capacidad
             </option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -136,10 +138,11 @@ const AddCabin = ({ onClose }) => {
             Cargue aquí las imágenes correspondientes a su cabaña
           </label>
           <input
+          required
             className={styles.input}
             type="text"
             value={images}
-            onChange={(e) => setImages(e.target.value)}
+            onChange={(e) => setImages(e.target.value, ...images)}
           />
 
           <button className={styles.submitBtn} type="submit">
