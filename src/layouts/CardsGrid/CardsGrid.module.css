@@ -1,0 +1,82 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0;    
+
+    .cardsContainer{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, auto);
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+
+    }
+
+
+
+    .pagination {
+        display: flex;
+        list-style: none; 
+        padding: 0;
+        margin-top: 20px;
+    }
+    
+    .pageItem {
+        margin: 0 5px; 
+        cursor: pointer;
+        padding: .5rem 1rem; 
+        border: 1px solid var(--color1); 
+        border-radius: .8rem;
+
+        &:hover{
+            background-color: var(--color1);
+            color: var(--color3);
+            opacity: 0.8;
+        }
+    }
+    
+    .activePage {
+        background-color: var(--color1); 
+        color: var(--color3);
+        border-color: var(--color1);
+    }
+    
+    .previousButton,
+    .nextButton {
+        cursor: pointer;
+        padding: .5rem 1rem; 
+        border: 1px solid var(--color1); 
+        border-radius: .8rem;
+        
+        
+        &:hover{
+            background-color: var(--color1);
+            color: var(--color3);
+            opacity: 0.8;
+        }
+    }
+    
+    .disabledButton {
+        opacity: 0.5;
+        cursor: default;
+
+        &:hover{
+            background-color: transparent;
+            color: inherit;
+            opacity: 0.5;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container{
+        .cardsContainer{
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: repeat(3, auto);
+        }
+    }
+}
