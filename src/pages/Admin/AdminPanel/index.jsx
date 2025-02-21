@@ -1,33 +1,23 @@
-import { Link } from "react-router-dom"
-import AddCabin from "@/components/AddCabin"
-import { useState } from "react";
+import styles from "./AdminPanel.module.css";
+import AdminNav from "../../../components/AdminNav";
 
 const AdminPanel = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
-    <main>
-        <h1>Bienvenido admin</h1>
-        <ul>
-            <li><Link to="/admin/cabinlist">Ver todas las cabañas</Link></li>
+    <>
+      <main className={styles.main}>
+        <AdminNav activeOpt="home" />
+        <div className={styles.container}>
+          <h1>Bienvenido admin</h1>
+          <p>Este es tu panel de administración</p>
+        </div>
+      </main>
+      <div className={styles.mobileWarning}>
+        <p className={styles.warning}>
+          El panel de administración no está disponible en dispositivos móviles
+        </p>
+      </div>
+    </>
+  );
+};
 
-            {/* Componente dinamico que permite agregar cabaña nueva */}
-            <li><button onClick={openModal}>Agregar cabaña</button></li>
-            {/* Componente dinamico que permite buscar cabaña para eliminar */}
-            <li>Eliminar cabaña</li>
-        </ul>
-        {isModalOpen && <AddCabin onClose={closeModal}/>}
-      
-    </main>
-  )
-}
-
-export default AdminPanel
+export default AdminPanel;

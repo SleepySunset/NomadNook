@@ -20,13 +20,12 @@
 }
 
 @media (max-width: 768px) {
-   .cabinGallery {
+  .cabinGallery {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(3, auto);
   }
 
-  .home{
-    padding-top:120px;
+  .home {
+    padding-top: var(--headerHeightMobile);
   }
 }
-

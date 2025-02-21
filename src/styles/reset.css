@@ -9,9 +9,6 @@
   padding: 0;
 }
 
-body{
-  min-height: 100vh;
-}
 
 input, button, textarea, select{
   font: inherit;
