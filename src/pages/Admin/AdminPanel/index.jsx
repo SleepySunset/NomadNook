@@ -1,5 +1,5 @@
 import styles from "./AdminPanel.module.css";
-import AdminNav from "../../../components/AdminNav";
+import AdminNav from "@/components/AdminNav";
 
 const AdminPanel = () => {
   return (

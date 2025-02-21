@@ -1,5 +1,6 @@
 .navAdmin {
-  width: 300px;
+  max-width: 300px;
+  width: 40%;
   background-color: #ffffff;
   border-radius: 35px;
   border: 1px solid rgb(255, 224, 201);

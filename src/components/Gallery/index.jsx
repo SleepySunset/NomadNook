@@ -14,7 +14,7 @@ const Gallery = ({ images, onClose }) => {
       </div>
       <div className={styles.content}>
         {images.map((image, index) => (
-          <img className={styles.image} style={{animationDelay:`${(index*100)+100}ms`}} key={index} src={image} alt={`Imagen ${index + 1}`} />
+          <img className={styles.image} style={{animationDelay:`${(index*100)+100}ms`}} key={image.id} src={image.url} alt={`Imagen ${index + 1}`} />
         ))}
 
       </div>

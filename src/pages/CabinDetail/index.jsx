@@ -1,57 +1,78 @@
 import styles from "./CabinDetail.module.css";
 import { useParams } from "react-router-dom";
-import { useState,useEffect } from "react";
-import response from "@/utils/response";
-import {Link} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Gallery from "@/components/Gallery";
-
+import axios from "axios";
 
 const CabinDetail = () => {
   const { id } = useParams();
-  const cabin = response[id - 1];
+  const END_POINT = `https://nomadnook-nomadnook.up.railway.app/api/alojamientos/buscar/${id}`
   const [showModal, setShowModal] = useState(false);
-  
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios(END_POINT).then((res) => {
+      setData(res.data);
+      console.log(res.data);
+    });
+  }, [END_POINT]);
+
   useEffect(() => {
     // Al abrir el modal, oculta el scroll del body
     if (showModal) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
       // Al cerrar el modal, restablece el scroll del body
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
 
     // Limpia el estilo del body al desmontar el componente
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [showModal]);
 
   const handleShowModal = () => {
     setShowModal(true);
-  }
+  };
 
   const handleCloseModal = () => {
     setShowModal(false);
-  }
+  };
 
-  if (!cabin) {
+  if (!data) {
     return <p className={styles.error}>Cabaña no encontrada.</p>;
   }
 
   return (
     <main className={styles.detail}>
       <div className={styles.container}>
-      <Link to="/" className={styles.back}></Link>
-        <h1 className={styles.title}>{cabin.titulo}</h1>
-        {cabin.imagenes && cabin.imagenes.length > 0 ? (
+        <Link to="/" className={styles.back}></Link>
+        <h1 className={styles.title}>{data.titulo}</h1>
+        {data.imagenes && data.imagenes.length > 0 ? (
           <div className={styles.imagesContainer}>
-            <img className={styles.mainImage} onClick={handleShowModal} src={cabin.imagenes[0]} alt={`Imagen 1 de ${cabin.title}`}/>
+            <img
+              className={styles.mainImage}
+              onClick={handleShowModal}
+              src={data.imagenes[0].url}
+              alt={`Imagen 1 de ${data.title}`}
+            />
             <div className={styles.gallery}>
-              {cabin.imagenes.slice(1,5).map((image, index) => (
-                <img className={styles.galleryImg} onClick={handleShowModal} key={index} src={image} alt={`Imagen ${index + 2} de ${cabin.title}`} />
+              {data.imagenes.slice(1, 5).map((image, index) => (
+                <img
+                  className={styles.galleryImg}
+                  onClick={handleShowModal}
+                  key={image.id}
+                  src={image.url}
+                  alt={`Imagen ${index + 2} de ${data.title}`}
+                />
               ))}
             </div>
-            <button onClick={handleShowModal} className={styles.showAllImagesBtn}>
+            <button
+              onClick={handleShowModal}
+              className={styles.showAllImagesBtn}
+            >
               <p className={styles.allImagesText}>Mostrar todas las fotos</p>
             </button>
           </div>
@@ -59,12 +80,14 @@ const CabinDetail = () => {
           <p>No hay imágenes disponibles.</p>
         )}
         <div className={styles.text}>
-          <span className={styles.price}>${cabin.precioPorNoche} por noche</span>
-          <p className={styles.description}>{cabin.descripcion}</p>
+          <span className={styles.price}>
+            ${data.precioPorNoche} por noche
+          </span>
+          <p className={styles.description}>{data.descripcion}</p>
         </div>
       </div>
       {showModal && (
-        <Gallery images={cabin.imagenes} onClose={handleCloseModal} />
+        <Gallery images={data.imagenes} onClose={handleCloseModal} />
       )}
     </main>
   );
