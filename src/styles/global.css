@@ -4,8 +4,10 @@
 
 body {
   font-family: 'Montserrat', sans-serif;
-  padding-top: 63px;
 }
 a{
   text-decoration: none;
+}
+a:visited{
+  color:#565656;
 }

@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  margin-top: var(--headerHeight);
+  padding: 50px 60px;
+  background-color: var(--color6);
+}
+.container {
+  padding: 30px 50px;
+}
+.mobileWarning {
+  display: none;
+  text-align: center;
+  padding: 40px;
+  color: #a94442;
+  border-radius: 10px;
+  margin-top: var(--headerHeightMobile);
+  font-weight: bold;
+}
+.warning {
+  background-color: #ffcccb;
+  border: 1px solid #a94442;
+  padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    display: none;
+  }
+
+  .mobileWarning {
+    display: block;
+  }
+}

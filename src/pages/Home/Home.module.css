@@ -1,6 +1,6 @@
 .home {
   text-align: center;
-  padding-top: 80px;
+  padding-top: var(--headerHeight);
   background-color: var(--color3);
   display: flex;
   flex-direction: column;
@@ -20,13 +20,12 @@
 }
 
 @media (max-width: 768px) {
-   .cabinGallery {
+  .cabinGallery {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(3, auto);
   }
 
-  .home{
-    padding-top:120px;
+  .home {
+    padding-top: var(--headerHeightMobile);
   }
 }
-

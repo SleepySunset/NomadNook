@@ -1,6 +1,4 @@
-@import "@/styles/variables.css";
-header {
-  background-color: #606C38;
+.header {
   padding: 20px 20px;
   display: flex;
   justify-content: space-between;
@@ -13,6 +11,18 @@ header {
   height: var(--headerHeight);
 }
 
+.headerUser {
+  background-color: var(--color1);
+}
+.headerAdmin {
+  background-color: var(--color4);
+}
+.userIcon {
+  margin-right: 30px;
+}
+.userIcon:hover {
+  cursor: pointer;
+}
 
 .logoLink {
   display: flex;
@@ -20,7 +30,6 @@ header {
   text-decoration: none;
   color: white;
 }
-
 
 .slogan {
   padding: 40px 5px;
@@ -33,38 +42,17 @@ header {
   display: block;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
+.authButton {
+  margin-left: 20px;
 }
-  
-nav ul li {
-  display: inline;
-}
-  
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-  
-nav ul li a:hover {
-  color: #ffcc00;
-}
-
 .authLinksHeader {
   display: flex;
   gap: 20px;
   align-items: center;
 }
-  
+
 .authLinksHeader a {
-  background-color: #DDA15E;
+  background-color: #dda15e;
   color: black;
   padding: 10px 15px;
   border-radius: 5px;
@@ -78,11 +66,13 @@ nav ul li a:hover {
 }
 
 @media (max-width: 768px) {
-  header {
-    width:100%;
-    flex-direction: column;
+  .header {
+    width: 100%;
     padding: 10px 5%;
     text-align: center;
-    height: 185px;
+    height: 135px;
+  }
+  .slogan {
+    display: none;
   }
 }
