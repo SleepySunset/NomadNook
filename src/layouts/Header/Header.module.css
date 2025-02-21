@@ -70,7 +70,7 @@
     width: 100%;
     padding: 10px 5%;
     text-align: center;
-    height: 135px;
+    height: var(--headerHeightMobile);
   }
   .slogan {
     display: none;
