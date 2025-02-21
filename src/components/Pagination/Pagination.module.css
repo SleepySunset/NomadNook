@@ -1,0 +1,47 @@
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .paginacion button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--color1);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .paginacion button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .paginacion button:hover:not(:disabled) {
+    background-color: var(--color2);
+  }
+  
+  .contador {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .contador button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--color1);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .contador button.paginaActiva {
+    background-color: var(--color2);
+    font-weight: bold;
+  }
