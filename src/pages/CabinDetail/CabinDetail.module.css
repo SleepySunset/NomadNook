@@ -1,7 +1,7 @@
 @import "@/styles/variables.css";
 
 .detail{
-    margin-top: var(--headerHeight);
+    padding-top: var(--headerHeight);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,18 +17,11 @@
         display: flex;
         flex-direction: column;
         gap: .5rem;
+        margin-top: 2rem;
         
-        .backButton{
-            position: absolute;
-            top: -1.5rem;
-            left: 0;
-            text-decoration: underline;
-            font-weight: 600;
-            color: var(--color2);
-        }
         .back {
             position: relative; 
-            top: 50%;
+            top: 2rem;
             transform: translateY(-50%);
             left: 0;
             padding: 15px 15px; 
@@ -62,7 +55,6 @@
             text-align: left;
             font-size: 2rem;
             font-weight: 700;
-            margin-top: 60px;
         }
         .imagesContainer{
             width: 100%;
