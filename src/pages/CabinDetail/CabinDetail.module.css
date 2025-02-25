@@ -1,0 +1,131 @@
+@import "@/styles/variables.css";
+
+.detail{
+    padding-top: var(--headerHeight);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10rem;
+
+    
+    .container{
+        width: 80%;
+        max-width: 1200px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        margin-top: 2rem;
+        
+        .back {
+            position: relative; 
+            top: 2rem;
+            transform: translateY(-50%);
+            left: 0;
+            padding: 15px 15px; 
+            border-radius: 15px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 100ms ease;
+            width: fit-content;
+            align-self: flex-end;
+            
+
+            &:hover{
+                background-color: var(--color1);
+            }
+        }
+        .back::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%; 
+            border-radius: 3px 0 0 0;
+            transform: translate(-40%, -50%) rotate(-45deg);
+            width: 12px; 
+            height: 12px;
+            border-top: 3px solid rgb(50, 50, 50); 
+            border-left: 3px solid rgb(50, 50, 50); 
+            z-index: 2;
+        }
+        .title{
+            text-align: left;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .imagesContainer{
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            display: flex;
+            flex-direction: row;
+            border-radius: .7rem;
+            overflow: hidden;
+            gap: .5rem;
+            position: relative;
+
+            .gallery{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                grid-gap: .5rem;
+                width: 50%;
+                height: 100%;
+                
+                .galleryImg{
+                    height: 100%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    aspect-ratio: 1 / 1;
+                    transition: all 100ms ease;
+
+                    &:hover{
+                        filter: brightness(.8);
+                    }
+                }
+            }
+            .mainImage{
+                width: 50%;
+                height: 100%;
+                object-fit: cover;
+                cursor: pointer;
+                transition: all 100ms ease;
+    
+                &:hover{
+                    filter: brightness(.8);
+                }
+            }
+            .showAllImagesBtn{
+                position: absolute;
+                bottom: .5rem;
+                right: .5rem;
+                padding: .4rem .8rem;
+                height: 1.7rem;
+                border-radius: .4rem;
+                border: 1px solid var(--color2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                font-size: .8rem;
+                font-weight: 500;
+            }
+        }
+        .text{
+
+            .description{
+                font-size: .9rem;
+            }
+            .price{
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        margin-top: var(--headerHeightMobile);
+    }
+}

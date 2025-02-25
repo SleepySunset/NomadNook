@@ -1,0 +1,90 @@
+.backdrop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 0;
+    background-color: var(--color3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1001;
+    overflow: scroll;
+    
+    .head{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5rem;
+        background-color: var(--color3);
+        z-index: 1;
+        
+        .back {
+            position: relative; 
+            top: 50%;
+            transform: translateY(-50%);
+            left: 2rem;
+            padding: 15px 15px; 
+            border-radius: 15px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 100ms ease;
+
+            &:hover{
+                background-color: var(--color1);
+            }
+        }
+        .back::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%; 
+            border-radius: 3px 0 0 0;
+            transform: translate(-40%, -50%) rotate(-45deg);
+            width: 12px; 
+            height: 12px;
+            border-top: 3px solid rgb(50, 50, 50); 
+            border-left: 3px solid rgb(50, 50, 50); 
+            z-index: 2;
+        }
+    }
+
+    .content{
+        display: flex;
+        flex-flow: row wrap;
+        width: 80%;
+        max-width: 800px;
+        gap: .5rem;
+
+        .image{
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+            transition: all 100ms ease;
+            border-radius: 2px;
+            opacity: 0;
+            animation: fadeIn 350ms forwards;
+            
+            &:hover{
+                filter: brightness(.8);
+            }
+            
+        }
+        .image:nth-child(3n+2), .image:nth-child(3n+3){
+            width: calc(50% - .25rem);
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

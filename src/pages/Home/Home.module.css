@@ -1,0 +1,14 @@
+.home {
+  text-align: center;
+  padding-top: var(--headerHeight);
+  background-color: var(--color3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .home {
+    padding-top: var(--headerHeightMobile);
+  }
+}
