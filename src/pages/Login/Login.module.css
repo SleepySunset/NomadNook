@@ -2,48 +2,94 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: #FCECDD;
 }
 
 .wrapper {
     width: 100%;
-    height:690px;
+    height: 690px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('../../../public/Nomad\ Nook\ green.png');
-    background-size: contain;
     background-position: center 120px;
     background-repeat: no-repeat;
     backdrop-filter: blur(30px);
     border-radius: 10px;
-    padding: 130px 10px 10px 10px; 
+    padding: 130px 650px 10px 650px;
 }
 
-.wrapper h1 {
-    font-size: 36px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.wrapper form {
+.wrapper .formulario {
     width: 100%;
     max-width: 400px;
-    /* background: rgba(255, 255, 255, 0.1); Lo dejo por si agregamos un img back más grande */
     padding: 20px;
+    border: 3px solid #dda15e;
     border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
 }
 
-.wrapper .inputBox {
+.wrapperSecundario {
+    padding: 15px 20px;
+    border-left: 2px solid #dda15e;
+    border-right: 2px solid #dda15e;
+    border-bottom: 2px solid #dda15e;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    width: 80%;
+    max-width: 350px;
+}
+
+.inputContainer {
+    position: relative;
+    margin: 25px 0;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+.label {
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    background: white;
+    padding: 0 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #bc6c25;
+    z-index: 2;
+}
+
+.inputBox {
     display: flex;
-    align-items: center; 
+    align-items: center;
     width: 100%;
     height: 50px;
     background: #fefae0;
-    margin: 15px 0;
-    border-radius: 40px;
+    margin: 10px 0;
     border: 2px solid #dda15e;
+    border-radius: 0px;
     padding: 0 15px;
+    position: relative;
+}
+
+.inputBox {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: #fefae0;
+    margin: 10px 0;
+    border-left: 2px solid #dda15e;
+    border-right: 2px solid #dda15e;
+    border-bottom: 2px solid #dda15e;
+    border-top: 2px solid #dda15e;
+    padding: 0 15px;
+    position: relative;
 }
 
 
@@ -55,7 +101,7 @@ html, body {
     outline: none;
     font-size: 16px;
     color: #070606;
-    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .icon {
@@ -64,59 +110,85 @@ html, body {
     margin-left: 10px;
 }
 
-.wrapper .inputBox:hover {
-    border: 2px solid #bc6c25;
+.inputBox:hover {
+    border-color: #bc6c25;
 }
 
-.wrapper .remember{
-        cursor: pointer;
+.button {
+    width: 100%;
+    height: 45px;
+    background: #070606e0;
+    border: 2px solid #dda15e;
+    border-radius: 0px;
+    cursor: pointer;
+    color:white;
+    transition: background 0.3s;
 }
 
-.wrapper .rememberForgot {
+.button:hover {
+    border-color: #bc6c25;
+    background: #000000;
+}
+
+.rememberForgot {
     display: flex;
     justify-content: space-between;
     font-size: 14.5px;
     margin: 10px 0 15px;
 }
 
-.wrapper button {
-    width: 100%;
-    height: 45px;
-    background: #fefae0;
-    border:2px solid #dda15e;
-    border-radius: 40px; 
-    cursor: pointer;
-}
-
-.wrapper button:hover{
-    border: 2px solid #bc6c25;
-}
-
-.wrapper .register-link {
-    font-size: 14.5px;
+.registerLink {
     text-align: center;
-    margin-top: 15px;
+    font-size: 14px;
+    margin-top: 10px;
 }
 
-.register-link p a {
+.registerLink a {
     color: #353434;
-    text-decoration: none;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-.register-link p a:hover {
+.registerLink a:hover {
     text-decoration: underline;
 }
 
-.registerLink {
-    display: flex;
-    justify-content:center;
-    font-size: 14.5px;
-    margin: 10px 0 15px;
+@media (max-width: 1440px) {
+    .wrapper {
+        padding: 30px 15px;
+    }
+
+    .formulario {
+        width: 1080px;
+    }
 }
 
 @media (max-width: 768px) {
     .wrapper {
-        padding: 20px;
+        padding: 30px 15px;
+    }
+
+    .formulario {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        padding: 20px 10px;
+    }
+
+
+    .label {
+        font-size: 12px;
+        left: 10px;
+    }
+
+    .inputBox {
+        height: 45px;
+        padding: 0 10px;
+    }
+
+    .button {
+        height: 40px;
     }
 }
