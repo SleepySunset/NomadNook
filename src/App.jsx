@@ -19,8 +19,8 @@ function App() {
         <Route path="/cabin/:id" element={<CabinDetail />} />
       </Route>
       <Route path="/" element={<LayoutAdmin />}>
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/admin/cabinmanagement" element={<CabinManagement />} />
+        <Route path="/administracion" element={<AdminPanel />} />
+        <Route path="/administracion/cabinmanagement" element={<CabinManagement />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
