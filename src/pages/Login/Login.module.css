@@ -23,21 +23,20 @@ html, body {
     width: 100%;
     max-width: 400px;
     padding: 20px;
-    border: 3px solid #dda15e;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.9);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .wrapperSecundario {
+    margin: -10px;
     padding: 15px 20px;
-    border-left: 2px solid #dda15e;
-    border-right: 2px solid #dda15e;
-    border-bottom: 2px solid #dda15e;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.9);
     text-align: center;
     width: 80%;
     max-width: 350px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .inputContainer {
@@ -45,53 +44,18 @@ html, body {
     margin: 25px 0;
 }
 
-.error {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-
-.label {
-    position: absolute;
-    top: -8px;
-    left: 15px;
-    background: white;
-    padding: 0 5px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #bc6c25;
-    z-index: 2;
-}
-
 .inputBox {
     display: flex;
     align-items: center;
     width: 100%;
     height: 50px;
-    background: #fefae0;
+    background: #ffffff;
     margin: 10px 0;
-    border: 2px solid #dda15e;
-    border-radius: 0px;
+    border: 2px solid #8E8E8E;
+    border-radius: 10px;
     padding: 0 15px;
     position: relative;
 }
-
-.inputBox {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    background: #fefae0;
-    margin: 10px 0;
-    border-left: 2px solid #dda15e;
-    border-right: 2px solid #dda15e;
-    border-bottom: 2px solid #dda15e;
-    border-top: 2px solid #dda15e;
-    padding: 0 15px;
-    position: relative;
-}
-
 
 .input {
     flex-grow: 1;
@@ -104,37 +68,78 @@ html, body {
     padding-left: 10px;
 }
 
+.inputError::placeholder {
+    color: red;
+}
+
 .icon {
     font-size: 18px;
     color: #606c38;
     margin-left: 10px;
 }
 
-.inputBox:hover {
-    border-color: #bc6c25;
+.inputError {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.label {
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    background: white;
+    padding: 0 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #88A035;
+    z-index: 2;
+}
+
+.loginOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 0;
+}
+
+.rememberMe {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.checkBox {
+    color: #353434;
+}
+
+.forgotPassword {
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.forgotPassword:hover {
+    text-decoration: underline;
 }
 
 .button {
     width: 100%;
     height: 45px;
-    background: #070606e0;
-    border: 2px solid #dda15e;
-    border-radius: 0px;
+    background: #606c38;
+    border: 2px solid #8E8E8E;
+    border-radius: 40px;
     cursor: pointer;
-    color:white;
+    color: white;
     transition: background 0.3s;
 }
 
 .button:hover {
-    border-color: #bc6c25;
-    background: #000000;
-}
-
-.rememberForgot {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14.5px;
-    margin: 10px 0 15px;
+    border-color: #88A035;
+    background: #4a532b;
 }
 
 .registerLink {
@@ -144,7 +149,7 @@ html, body {
 }
 
 .registerLink a {
-    color: #353434;
+    color: #88A035;
     font-weight: bold;
 }
 
@@ -152,6 +157,36 @@ html, body {
     text-decoration: underline;
 }
 
+.loginMethodsContainer {
+    display: flex;
+    justify-content: center;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.loginMethods {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+.loginMethods li {
+    display: inline-block;
+}
+
+.loginIcon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.loginIcon:hover {
+    transform: scale(1.1);
+}
+
+/* 📌 Estilos responsivos */
 @media (max-width: 1440px) {
     .wrapper {
         padding: 30px 15px;
@@ -176,7 +211,6 @@ html, body {
     .wrapper {
         padding: 20px 10px;
     }
-
 
     .label {
         font-size: 12px;

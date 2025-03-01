@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../Header/Header.module.css";
 import PersonIcon from "@mui/icons-material/Person";
 
 const Header = ({ user }) => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === "/Login" || location.pathname === "/Register";
   return (
     <header
       className={`${styles.header} ${
@@ -21,7 +23,7 @@ const Header = ({ user }) => {
           </h3>
         </Link>
       </div>
-
+      {!isAuthPage && (
       <nav className={styles.authLinksHeader}>
         {user == "admin" ? (
           <span className={styles.userIcon}>
@@ -38,6 +40,7 @@ const Header = ({ user }) => {
           </>
         )}
       </nav>
+         )}
     </header>
   );
 };

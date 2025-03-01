@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./Register.module.css";
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,17 @@ const Index = () => {
   });
 
   const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
+    });
+  };
 
   const validateForm = () => {
     let newErrors = {};
@@ -41,14 +53,18 @@ const Index = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    if (Object.keys(newErrors).length > 0) {
+      setFormData((prevData) => {
+        const updatedData = { ...prevData };
+        Object.keys(newErrors).forEach((field) => {
+          updatedData[field] = "";
+        });
+        return updatedData;
+      });
+    }
+
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
@@ -61,96 +77,75 @@ const Index = () => {
   return (
     <div className={styles.wrapper}>
       <form className={styles.formulario} onSubmit={handleSubmit}>
-        {/* Nombre */}
         <div className={styles.inputContainer}>
           <label className={styles.label}>Nombre</label>
           <div className={styles.inputBox}>
             <input
               type="text"
               name="nombre"
-              className={styles.input}
+              className={`${styles.input} ${errors.nombre ? styles.inputError : ""}`}
               value={formData.nombre}
               onChange={handleChange}
+              placeholder={errors.nombre || "Ingresa tu Nombre"}
+              required
             />
           </div>
-          {errors.nombre && <p className={styles.error}>{errors.nombre}</p>}
         </div>
-
-        {/* Apellido */}
         <div className={styles.inputContainer}>
           <label className={styles.label}>Apellido</label>
           <div className={styles.inputBox}>
             <input
               type="text"
               name="apellido"
-              className={styles.input}
+              className={`${styles.input} ${errors.apellido ? styles.inputError : ""}`}
               value={formData.apellido}
               onChange={handleChange}
+              placeholder={errors.apellido || "Ingresa tu Apellido"}
+              required
             />
           </div>
-          {errors.apellido && <p className={styles.error}>{errors.apellido}</p>}
         </div>
-
-        {/* Correo Electrónico */}
         <div className={styles.inputContainer}>
           <label className={styles.label}>Correo Electrónico</label>
           <div className={styles.inputBox}>
             <input
               type="text"
               name="email"
-              className={styles.input}
+              className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
               value={formData.email}
               onChange={handleChange}
+              placeholder={errors.email || "Ingresa tu Correo Electrónico"}
+              required
             />
           </div>
-          {errors.email && <p className={styles.error}>{errors.email}</p>}
         </div>
-
-        {/* Contraseña */}
         <div className={styles.inputContainer}>
           <label className={styles.label}>Contraseña</label>
           <div className={styles.inputBox}>
             <input
               type="password"
               name="password"
-              className={styles.input}
+              className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
               value={formData.password}
               onChange={handleChange}
+              placeholder={errors.password || "Ingresa tu Contraseña"}
+              required
             />
           </div>
-          {errors.password && <p className={styles.error}>{errors.password}</p>}
         </div>
 
         <button type="submit" className={styles.button}>
           Crear Cuenta
         </button>
-      </form>
-
-      {/* Métodos de Inicio de Sesión */}
-      <div className={styles.wrapperSecundario}>
-        <div className={styles.registerLink}>
-          <p>O inicie sesión con {" "}</p>
-          <div className={styles.loginMethodsContainer}>
-            <ul className={styles.loginMethods}>
-              <li>
-                <a href="#" target="_blank" rel="noopener noreferrer">
-                  <img src="/google.png" alt="Google Logo" className={styles.loginIcon} />
-                </a>
-              </li>
-              <li>
-                <a href="#" target="_blank" rel="noopener noreferrer">
-                  <img src="/facebook.png" alt="Facebook Logo" className={styles.loginIcon} />
-                </a>
-              </li>
-              <li>
-                <a href="#" target="_blank" rel="noopener noreferrer">
-                  <img src="/github.png" alt="GitHub Logo" className={styles.loginIcon} />
-                </a>
-              </li>
-            </ul>
-          </div>
+        <div className={styles.loginLink}>
+          <p>
+            ¿Ya tienes una cuenta?{" "}
+            <Link to="/Login" className={styles.login}>
+              Iniciar Sesión
+            </Link>
+          </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

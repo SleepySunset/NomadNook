@@ -1,6 +1,15 @@
+import { useLocation } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
+
+  const location = useLocation();
+  const hideFooterPages = ["/Login", "/Register"];
+  const isHidden = hideFooterPages.some((path) => location.pathname.startsWith(path));
+
+  if (isHidden) {
+    return null;
+  }
   return (
     <footer className={styles.footer}>
       <div className={styles.logoContainer}>

@@ -7,7 +7,7 @@ html, body {
 
 .wrapper {
     width: 100%;
-    height: 690px;
+    height: 660px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,16 +16,16 @@ html, body {
     background-repeat: no-repeat;
     backdrop-filter: blur(30px);
     border-radius: 10px;
-    padding: 150px 650px 10px 650px;
+    padding: 350px 650px 10px 650px;
 }
 
 .wrapper .formulario {
     width: 100%;
     max-width: 400px;
     padding: 20px;
-    border: 3px solid #dda15e;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.9);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .wrapperSecundario {
@@ -58,9 +58,9 @@ html, body {
     left: 15px;
     background: white;
     padding: 0 5px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    color: #bc6c25;
+    color: #88A035;
     z-index: 2;
 }
 
@@ -72,7 +72,7 @@ html, body {
     background: #fefae0;
     margin: 10px 0;
     border: 2px solid #dda15e;
-    border-radius: 0px;
+    border-radius: 10px;
     padding: 0 15px;
     position: relative;
 }
@@ -82,12 +82,12 @@ html, body {
     align-items: center;
     width: 100%;
     height: 50px;
-    background: #fefae0;
+    background: #ffffff;
     margin: 10px 0;
-    border-left: 2px solid #dda15e;
-    border-right: 2px solid #dda15e;
-    border-bottom: 2px solid #dda15e;
-    border-top: 2px solid #dda15e;
+    border-left: 2px solid #8E8E8E;
+    border-right: 2px solid #8E8E8E;
+    border-bottom: 2px solid #8E8E8E;
+    border-top: 2px solid #8E8E8E;
     padding: 0 15px;
     position: relative;
 }
@@ -104,30 +104,36 @@ html, body {
     padding-left: 10px;
 }
 
+.input::placeholder {
+    color: #aaa;
+  }
+  
+  .inputError::placeholder {
+    font-size: 12px;
+    color: red;
+  }
+
 .icon {
     font-size: 18px;
     color: #606c38;
     margin-left: 10px;
 }
 
-.inputBox:hover {
-    border-color: #bc6c25;
-}
-
 .button {
     width: 100%;
     height: 45px;
-    background: #070606e0;
-    border: 2px solid #dda15e;
-    border-radius: 0px;
+    background: #606c38;
+    border: 2px solid #8E8E8E;
+    border-radius: 40px;
     cursor: pointer;
     color:white;
     transition: background 0.3s;
 }
 
 .button:hover {
-    border-color: #bc6c25;
-    background: #000000;
+    border-color: #88A035;
+    background: #4a532b;
+    ;
 }
 
 .rememberForgot {
@@ -137,53 +143,37 @@ html, body {
     margin: 10px 0 15px;
 }
 
-.registerLink {
+.loginLink {
     text-align: center;
     font-size: 14px;
     margin-top: 10px;
 }
 
-.registerLink a {
-    color: #353434;
+.loginLink a {
+    color: #88A035;
     font-weight: bold;
 }
 
-.registerLink a:hover {
+.loginLink a:hover {
     text-decoration: underline;
 }
 
-.loginMethodsContainer {
-    display: flex;
-    justify-content: center;
-    padding-right: 20px;
-    margin-top: 10px;
-  }
-  
-  .loginMethods {
-    list-style: none;
-    display: flex;
-    gap: 12px;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .loginMethods li {
-    display: inline-block;
-  }
-  
-  .loginIcon {
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s ease;
-  }
-  
-  .loginIcon:hover {
-    transform: scale(1.1);
-  }
+@media (max-width: 2880) {
+    .wrapper {
+        padding: 10px 10px 10px 10px;
+        height:600px;
+    }
+
+
+    .formulario {
+        width: 1080px;
+    }
+}
 
 @media (max-width: 1440px) {
     .wrapper {
-        padding: 300px 10px 0px 10px;
+        padding: 180px 10px 0px 10px;
+        height:600px;
     }
 
     .formulario {
@@ -194,6 +184,7 @@ html, body {
 @media (max-width: 768px) {
     .wrapper {
         padding: 300px 10px 0px 10px;
+        height: 468px;
     }
 
     .formulario {
@@ -203,28 +194,8 @@ html, body {
 
 @media (max-width: 480px) {
     .wrapper {
-        padding: 30px 10px;
-    }
-
-
-    .label {
-        font-size: 12px;
-        left: 10px;
-    }
-
-    .inputBox {
-        height: 45px;
-        padding: 0 10px;
-    }
-
-    .button {
-        height: 40px;
-    }
-}
-
-@media (max-width: 480px) {
-    .wrapper {
-        padding: 130px 10px 0px 10px;
+        padding: 300px 10px 0px 10px;
+        height: 480px;
     }
 
 
