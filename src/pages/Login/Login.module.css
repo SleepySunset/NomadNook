@@ -2,50 +2,60 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-color: #FCECDD;
 }
 
 .wrapper {
     width: 100%;
-    height:690px;
+    height: 690px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('../../../public/Nomad\ Nook\ green.png');
-    background-size: contain;
     background-position: center 120px;
     background-repeat: no-repeat;
     backdrop-filter: blur(30px);
     border-radius: 10px;
-    padding: 130px 10px 10px 10px; 
+    padding: 130px 650px 10px 650px;
 }
 
-.wrapper h1 {
-    font-size: 36px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.wrapper form {
+.wrapper .formulario {
     width: 100%;
     max-width: 400px;
-    /* background: rgba(255, 255, 255, 0.1); Lo dejo por si agregamos un img back más grande */
     padding: 20px;
     border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.wrapper .inputBox {
+.wrapperSecundario {
+    margin: -10px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    width: 80%;
+    max-width: 350px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.inputContainer {
+    position: relative;
+    margin: 25px 0;
+}
+
+.inputBox {
     display: flex;
-    align-items: center; 
+    align-items: center;
     width: 100%;
     height: 50px;
-    background: #fefae0;
-    margin: 15px 0;
-    border-radius: 40px;
-    border: 2px solid #dda15e;
+    background: #ffffff;
+    margin: 10px 0;
+    border: 2px solid #8E8E8E;
+    border-radius: 10px;
     padding: 0 15px;
+    position: relative;
 }
-
 
 .input {
     flex-grow: 1;
@@ -55,7 +65,11 @@ html, body {
     outline: none;
     font-size: 16px;
     color: #070606;
-    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.inputError::placeholder {
+    color: red;
 }
 
 .icon {
@@ -64,59 +78,151 @@ html, body {
     margin-left: 10px;
 }
 
-.wrapper .inputBox:hover {
-    border: 2px solid #bc6c25;
+.inputError {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
 }
 
-.wrapper .remember{
-        cursor: pointer;
+.label {
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    background: white;
+    padding: 0 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #88A035;
+    z-index: 2;
 }
 
-.wrapper .rememberForgot {
+.loginOptions {
     display: flex;
     justify-content: space-between;
-    font-size: 14.5px;
-    margin: 10px 0 15px;
-}
-
-.wrapper button {
+    align-items: center;
     width: 100%;
-    height: 45px;
-    background: #fefae0;
-    border:2px solid #dda15e;
-    border-radius: 40px; 
-    cursor: pointer;
-}
-
-.wrapper button:hover{
-    border: 2px solid #bc6c25;
-}
-
-.wrapper .register-link {
-    font-size: 14.5px;
-    text-align: center;
     margin-top: 15px;
+    padding: 10px 0;
 }
 
-.register-link p a {
+.rememberMe {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.checkBox {
     color: #353434;
-    text-decoration: none;
-    font-weight: 600;
 }
 
-.register-link p a:hover {
+.forgotPassword {
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.forgotPassword:hover {
     text-decoration: underline;
 }
 
+.button {
+    width: 100%;
+    height: 45px;
+    background: #606c38;
+    border: 2px solid #8E8E8E;
+    border-radius: 40px;
+    cursor: pointer;
+    color: white;
+    transition: background 0.3s;
+}
+
+.button:hover {
+    border-color: #88A035;
+    background: #4a532b;
+}
+
 .registerLink {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.registerLink a {
+    color: #88A035;
+    font-weight: bold;
+}
+
+.registerLink a:hover {
+    text-decoration: underline;
+}
+
+.loginMethodsContainer {
     display: flex;
-    justify-content:center;
-    font-size: 14.5px;
-    margin: 10px 0 15px;
+    justify-content: center;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.loginMethods {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+.loginMethods li {
+    display: inline-block;
+}
+
+.loginIcon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.loginIcon:hover {
+    transform: scale(1.1);
+}
+
+/* 📌 Estilos responsivos */
+@media (max-width: 1440px) {
+    .wrapper {
+        padding: 30px 15px;
+    }
+
+    .formulario {
+        width: 1080px;
+    }
 }
 
 @media (max-width: 768px) {
     .wrapper {
-        padding: 20px;
+        padding: 30px 15px;
+    }
+
+    .formulario {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        padding: 20px 10px;
+    }
+
+    .label {
+        font-size: 12px;
+        left: 10px;
+    }
+
+    .inputBox {
+        height: 45px;
+        padding: 0 10px;
+    }
+
+    .button {
+        height: 40px;
     }
 }
