@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)http://localhost:5173/Register -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="emotion-insertion-point" content="">
+    <script type="module">
+import RefreshRuntime from "/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true
+</script>
+
+    <script type="module" src="./Nomad Nook_files/client"></script>
+
+    
+    <link rel="icon" type="image/svg+xml" href="http://localhost:5173/black_img_logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomad Nook</title>
+  <style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/styles/global.css">
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap');:root{
+  --color1: #606c38;
+  --color2: #283618;
+  --color3: #fefae0;
+  --color4: #dda15e;
+  --color5: #bc6c25;
+  --color6: #FCECDD;
+  --headerHeight: 140px;
+  --headerHeightMobile: 135px;
+}*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}* {
+  margin: 0;
+  padding: 0;
+}input, button, textarea, select{
+  font: inherit;
+}p{
+  text-wrap: pretty;
+}h1, h2, h3, h4, h5, h6{
+  text-wrap: balance;
+}img, video, svg{
+  height: auto;
+  max-width: 100%;
+}body {
+  font-family: 'Montserrat', sans-serif;
+}a{
+  text-decoration: none;
+}a:visited{
+  color:#565656;
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/pages/Home/Home.module.css">._home_i461e_1 {
+  text-align: center;
+  padding-top: var(--headerHeight);
+  background-color: var(--color3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  ._home_i461e_1 {
+    padding-top: var(--headerHeightMobile);
+  }
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/components/Categories/Categories.module.css">._categoriesContainer_1kco6_1{
+    width: 100%;
+}
+
+._categories_1kco6_1 {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 10px 10px 15px;
+    position: sticky;
+    top: 80px;
+    background-color: white;
+    z-index: 999;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-padding-left: 20px;
+}
+
+
+._categories_1kco6_1::-webkit-scrollbar {
+    display: none;
+}
+
+
+._categoryButton_1kco6_53 {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    flex: 0 0 auto;
+    min-width: 100px;
+}
+
+._categoryButton_1kco6_53:first-child {
+    margin-left: 10px;
+}
+
+._categoryButton_1kco6_53:hover {
+    background: #BC6C25;
+    color: white;
+    border-color: #BC6C25;
+}
+
+
+._categoryIcon_1kco6_105 {
+    width: 20px;
+    height: 20px;
+}
+
+
+@media (max-width: 768px) {
+    ._categories_1kco6_1 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        overflow-x: hidden;
+        padding: 10px;
+    }
+
+    ._categoryButton_1kco6_53 {
+        width: 100%;
+        min-width: auto;
+        padding: 8px;
+        font-size: 13px;
+        justify-content: center;
+    }
+
+    ._categoryIcon_1kco6_105 {
+        width: 18px;
+        height: 18px;
+    }
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/components/Searchbar/Searchbar.module.css">._form_1ic4y_1{
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    background-color: white;
+}
+._input_1ic4y_17{
+    width: 100%;
+    padding: 10px;
+    border: none;
+}
+._input_1ic4y_17:focus{
+    outline: none;
+}
+._icon_1ic4y_33{
+    background: none;
+    border: none;
+    margin: 0 6px;
+}
+
+@media (max-width: 768px) {
+    ._form_1ic4y_1{
+        width:100%;
+        margin-top: 0px;
+    }
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/layouts/CardsGrid/CardsGrid.module.css">._container_6469w_1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0;    
+
+    ._cardsContainer_6469w_13{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, auto);
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+
+    }
+
+
+
+    ._pagination_6469w_41 {
+        display: flex;
+        list-style: none; 
+        padding: 0;
+        margin-top: 20px;
+    }
+    
+    ._pageItem_6469w_55 {
+        margin: 0 5px; 
+        cursor: pointer;
+        padding: .5rem 1rem; 
+        border: 1px solid var(--color1); 
+        border-radius: .8rem;
+
+        &:hover{
+            background-color: var(--color1);
+            color: var(--color3);
+            opacity: 0.8;
+        }
+    }
+    
+    ._activePage_6469w_83 {
+        background-color: var(--color1); 
+        color: var(--color3);
+        border-color: var(--color1);
+    }
+    
+    ._previousButton_6469w_95,
+    ._nextButton_6469w_97 {
+        cursor: pointer;
+        padding: .5rem 1rem; 
+        border: 1px solid var(--color1); 
+        border-radius: .8rem;
+        
+        
+        &:hover{
+            background-color: var(--color1);
+            color: var(--color3);
+            opacity: 0.8;
+        }
+    }
+    
+    ._disabledButton_6469w_125 {
+        opacity: 0.5;
+        cursor: default;
+
+        &:hover{
+            background-color: transparent;
+            color: inherit;
+            opacity: 0.5;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    ._container_6469w_1{
+        ._cardsContainer_6469w_13{
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-rows: repeat(3, auto);
+        }
+    }
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/components/Card/Card.module.css">._container_8e464_1{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 450px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+._text_8e464_21{
+    padding: 20px;
+    
+}
+
+._imageContainer_8e464_31{
+    overflow: hidden;
+    border-radius: 10px 10px 0 0 ;
+    width: 100%;
+    aspect-ratio: 4/3;
+
+    ._image_8e464_31 {
+        width: 100%;
+        height: 100%;
+        transition: transform 0.3s ease;
+        object-fit: cover;
+    }
+    ._image_8e464_31:hover {
+        transform: scale(1.1);
+        filter: brightness(0.8);
+    }
+}
+
+
+@media (max-width: 768px) {
+    ._container_8e464_1{
+        width: 100%;
+    }
+
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/pages/Login/Login.module.css">html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FCECDD;
+}
+
+._wrapper_zkv7l_15 {
+    width: 100%;
+    height: 690px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-position: center 120px;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    padding: 130px 650px 10px 650px;
+}
+
+._wrapper_zkv7l_15 ._formulario_zkv7l_43 {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 3px solid #dda15e;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+._wrapperSecundario_zkv7l_61 {
+    padding: 15px 20px;
+    border-left: 2px solid #dda15e;
+    border-right: 2px solid #dda15e;
+    border-bottom: 2px solid #dda15e;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    width: 80%;
+    max-width: 350px;
+}
+
+._inputContainer_zkv7l_85 {
+    position: relative;
+    margin: 25px 0;
+}
+
+._error_zkv7l_95 {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+._label_zkv7l_109 {
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    background: white;
+    padding: 0 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #bc6c25;
+    z-index: 2;
+}
+
+._inputBox_zkv7l_133 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: #fefae0;
+    margin: 10px 0;
+    border: 2px solid #dda15e;
+    border-radius: 0px;
+    padding: 0 15px;
+    position: relative;
+}
+
+._inputBox_zkv7l_133 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: #fefae0;
+    margin: 10px 0;
+    border-left: 2px solid #dda15e;
+    border-right: 2px solid #dda15e;
+    border-bottom: 2px solid #dda15e;
+    border-top: 2px solid #dda15e;
+    padding: 0 15px;
+    position: relative;
+}
+
+
+._input_zkv7l_85 {
+    flex-grow: 1;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #070606;
+    padding-left: 10px;
+}
+
+._icon_zkv7l_213 {
+    font-size: 18px;
+    color: #606c38;
+    margin-left: 10px;
+}
+
+._inputBox_zkv7l_133:hover {
+    border-color: #bc6c25;
+}
+
+._button_zkv7l_233 {
+    width: 100%;
+    height: 45px;
+    background: #070606e0;
+    border: 2px solid #dda15e;
+    border-radius: 0px;
+    cursor: pointer;
+    color:white;
+    transition: background 0.3s;
+}
+
+._button_zkv7l_233:hover {
+    border-color: #bc6c25;
+    background: #000000;
+}
+
+._rememberForgot_zkv7l_265 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: 10px 0 15px;
+}
+
+._registerLink_zkv7l_279 {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+._registerLink_zkv7l_279 a {
+    color: #353434;
+    font-weight: bold;
+}
+
+._registerLink_zkv7l_279 a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1440px) {
+    ._wrapper_zkv7l_15 {
+        padding: 30px 15px;
+    }
+
+    ._formulario_zkv7l_43 {
+        width: 1080px;
+    }
+}
+
+@media (max-width: 768px) {
+    ._wrapper_zkv7l_15 {
+        padding: 30px 15px;
+    }
+
+    ._formulario_zkv7l_43 {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    ._wrapper_zkv7l_15 {
+        padding: 20px 10px;
+    }
+
+
+    ._label_zkv7l_109 {
+        font-size: 12px;
+        left: 10px;
+    }
+
+    ._inputBox_zkv7l_133 {
+        height: 45px;
+        padding: 0 10px;
+    }
+
+    ._button_zkv7l_233 {
+        height: 40px;
+    }
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/pages/Register/Register.module.css">html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FCECDD;
+}
+
+._wrapper_nbdkc_15 {
+    width: 100%;
+    height: 690px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-position: center 120px;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    padding: 130px 650px 10px 650px;
+}
+
+._wrapper_nbdkc_15 ._formulario_nbdkc_43 {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 3px solid #dda15e;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+._wrapperSecundario_nbdkc_61 {
+    padding: 15px 20px;
+    border-left: 2px solid #dda15e;
+    border-right: 2px solid #dda15e;
+    border-bottom: 2px solid #dda15e;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    width: 80%;
+    max-width: 350px;
+}
+
+._inputContainer_nbdkc_85 {
+    position: relative;
+    margin: 25px 0;
+}
+
+._error_nbdkc_95 {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+._label_nbdkc_109 {
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    background: white;
+    padding: 0 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #bc6c25;
+    z-index: 2;
+}
+
+._inputBox_nbdkc_133 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: #fefae0;
+    margin: 10px 0;
+    border: 2px solid #dda15e;
+    border-radius: 0px;
+    padding: 0 15px;
+    position: relative;
+}
+
+._inputBox_nbdkc_133 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background: #fefae0;
+    margin: 10px 0;
+    border-left: 2px solid #dda15e;
+    border-right: 2px solid #dda15e;
+    border-bottom: 2px solid #dda15e;
+    border-top: 2px solid #dda15e;
+    padding: 0 15px;
+    position: relative;
+}
+
+
+._input_nbdkc_85 {
+    flex-grow: 1;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: #070606;
+    padding-left: 10px;
+}
+
+._icon_nbdkc_213 {
+    font-size: 18px;
+    color: #606c38;
+    margin-left: 10px;
+}
+
+._inputBox_nbdkc_133:hover {
+    border-color: #bc6c25;
+}
+
+._button_nbdkc_233 {
+    width: 100%;
+    height: 45px;
+    background: #070606e0;
+    border: 2px solid #dda15e;
+    border-radius: 0px;
+    cursor: pointer;
+    color:white;
+    transition: background 0.3s;
+}
+
+._button_nbdkc_233:hover {
+    border-color: #bc6c25;
+    background: #000000;
+}
+
+._rememberForgot_nbdkc_265 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: 10px 0 15px;
+}
+
+._registerLink_nbdkc_279 {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+._registerLink_nbdkc_279 a {
+    color: #353434;
+    font-weight: bold;
+}
+
+._registerLink_nbdkc_279 a:hover {
+    text-decoration: underline;
+}
+
+._loginMethodsContainer_nbdkc_309 {
+    display: flex;
+    justify-content: center;
+    padding-right: 20px;
+    margin-top: 10px;
+  }
+  
+  ._loginMethods_nbdkc_309 {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  ._loginMethods_nbdkc_309 li {
+    display: inline-block;
+  }
+  
+  ._loginIcon_nbdkc_347 {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  ._loginIcon_nbdkc_347:hover {
+    transform: scale(1.1);
+  }
+
+@media (max-width: 1440px) {
+    ._wrapper_nbdkc_15 {
+        padding: 30px 15px;
+    }
+
+    ._formulario_nbdkc_43 {
+        width: 1080px;
+    }
+}
+
+@media (max-width: 768px) {
+    ._wrapper_nbdkc_15 {
+        padding: 30px 15px;
+    }
+
+    ._formulario_nbdkc_43 {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    ._wrapper_nbdkc_15 {
+        padding: 20px 10px;
+    }
+
+
+    ._label_nbdkc_109 {
+        font-size: 12px;
+        left: 10px;
+    }
+
+    ._inputBox_nbdkc_133 {
+        height: 45px;
+        padding: 0 10px;
+    }
+
+    ._button_nbdkc_233 {
+        height: 40px;
+    }
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/layouts/Footer/Footer.module.css">._footer_tcvzp_1 {
+  width: 100%;
+  background-color: #bc6c25;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+._logoContainer_tcvzp_23 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0;
+}
+
+._whitelogo_tcvzp_39 {
+  max-width: 100px;
+  height: auto;
+  display: block;
+}
+
+._text_tcvzp_51 {
+  font-size: 14px;
+}
+
+._socialContainer_tcvzp_59 {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+  margin-top: 10px;
+}
+
+._socialList_tcvzp_73 {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+}
+
+._socialList_tcvzp_73 li {
+  display: inline-block;
+}
+
+._socialIcon_tcvzp_97 {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+._socialIcon_tcvzp_97:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  ._footer_tcvzp_1 {
+    width: 100%;
+    max-width: 100vw;
+    padding: 10px 5%;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  ._logoContainer_tcvzp_23 {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  ._socialContainer_tcvzp_59 {
+    justify-content: center;
+    padding-right: 0;
+  }
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/layouts/Header/Header.module.css">._header_13imo_1 {
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: var(--headerHeight);
+}
+
+._headerUser_13imo_27 {
+  background-color: var(--color1);
+}
+._headerAdmin_13imo_33 {
+  background-color: var(--color4);
+}
+._userIcon_13imo_39 {
+  margin-right: 30px;
+}
+._userIcon_13imo_39:hover {
+  cursor: pointer;
+}
+
+._logoLink_13imo_53 {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+._slogan_13imo_67 {
+  padding: 40px 5px;
+  color: #ffffff;
+}
+
+._whitelogo_13imo_77 {
+  max-width: 100px;
+  height: auto;
+  display: block;
+}
+
+._authButton_13imo_89 {
+  margin-left: 20px;
+}
+._authLinksHeader_13imo_95 {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+._authLinksHeader_13imo_95 a {
+  background-color: #dda15e;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+._authLinksHeader_13imo_95 a:hover {
+  background-color: #d67607;
+}
+
+@media (max-width: 768px) {
+  ._header_13imo_1 {
+    width: 100%;
+    padding: 10px 5%;
+    text-align: center;
+    height: var(--headerHeightMobile);
+  }
+  ._slogan_13imo_67 {
+    display: none;
+  }
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/layouts/LayoutUser/Layout.module.css">._layout_1wm8g_1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
+  </style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/pages/Admin/AdminPanel/AdminPanel.module.css">._main_1efn7_1 {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  margin-top: var(--headerHeight);
+  padding: 50px 60px;
+  background-color: var(--color6);
+}
+._container_1efn7_17 {
+  width: 50%;
+  flex-grow: 1;
+  padding: 30px 50px;
+  background-color: #FFF;
+  border-radius: 35px;
+  border: 1px solid rgb(255, 224, 201);
+  box-shadow: 0px 0px 13px 0px rgb(226, 208, 191);
+  min-height: 500px;
+  margin-left: 8%;
+}
+._title_1efn7_39{
+  text-align: center;
+  color: #565656;
+  margin-bottom: 30px;
+}
+
+._text_1efn7_51{
+  font-size: 1.2rem;
+  color: #565656;
+}
+
+._mobileWarning_1efn7_61 {
+  display: none;
+  text-align: center;
+  padding: 40px;
+  color: #a94442;
+  border-radius: 10px;
+  margin-top: var(--headerHeightMobile);
+  font-weight: bold;
+}
+._warning_1efn7_79 {
+  background-color: #ffcccb;
+  border: 1px solid #a94442;
+  padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  ._main_1efn7_1 {
+    display: none;
+  }
+
+  ._mobileWarning_1efn7_61 {
+    display: block;
+  }
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/components/AdminNav/AdminNav.module.css">._navAdmin_1p0q0_1 {
+  max-width: 300px;
+  width: 40%;
+  background-color: #ffffff;
+  border-radius: 35px;
+  border: 1px solid rgb(255, 224, 201);
+  box-shadow: 0px 0px 13px 0px rgb(226, 208, 191);
+  min-height: 500px;
+}
+
+._navMenu_1p0q0_21 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+._navOpt_1p0q0_33 {
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+}
+._navOpt_1p0q0_33:hover {
+  cursor: pointer;
+  background-color: var(--color6);
+}
+._navText_1p0q0_51 {
+  margin-left: 15px;
+  color: #565656;
+}
+
+._active_1p0q0_61 {
+  background-color: rgba(255, 224, 201, 0.291);
+}
+._activeText_1p0q0_67 {
+  color: var(--color5);
+  margin-left: 15px;
+}
+
+/* a:visited {
+  color: #565656;
+} */
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/pages/CabinDetail/CabinDetail.module.css">:root{
+  --color1: #606c38;
+  --color2: #283618;
+  --color3: #fefae0;
+  --color4: #dda15e;
+  --color5: #bc6c25;
+  --color6: #FCECDD;
+  --headerHeight: 140px;
+  --headerHeightMobile: 135px;
+}
+
+._detail_1mwg2_5{
+    padding-top: var(--headerHeight);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 10rem;
+
+    
+    ._container_1mwg2_25{
+        width: 80%;
+        max-width: 1200px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        margin-top: 2rem;
+        
+        ._back_1mwg2_43 {
+            position: relative; 
+            top: 2rem;
+            transform: translateY(-50%);
+            left: 0;
+            padding: 15px 15px; 
+            border-radius: 15px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 100ms ease;
+            width: fit-content;
+            align-self: flex-end;
+            
+
+            &:hover{
+                background-color: var(--color1);
+            }
+        }
+        ._back_1mwg2_43::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%; 
+            border-radius: 3px 0 0 0;
+            transform: translate(-40%, -50%) rotate(-45deg);
+            width: 12px; 
+            height: 12px;
+            border-top: 3px solid rgb(50, 50, 50); 
+            border-left: 3px solid rgb(50, 50, 50); 
+            z-index: 2;
+        }
+        ._title_1mwg2_107{
+            text-align: left;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        ._imagesContainer_1mwg2_117{
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            display: flex;
+            flex-direction: row;
+            border-radius: .7rem;
+            overflow: hidden;
+            gap: .5rem;
+            position: relative;
+
+            ._gallery_1mwg2_137{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                grid-gap: .5rem;
+                width: 50%;
+                height: 100%;
+                
+                ._galleryImg_1mwg2_153{
+                    height: 100%;
+                    object-fit: cover;
+                    cursor: pointer;
+                    aspect-ratio: 1 / 1;
+                    transition: all 100ms ease;
+
+                    &:hover{
+                        filter: brightness(.8);
+                    }
+                }
+            }
+            ._mainImage_1mwg2_177{
+                width: 50%;
+                height: 100%;
+                object-fit: cover;
+                cursor: pointer;
+                transition: all 100ms ease;
+    
+                &:hover{
+                    filter: brightness(.8);
+                }
+            }
+            ._showAllImagesBtn_1mwg2_199{
+                position: absolute;
+                bottom: .5rem;
+                right: .5rem;
+                padding: .4rem .8rem;
+                height: 1.7rem;
+                border-radius: .4rem;
+                border: 1px solid var(--color2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                font-size: .8rem;
+                font-weight: 500;
+            }
+        }
+        ._text_1mwg2_231{
+
+            ._description_1mwg2_235{
+                font-size: .9rem;
+            }
+            ._price_1mwg2_241{
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        margin-top: var(--headerHeightMobile);
+    }
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/components/Gallery/Gallery.module.css">._backdrop_n4mf8_1{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10rem 0;
+    background-color: var(--color3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1001;
+    overflow: scroll;
+    
+    ._head_n4mf8_29{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5rem;
+        background-color: var(--color3);
+        z-index: 1;
+        
+        ._back_n4mf8_1 {
+            position: relative; 
+            top: 50%;
+            transform: translateY(-50%);
+            left: 2rem;
+            padding: 15px 15px; 
+            border-radius: 15px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 100ms ease;
+
+            &:hover{
+                background-color: var(--color1);
+            }
+        }
+        ._back_n4mf8_1::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%; 
+            border-radius: 3px 0 0 0;
+            transform: translate(-40%, -50%) rotate(-45deg);
+            width: 12px; 
+            height: 12px;
+            border-top: 3px solid rgb(50, 50, 50); 
+            border-left: 3px solid rgb(50, 50, 50); 
+            z-index: 2;
+        }
+    }
+
+    ._content_n4mf8_109{
+        display: flex;
+        flex-flow: row wrap;
+        width: 80%;
+        max-width: 800px;
+        gap: .5rem;
+
+        ._image_n4mf8_123{
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+            transition: all 100ms ease;
+            border-radius: 2px;
+            opacity: 0;
+            animation: _fadeIn_n4mf8_1 350ms forwards;
+            
+            &:hover{
+                filter: brightness(.8);
+            }
+            
+        }
+        ._image_n4mf8_123:nth-child(3n+2), ._image_n4mf8_123:nth-child(3n+3){
+            width: calc(50% - .25rem);
+        }
+    }
+}
+
+@keyframes _fadeIn_n4mf8_1 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/pages/Admin/CabinManagement/CabinManagement.module.css">._main_1vh91_1 {
+  background-color: var(--color6);
+  margin-top: var(--headerHeight);
+  padding: 50px 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+._container_1vh91_17 {
+  background-color: #fff;
+  padding: 40px;
+  width: 50%;
+  flex-grow: 1;
+  margin-left: 8%;
+  border-radius: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid rgb(255, 224, 201);
+  box-shadow: 0px 0px 13px 0px rgb(226, 208, 191);
+}
+
+._container_1vh91_17 input {
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+._upperContainer_1vh91_59 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+._addCabinBtn_1vh91_69 {
+  max-width: 200px;
+  padding: 10px 20px;
+  background-color: var(--color5);
+  border: none;
+  color: white;
+  border-radius: 15px;
+}
+._addCabinBtn_1vh91_69:hover {
+  cursor: pointer;
+}
+._title_1vh91_91 {
+  margin-bottom: 40px;
+}
+
+._mobileWarning_1vh91_99 {
+  display: none;
+  text-align: center;
+  padding: 40px;
+  color: #a94442;
+  border-radius: 10px;
+  margin-top: var(--headerHeightMobile);
+  font-weight: bold;
+}
+._warning_1vh91_117 {
+  background-color: #ffcccb;
+  border: 1px solid #a94442;
+  padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  ._main_1vh91_1 {
+    display: none;
+  }
+
+  ._mobileWarning_1vh91_99 {
+    display: block;
+  }
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/components/AddCabin/AddCabin.module.css">._container_a9m1r_1 {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  right: -100;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  z-index: 1000;
+  overflow: hidden;
+}
+._modalContent_a9m1r_35 {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  max-height: 100vh;
+  overflow-y: auto;
+  box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+._closeButton_a9m1r_55 {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 50px;
+  cursor: pointer;
+  color: #777;
+  transition: color 0.3s ease;
+}
+
+._closeButton_a9m1r_55:hover {
+  color: #000;
+}
+
+._title_a9m1r_83 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+._form_a9m1r_95 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+._label_a9m1r_107 {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+._input_a9m1r_119,
+._select_a9m1r_121 {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border 0.3s ease-in-out;
+}
+
+._input_a9m1r_119:focus,
+._select_a9m1r_121:focus {
+  border: 1px solid var(--color5);
+  outline: none;
+  box-shadow: 0 0 5px var(--color5);
+}
+
+._submitBtn_a9m1r_153 {
+  align-self: center;
+  width: 200px;
+  background: var(--color5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+._submitBtn_a9m1r_153:hover {
+  background: var(--color4);
+}
+
+._imgInputBtn_a9m1r_187{
+  border: none;
+  padding: 10px;
+  background-color: var(--color5);
+  transition: background 0.3s ease-in-out;
+  cursor: pointer;
+  color: white;
+}
+
+._imgInputBtn_a9m1r_187:hover {
+  background: var(--color4);
+}
+
+._imageInputContainer_a9m1r_213{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+._imageInputContainer_a9m1r_213 input{
+  margin: 0;
+  margin-right: 7px;
+}
+  
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/components/AdminTable/AdminTable.module.css">._table_csqsg_1 {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+
+  th,
+  td {
+    border-bottom: 1px solid rgb(208, 208, 208);
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  tr:hover {
+    background-color: var(--color4);
+  }
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/sebas/Desktop/NomadNook/NomadNook/src/layouts/LayoutAdmin/LayoutAdmin.module.css">._layout_11nzj_1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+</style><script src="chrome-extension://mooikfkahbdckldjjndioackbalphokd/assets/prompt.js"></script></head>
+  <body>
+    <div id="root"><div class="_layout_1wm8g_1"><header class="_header_13imo_1 _headerUser_13imo_27"><div><a class="_logoLink_13imo_53" href="http://localhost:5173/" data-discover="true"><img alt="White-logo" class="_whitelogo_13imo_77" src="./Nomad Nook_files/white_full_logo.png"><h3 class="_slogan_13imo_67">Viajar es vivir, hospedarte es sentir</h3></a></div><nav class="_authLinksHeader_13imo_95"><a class="_authButton_13imo_89" href="http://localhost:5173/Register" data-discover="true">Crear Cuenta</a><a class="_authButton_13imo_89" href="http://localhost:5173/Login" data-discover="true">Iniciar Sesión</a></nav></header><div class="_wrapper_nbdkc_15" style="
+    padding-top: 10px;
+"><form class="_formulario_nbdkc_43"><div class="_inputContainer_nbdkc_85"><label class="_label_nbdkc_109">Nombre</label><div class="_inputBox_nbdkc_133"><input class="_input_nbdkc_85" type="text"></div></div><div class="_inputContainer_nbdkc_85"><label class="_label_nbdkc_109">Apellido</label><div class="_inputBox_nbdkc_133"><input class="_input_nbdkc_85" required="" type="text"></div></div><div class="_inputContainer_nbdkc_85"><label class="_label_nbdkc_109">Correo Electrónico</label><div class="_inputBox_nbdkc_133"><input class="_input_nbdkc_85" required="" type="text"></div></div><div class="_inputContainer_nbdkc_85"><label class="_label_nbdkc_109">Correo Electrónico</label><div class="_inputBox_nbdkc_133"><input class="_input_nbdkc_85" required="" type="text"></div></div><button type="submit" class="_button_nbdkc_233">Crear Cuenta</button></form><div class="_wrapperSecundario_nbdkc_61"><div class="_registerLink_nbdkc_279"><p> O inicie sesión con   </p><div class="_loginMethodsContainer_nbdkc_309"><ul class="_loginMethods_nbdkc_309"><li><a href="http://localhost:5173/Register#" target="_blank" rel="noopener noreferrer"><img alt="Google Logo" class="_loginIcon_nbdkc_347" src="./Nomad Nook_files/google.png"></a></li><li><a href="http://localhost:5173/Register#" target="_blank" rel="noopener noreferrer"><img alt="Facebook Logo" class="_loginIcon_nbdkc_347" src="./Nomad Nook_files/facebook.png"></a></li><li><a href="http://localhost:5173/Register#" target="_blank" rel="noopener noreferrer"><img alt="GitHub Logo" class="_loginIcon_nbdkc_347" src="./Nomad Nook_files/github.png"></a></li></ul></div></div></div></div><footer class="_footer_tcvzp_1"><div class="_logoContainer_tcvzp_23"><img alt="White-logo" class="_whitelogo_tcvzp_39" src="./Nomad Nook_files/white_full_logo.png"><p class="_text_tcvzp_51">© 2025 Nomad Nook. Todos los derechos reservados.</p></div><div class="_socialContainer_tcvzp_59"><ul class="_socialList_tcvzp_73"><li><a href="http://localhost:5173/Register#" target="_blank" rel="noopener noreferrer"><img alt="Instagram Logo" class="_socialIcon_tcvzp_97" src="./Nomad Nook_files/instagram.png"></a></li><li><a href="http://localhost:5173/Register#" target="_blank" rel="noopener noreferrer"><img alt="Facebook Logo" class="_socialIcon_tcvzp_97" src="./Nomad Nook_files/facebook.png"></a></li><li><a href="http://localhost:5173/Register#" target="_blank" rel="noopener noreferrer"><img alt="WhatsApp Logo" class="_socialIcon_tcvzp_97" src="./Nomad Nook_files/whatsapp.png"></a></li></ul></div></footer></div></div>
+    <script type="module" src="./Nomad Nook_files/main.jsx"></script>
+  
+
+</body></html>
