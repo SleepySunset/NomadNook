@@ -32,10 +32,10 @@ const Header = ({ user }) => {
         ) : (
           <>
             <Link to="/Register" className={styles.authButton}>
-              Crear Cuenta
+              <span className={styles.textBtn}>Crear Cuenta</span>
             </Link>
             <Link to="/Login" className={styles.authButton}>
-              Iniciar Sesión
+              <span className={styles.textBtn}>Iniciar Sesión</span>
             </Link>
           </>
         )}

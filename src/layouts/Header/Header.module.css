@@ -50,6 +50,9 @@
   gap: 20px;
   align-items: center;
 }
+.textBtn{
+  color: var(--color2);
+}
 
 .authLinksHeader a {
   background-color: #dda15e;

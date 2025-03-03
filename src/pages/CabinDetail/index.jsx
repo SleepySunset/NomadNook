@@ -73,7 +73,7 @@ const CabinDetail = () => {
               onClick={handleShowModal}
               className={styles.showAllImagesBtn}
             >
-              <p className={styles.allImagesText}>Mostrar todas las fotos</p>
+              <p className={styles.allImagesText}>Ver más</p>
             </button>
           </div>
         ) : (
