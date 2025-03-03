@@ -1,0 +1,14 @@
+name: Deploy to Amplify on PR Approval
+
+on:
+  pull_request:
+    types: [closed] 
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true  
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Activar Webhook de Amplify
+        run: curl --location --request POST '${{ secrets.AMPLIFY_WEBHOOK_URL }}'
