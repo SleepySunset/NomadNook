@@ -186,7 +186,6 @@ html, body {
     transform: scale(1.1);
 }
 
-/* 📌 Estilos responsivos */
 @media (max-width: 1440px) {
     .wrapper {
         padding: 30px 15px;

@@ -12,6 +12,7 @@ const Index = () => {
 
   const [errors, setErrors] = useState({});
 
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
