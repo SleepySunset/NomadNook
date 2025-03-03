@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./hooks/AuthContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -11,6 +12,7 @@ import LayoutAdmin from "./layouts/LayoutAdmin";
 
 function App() {
   return (
+    <AuthProvider>
     <Routes>
       <Route path="/" element={<LayoutUser />}>
         <Route path="/" element={<Home />} />
@@ -24,6 +26,7 @@ function App() {
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </AuthProvider>
   );
 }
 

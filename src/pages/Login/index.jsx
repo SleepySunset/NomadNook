@@ -1,9 +1,13 @@
 import { useState } from "react";
 import styles from "./Login.module.css";
 import { FaUser, FaLock } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/AuthContext";
 
-const Index = () => {
+const Login = () => {
+  const { login, loading } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -11,77 +15,84 @@ const Index = () => {
 
   const [errors, setErrors] = useState({});
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
-  const validateEmail = (value) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const validateForm = () => {
     let newErrors = {};
 
-    if (!validateEmail(formData.email)) {
-      newErrors.email = "Correo inválido (ej: usuario@dominio.com)";
-      setFormData({ ...formData, email: "" });
+    if (!formData.email) {
+      newErrors.email = "El correo es obligatorio.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "El correo no tiene un formato válido.";
     }
 
-    if (!formData.password.trim()) {
+    if (!formData.password) {
       newErrors.password = "La contraseña es obligatoria.";
-      setFormData({ ...formData, password: "" });
-    } else if (formData.password.length < 8) {
-      newErrors.password = "Debe tener al menos 8 caracteres.";
-      setFormData({ ...formData, password: "" });
-    } else if (!/[A-Za-z]/.test(formData.password) || !/\d/.test(formData.password)) {
-      newErrors.password = "Debe contener al menos una letra y un número.";
-      setFormData({ ...formData, password: "" });
+    } else if (formData.password.length < 6) {
+      newErrors.password = "La contraseña debe tener al menos 6 caracteres.";
     }
 
     setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    if (Object.keys(newErrors).length === 0) {
-      alert(`Bienvenido ${formData.email}`);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoginError("");
+
+    if (!validateForm()) return;
+
+    try {
+      await login(formData);
+      navigate("/");
+    } catch (error) {
+      setLoginError(error.response?.data?.message || "Credenciales inválidas.");
     }
   };
 
   return (
     <div className={styles.wrapper}>
       <form className={styles.formulario} onSubmit={handleSubmit}>
+        {loginError && <p className={styles.errorText}>{loginError}</p>}
+
         <div className={styles.inputContainer}>
           <label className={styles.label}>Correo Electrónico</label>
           <div className={styles.inputBox}>
             <input
               type="text"
-              value={errors.email ? "" : formData.email}
+              value={formData.email}
               onChange={(e) => {
                 setFormData({ ...formData, email: e.target.value });
                 setErrors({ ...errors, email: "" });
+                setLoginError("");
               }}
-              placeholder={errors.email || "correo@gmail.com"}
-              className={`${styles.input} ${errors.email ? styles.inputError : ""}`} 
-              required
+              placeholder="correo@gmail.com"
+              className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
             />
             <FaUser className={styles.icon} />
           </div>
+          {errors.email && <p className={styles.errorText}>{errors.email}</p>}
         </div>
+
         <div className={styles.inputContainer}>
           <label className={styles.label}>Contraseña</label>
           <div className={styles.inputBox}>
             <input
               type="password"
-              value={errors.password ? "" : formData.password}
+              value={formData.password}
               onChange={(e) => {
                 setFormData({ ...formData, password: e.target.value });
                 setErrors({ ...errors, password: "" });
+                setLoginError("");
               }}
-              placeholder={errors.password || "**************"}
+              placeholder="**************"
               className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
-              required
             />
             <FaLock className={styles.icon} />
           </div>
+          {errors.password && <p className={styles.errorText}>{errors.password}</p>}
         </div>
+
         <div className={styles.loginOptions}>
           <label className={styles.rememberMe}>
             <input
@@ -93,10 +104,16 @@ const Index = () => {
           </label>
           <a href="#" className={styles.forgotPassword}>¿Olvidaste tu contraseña?</a>
         </div>
-        <button type="submit" className={styles.button}>
-          Iniciar sesión
+
+        <button 
+          type="submit" 
+          className={styles.button}
+          disabled={loading}
+        >
+          {loading ? "Cargando..." : "Iniciar sesión"}
         </button>
       </form>
+
       <div className={styles.wrapperSecundario}>
         <div className={styles.registerLink}>
           <p>
@@ -127,9 +144,8 @@ const Index = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
-}
+};
 
-export default Index;
+export default Login;
