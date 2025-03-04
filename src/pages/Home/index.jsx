@@ -7,14 +7,22 @@ import { useState, useEffect } from "react";
 
 const Home = () => {
   const [data, setData] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const END_POINT = "https://nomadnook-nomadnook.up.railway.app/api/alojamientos/listarTodos";
 
   useEffect(() => {
     axios(END_POINT).then((res) => {
       setData(res.data);
-      console.log(res.data);
     });
   }, []);
+  const addCategories = () => data.map( (cabin) => {
+    if (cabin.tipo && !categories.includes(cabin.tipo)) {
+      setCategories([...categories,  cabin.tipo]);
+    }
+    return ;
+  });
+  addCategories();
   const cabins = data
   ? [...data].sort(() => Math.random() - 0.5)
   : [];
@@ -23,9 +31,9 @@ const Home = () => {
   return (
     <main className={styles.home}>
       
-      <Categories/>
+      <Categories categories={categories} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/>
       <Searchbar/>
-      <CardsGrid cabins={cabins}/>
+      <CardsGrid cabins={cabins} selectedCategories={selectedCategories}/>
       
     </main>
   );
