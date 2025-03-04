@@ -12,13 +12,10 @@ const CabinDetail = () => {
   const [cabin, setCabin] = useState([]);
 
   useEffect(() => {
-    axios(END_POINT).then((res1) => {
-      axios.get(res1.data.imagenes).then((res2) => {
-        const cabin= {...res1.data, imagenes: res2.data}
-        setCabin(cabin);
-        console.log(cabin);
+    axios(END_POINT).then((res) => {
+        setCabin(res.data);
+        console.log(res.data);
       })
-    });
   }, [END_POINT]);
 
 
