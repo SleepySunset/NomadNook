@@ -9,14 +9,18 @@ const CabinDetail = () => {
   const { id } = useParams();
   const END_POINT = `https://nomadnook-nomadnook.up.railway.app/api/alojamientos/buscar/${id}`
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState([]);
+  const [cabin, setCabin] = useState([]);
 
   useEffect(() => {
-    axios(END_POINT).then((res) => {
-      setData(res.data);
-      console.log(res.data);
+    axios(END_POINT).then((res1) => {
+      axios.get(res1.data.imagenes).then((res2) => {
+        const cabin= {...res1.data, imagenes: res2.data}
+        setCabin(cabin);
+        console.log(cabin);
+      })
     });
   }, [END_POINT]);
+
 
   useEffect(() => {
     // Al abrir el modal, oculta el scroll del body
@@ -41,7 +45,7 @@ const CabinDetail = () => {
     setShowModal(false);
   };
 
-  if (!data) {
+  if (!cabin) {
     return <p className={styles.error}>Cabaña no encontrada.</p>;
   }
 
@@ -49,23 +53,23 @@ const CabinDetail = () => {
     <main className={styles.detail}>
       <div className={styles.container}>
         <Link to="/" className={styles.back}></Link>
-        <h1 className={styles.title}>{data.titulo}</h1>
-        {data.imagenes && data.imagenes.length > 0 ? (
+        <h1 className={styles.title}>{cabin.titulo}</h1>
+        {cabin.imagenes && cabin.imagenes.length > 0 ? (
           <div className={styles.imagesContainer}>
             <img
               className={styles.mainImage}
               onClick={handleShowModal}
-              src={data.imagenes[0].url}
-              alt={`Imagen 1 de ${data.title}`}
+              src={cabin.imagenes[0].url}
+              alt={`Imagen 1 de ${cabin.title}`}
             />
             <div className={styles.gallery}>
-              {data.imagenes.slice(1, 5).map((image, index) => (
+              {cabin.imagenes.slice(1, 5).map((image, index) => (
                 <img
                   className={styles.galleryImg}
                   onClick={handleShowModal}
                   key={image.id}
                   src={image.url}
-                  alt={`Imagen ${index + 2} de ${data.title}`}
+                  alt={`Imagen ${index + 2} de ${cabin.title}`}
                 />
               ))}
             </div>
@@ -81,13 +85,13 @@ const CabinDetail = () => {
         )}
         <div className={styles.text}>
           <span className={styles.price}>
-            ${data.precioPorNoche} por noche
+            ${cabin.precioPorNoche} por noche
           </span>
-          <p className={styles.description}>{data.descripcion}</p>
+          <p className={styles.description}>{cabin.descripcion}</p>
         </div>
       </div>
       {showModal && (
-        <Gallery images={data.imagenes} onClose={handleCloseModal} />
+        <Gallery images={cabin.imagenes} onClose={handleCloseModal} />
       )}
     </main>
   );
