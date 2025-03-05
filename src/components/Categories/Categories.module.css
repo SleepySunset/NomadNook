@@ -7,7 +7,7 @@
     justify-content: center;
     gap: 10px;
     overflow-x: auto;
-    padding: 10px 10px 10px 15px;
+    padding: 10px 10px 10px 10px;
     position: sticky;
     top: 80px;
     background-color: white;
@@ -25,6 +25,8 @@
 
 
 .categoryButton {
+    display: flex;
+    justify-content: center;
     background: white;
     border: 1px solid #ddd;
     border-radius: 20px;
@@ -37,6 +39,11 @@
     transition: all 0.3s ease;
     flex: 0 0 auto;
     min-width: 100px;
+}
+.selected {
+    background: #BC6C25;
+    color: white;
+    border-color: #BC6C25;
 }
 
 .categoryButton:first-child {

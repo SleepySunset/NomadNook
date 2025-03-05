@@ -7,11 +7,13 @@ const Card = ({id, title, description, images, pricePerNight}) => {
     <div className={styles.container}>
       <Link to={`/cabin/${id}`}>
         <div className={styles.imageContainer}>
-          <img
-          className={styles.image}
-            src={images[0]?.url}
-            alt={title}
-          />
+          {images && images.length > 0 && (
+            <img
+            className={styles.image}
+              src={images[0].url}
+              alt={title}
+            />
+          )}
         </div>
         </Link>
         <div className={styles.text}>  
