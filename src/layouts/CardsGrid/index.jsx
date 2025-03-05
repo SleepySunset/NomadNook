@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import styles from "./CardsGrid.module.css";
 import Card from "@/components/Card";
-import axios from "axios";
 
 const CardsGrid = ({cabins, selectedCategories}) => {
         const [currentPage, setCurrentPage] = useState(0)
-        const [pageCabins, setPageCabins] = useState([]);
         const [filteredCabins, setFilteredCabins] = useState([]);
         const productsPerPage = 10;
 
@@ -24,29 +22,11 @@ const CardsGrid = ({cabins, selectedCategories}) => {
       
           return filteredCabins.slice(startIndex, endIndex);
         };
-        useEffect(()=>{
-          const fetchImages = async () => {
-            const currentCabins = getCabinsForCurrentPage();
-            const newPageCabins = await Promise.all(
-              currentCabins.map(async (cabin) => {
-                try{
-                  const {data} = await axios(cabin.imagenes);
-                  return { ...cabin, imagenes: data};
-                }catch(error){
-                  console.error('error fetching images', error);
-                  return { ...cabin, imagenes: []};
-                }
-              })
-            )
-            setPageCabins(newPageCabins);
-          };
-          fetchImages();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [currentPage, filteredCabins]);
+
   return (
     <div className={styles.container}>
         <div className={styles.cardsContainer}>
-          {pageCabins.map((cabin) => (
+          {getCabinsForCurrentPage().map((cabin) => (
             <Card
                 key={cabin.id}
                 id={cabin.id}
