@@ -1,14 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 import styles from "../Header/Header.module.css";
-import PersonIcon from "@mui/icons-material/Person";
+import { useAuth } from "../../hooks/AuthContext";
+import "react-initials-avatar/lib/ReactInitialsAvatar.css";
+import ProfileMenu from "../../components/ProfileMenu";
 
-const Header = ({ user }) => {
+
+const Header = ({userType}) => {
+  const { user } = useAuth();
   const location = useLocation();
-  const isAuthPage = location.pathname === "/Login" || location.pathname === "/Register";
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/register";
+
   return (
     <header
       className={`${styles.header} ${
-        user === "admin" ? styles.headerAdmin : styles.headerUser
+        userType === "ADMIN"
+          ? styles.headerAdmin
+          : styles.headerUser
       }`}
     >
       <div className={styles.logoContainer}>
@@ -24,23 +32,21 @@ const Header = ({ user }) => {
         </Link>
       </div>
       {!isAuthPage && (
-      <nav className={styles.authLinksHeader}>
-        {user == "admin" ? (
-          <span className={styles.userIcon}>
-            <PersonIcon fontSize="large" sx={{ color: "#FFF" }} />
-          </span>
-        ) : (
-          <>
-            <Link to="/Register" className={styles.authButton}>
-              <span className={styles.textBtn}>Crear Cuenta</span>
-            </Link>
-            <Link to="/Login" className={styles.authButton}>
-              <span className={styles.textBtn}>Iniciar Sesión</span>
-            </Link>
-          </>
-        )}
-      </nav>
-         )}
+        <nav className={styles.authLinksHeader}>
+          {user ? (
+            <ProfileMenu/>
+          ) : (
+            <>
+              <Link to="/register" className={styles.authButton}>
+                <span className={styles.textBtn}>Crear Cuenta</span>
+              </Link>
+              <Link to="/login" className={styles.authButton}>
+                <span className={styles.textBtn}>Iniciar Sesión</span>
+              </Link>
+            </>
+          )}
+        </nav>
+      )}
     </header>
   );
 };

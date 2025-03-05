@@ -38,15 +38,21 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoginError("");
-
-    if (!validateForm()) return;
-
+    setLoginError(""); // Reiniciar mensaje de error
+  
+    if (!validateForm()) return; // Validar formulario antes de enviar
+  
     try {
       await login(formData);
-      navigate("/");
+      navigate("/"); // Solo si el login es exitoso
     } catch (error) {
-      setLoginError(error.response?.data?.message || "Credenciales inválidas.");
+      console.error("Error de autenticación:", error);
+      
+      // Verifica si el error tiene respuesta del servidor
+      const errorMessage =
+        error.response?.data?.message || "Credenciales inválidas.";
+      
+      setLoginError(errorMessage);
     }
   };
 
@@ -99,6 +105,7 @@ const Login = () => {
               type="checkbox"
               checked={rememberMe}
               onChange={() => setRememberMe(!rememberMe)}
+              className={styles.checkbox}
             />
             Recordarme
           </label>
@@ -118,7 +125,7 @@ const Login = () => {
         <div className={styles.registerLink}>
           <p>
             ¿No tienes cuenta?{" "}
-            <Link to="/Register" className={styles.register}>
+            <Link to="/register" className={styles.register}>
               Crear cuenta
             </Link>
           </p>
