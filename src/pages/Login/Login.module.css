@@ -154,6 +154,9 @@
 .registerLink a:hover {
     text-decoration: underline;
 }
+.checkbox:hover{
+ cursor: pointer;
+}
 
 .loginMethodsContainer {
     display: flex;

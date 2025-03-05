@@ -5,7 +5,7 @@ import styles from './Layout.module.css';
 
 const Layout = () => {
   const location = useLocation();
-  const hideFooterPages = ["/login", "/register", "/admin", "/admin/cabinmanagement"];
+  const hideFooterPages = ["/login", "/register"];
   const isHidden = hideFooterPages.some((path) => location.pathname.startsWith(path));
 
   return (

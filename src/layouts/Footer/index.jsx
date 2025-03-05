@@ -4,7 +4,7 @@ import styles from "./Footer.module.css";
 const Footer = () => {
 
   const location = useLocation();
-  const hideFooterPages = ["/Login", "/Register"];
+  const hideFooterPages = ["/login", "/register"];
   const isHidden = hideFooterPages.some((path) => location.pathname.startsWith(path));
 
   if (isHidden) {

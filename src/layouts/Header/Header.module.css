@@ -17,12 +17,6 @@
 .headerAdmin {
   background-color: var(--color4);
 }
-.userIcon {
-  margin-right: 30px;
-}
-.userIcon:hover {
-  cursor: pointer;
-}
 
 .logoLink {
   display: flex;

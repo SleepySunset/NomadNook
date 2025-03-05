@@ -4,29 +4,41 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); 
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
+  }, []);
 
   const login = async (formData) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const response = await axios.post(
         "https://nomadnook-nomadnook.up.railway.app/api/auth/login",
         formData
       );
 
       if (response.data) {
-        setUser({
+        const newUser = {
           email: response.data.email,
+          name: response.data.nombre,
+          lastName: response.data.apellido,
           role: response.data.rol,
-          token: response.token,
-          message: response.mensaje
-        });
-        localStorage.setItem("user", JSON.stringify(response.data)); // Guarda en localStorage
+          token: response.data.token,
+          message: response.data.mensaje,
+        };
+
+        setUser(newUser);
+        localStorage.setItem("user", JSON.stringify(newUser));
       }
     } catch (error) {
       console.error("Error en la autenticación:", error);
-      throw error;
+      throw new Error(error.response?.data?.message || "Error desconocido en el login");
     } finally {
       setLoading(false);
     }
@@ -37,15 +49,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
-
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
