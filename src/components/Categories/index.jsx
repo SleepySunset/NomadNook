@@ -21,7 +21,7 @@ const Categories = ({categories, selectedCategories, setSelectedCategories}) => 
     <div className={styles.categoriesContainer}>
         <div className={styles.categories}>
           {categories.map((category, index) => (
-            <button key={index} className={`${styles.categoryButton} ${selectedCategories.includes(category) && styles.selected}`} onClick={() => toggleSelected(category)}>
+            <button key={index} style={{animationDelay:  `${index * 70}ms`}} className={`${styles.categoryButton} ${selectedCategories.includes(category) && styles.selected}`} onClick={() => toggleSelected(category)}>
               {/* <img
                 src={category.icon}
                 alt={category.name}
@@ -30,6 +30,9 @@ const Categories = ({categories, selectedCategories, setSelectedCategories}) => 
               {category}
             </button>
           ))}
+          {selectedCategories.length > 0 && (
+            <button className={styles.clearButton} onClick={() => setSelectedCategories([])}>x</button>
+          )}
         </div>
       </div>
   )
