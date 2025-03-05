@@ -153,7 +153,7 @@ const Register = () => {
         <div className={styles.loginLink}>
           <p>
             ¿Ya tienes una cuenta?{" "}
-            <Link to="/Login" className={styles.login}>
+            <Link to="/login" className={styles.login}>
               Iniciar Sesión
             </Link>
           </p>

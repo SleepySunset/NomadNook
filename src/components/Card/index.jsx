@@ -9,7 +9,7 @@ const Card = ({id, title, description, images, pricePerNight}) => {
         <div className={styles.imageContainer}>
           <img
           className={styles.image}
-            src={images[0].url}
+            src={images[0]?.url}
             alt={title}
           />
         </div>
