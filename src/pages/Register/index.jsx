@@ -31,6 +31,8 @@ const Register = () => {
 
     if (!formData.nombre.trim()) {
       newErrors.nombre = "El nombre es obligatorio.";
+    } else if (formData.nombre.trim().length < 3) {
+      newErrors.nombre = "El nombre debe tener al menos 3 caracteres.";
     } else if (!/^[a-zA-Z\s]+$/.test(formData.nombre)) {
       newErrors.nombre = "El nombre solo puede contener letras.";
     }
