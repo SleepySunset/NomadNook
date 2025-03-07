@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-
+import { ENDPOINTS } from "../config/config";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://nomadnook-nomadnook.up.railway.app/api/auth/login",
+        ENDPOINTS.LOGIN,
         formData
       );
 

@@ -2,9 +2,9 @@ import { useState } from "react";
 import styles from "./Register.module.css";
 import { Link } from 'react-router-dom';
 import axios from "axios";
-
+import { ENDPOINTS } from "../../config/config";
 const Register = () => {
-  const END_POINT = "https://nomadnook-nomadnook.up.railway.app/api/auth/register"
+  const END_POINT = ENDPOINTS.REGISTER
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",

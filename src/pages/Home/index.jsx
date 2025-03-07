@@ -4,16 +4,17 @@ import Searchbar from "@/components/Searchbar";
 import CardsGrid from "@/layouts/CardsGrid";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { ENDPOINTS } from '../../config/config';
 
 const Home = () => {
   const [cabins, setCabins] = useState([])
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const endpoint = "https://nomadnook-nomadnook.up.railway.app/api/alojamientos/listarTodos"
+
   useEffect(() => {
     const fetchCabins = async () => {
       try {
-        const response = await axios(endpoint);
+        const response = await axios(ENDPOINTS.GET_ALL_CABINS);
         setCabins(response.data.sort(() => Math.random() - 0.5));
       } catch (error) {
         console.error("Error al obtener las cabañas:", error);
