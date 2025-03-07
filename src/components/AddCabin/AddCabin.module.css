@@ -114,4 +114,34 @@
   margin: 0;
   margin-right: 7px;
 }
+
+.categoriesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.categoryLabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.categoryLabel:hover {
+  background-color: #e0e0e0;
+}
+
+.categoryCheckbox {
+  margin: 0;
+}
+
+.categoryLabel input:checked + span {
+  font-weight: bold;
+}
   
