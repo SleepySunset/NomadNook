@@ -1,6 +1,6 @@
-import CabinIcon from "@mui/icons-material/Cabin";
+import { MdCabin } from "react-icons/md";
 import DateRangeIcon from "@mui/icons-material/DateRange";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { FaUserEdit } from "react-icons/fa";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import SettingsIcon from "@mui/icons-material/Settings";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -36,9 +36,9 @@ const AdminNav = ({ activeOpt }) => {
               activeOpt === "cabin" ? styles.active : null
             }`}
           >
-            <CabinIcon
+            <MdCabin
               sx={{ color: activeOpt === "cabin" ? "#bc6c25" : "#565656" }}
-              fontSize="small"
+              fontSize="large"
             />
             <span
               className={
@@ -49,14 +49,21 @@ const AdminNav = ({ activeOpt }) => {
             </span>
           </li>
         </Link>
+        <Link to="/administracion/usermanagement">
+          <li
+            className={`${styles.navOpt} ${
+              activeOpt === "user" ? styles.active : null
+            }`}
+          >
+            <FaUserEdit sx={{ color: "#565656" }} fontSize="large" />
+            <span className={styles.navText}>Gestión de usuarios</span>
+          </li>
+        </Link>
         <li className={styles.navOpt}>
           <DateRangeIcon sx={{ color: "#565656" }} fontSize="small" />
           <span className={styles.navText}>Gestión de reservas</span>
         </li>
-        <li className={styles.navOpt}>
-          <AccountBalanceIcon sx={{ color: "#565656" }} fontSize="small" />
-          <span className={styles.navText}>Gestión de pagos</span>
-        </li>
+
         <li className={styles.navOpt}>
           <QueryStatsIcon sx={{ color: "#565656" }} fontSize="small" />
           <span className={styles.navText}>Estadísticas y reportes</span>

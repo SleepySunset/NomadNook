@@ -22,7 +22,7 @@ const AdminPanel = () => {
   try {
     decoded = jwtDecode(user.token);
 
-    if (decoded.role !== "ROLE_ADMIN") {
+    if (decoded.role !== "ADMIN") {
       console.log("Acceso denegado. Rol actual:", decoded.role);
       return <Navigate to="/not-authorized" replace />;
     }

@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import styles from "./AdminTable.module.css";
+import styles from "./CabinTable.module.css";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const AdminTable = () => {
+const CabinTable = () => {
   const [data, setData] = useState([]);
   const END_POINT =
     "https://nomadnook-nomadnook.up.railway.app/api/alojamientos/listarTodos";
@@ -46,4 +46,4 @@ const AdminTable = () => {
   );
 };
 
-export default AdminTable;
+export default CabinTable;
