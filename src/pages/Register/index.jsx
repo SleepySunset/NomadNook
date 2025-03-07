@@ -14,6 +14,7 @@ const Register = () => {
 
   const [errors, setErrors] = useState({});
 
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
