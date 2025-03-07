@@ -41,7 +41,7 @@ const ProfileMenu = () => {
           </p>
           {user.role == "ADMIN" && (
             <Link to="/administracion">
-              <span className={styles.adminLink}>Ver panel de administración</span>
+              <span className={styles.adminOpt}>Ver panel de administración</span>
             </Link>
           )}
           <span className={styles.logout} onClick={handleLogout}>
