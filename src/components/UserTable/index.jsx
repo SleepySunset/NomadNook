@@ -4,24 +4,26 @@ import styles from "./UserTable.module.css";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useAuth } from "../../hooks/AuthContext";
+import { ENDPOINTS } from "../../config/config";
 
 const UserTable = () => {
-    const { user } = useAuth();
+  const { user } = useAuth();
   const [data, setData] = useState([]);
-  const END_POINT =
-    "https://nomadnook-nomadnook.up.railway.app/api/usuarios/listarTodos";
+  const END_POINT = ENDPOINTS.GET_ALL_USERS;
 
   useEffect(() => {
-    axios.get(END_POINT,{
+    axios
+      .get(END_POINT, {
         headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "application/json"
-          }
-    }).then((res) => {
-      setData(res.data);
-      console.log(res.data);
-    });
-  }, [user]);
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setData(res.data);
+        console.log(res.data);
+      });
+  }, [END_POINT, user]);
   return (
     <table className={styles.table}>
       <thead>
@@ -37,7 +39,9 @@ const UserTable = () => {
         {data.map((user) => (
           <tr key={user.id}>
             <td>{user.id}</td>
-            <td>{user.nombre} {user.apellido}</td>
+            <td>
+              {user.nombre} {user.apellido}
+            </td>
             <td>{user.rol}</td>
             <td>{user.email}</td>
             <td>
