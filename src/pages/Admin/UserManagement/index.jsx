@@ -2,8 +2,36 @@ import AdminNav from "../../../components/AdminNav";
 import styles from "./UserManagement.module.css"
 import Searchbar from "../../../components/Searchbar";
 import UserTable from "../../../components/UserTable";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../../../hooks/AuthContext";
+import { Navigate } from "react-router-dom"
 
 const UserManagement = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <p>Cargando...</p>;
+  }
+
+  if (!user?.token) {
+    console.log("No hay usuario autenticado:", user);
+    return <Navigate to="/login" replace />;
+  }else{
+    console.log(user)
+  }
+
+  let decoded;
+  try {
+    decoded = jwtDecode(user.token);
+
+    if (decoded.role !== "ADMIN") {
+      console.log("Acceso denegado. Rol actual:", decoded.role);
+      return <Navigate to="/not-authorized" replace />;
+    }
+  } catch (error) {
+    console.error("Error al decodificar el token:", error);
+    return <Navigate to="/login" replace />;
+  }
     return (
         <>
           <main className={styles.main}>
@@ -11,10 +39,6 @@ const UserManagement = () => {
             <div className={styles.container}>
               <div className={styles.upperContainer}>
                 <Searchbar />
-                {/* <button className={styles.addCabinBtn} onClick={openModal}>
-                  Agregar cabaña
-                </button> */}
-                {/* {isModalOpen && <AddCabin onClose={closeModal} />} */}
               </div>
               <UserTable/>
             </div>
