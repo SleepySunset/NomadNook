@@ -1,7 +1,7 @@
 const API_BASE_URL_AWS = "http://nomadnook-env-1.eba-k2m2rsbd.us-east-1.elasticbeanstalk.com";
 const API_BASE_URL_RAILWAY = "https://nomadnook-nomadnook.up.railway.app";
 
-export const API_BASE_URL = API_BASE_URL_AWS;
+export const API_BASE_URL = API_BASE_URL_RAILWAY;
 
 export const ENDPOINTS = {
     // ALOJAMIENTOS
