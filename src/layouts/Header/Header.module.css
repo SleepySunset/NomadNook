@@ -37,19 +37,8 @@
 }
 
 .authButton {
-  margin-left: 20px;
-}
-.authLinksHeader {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-.textBtn{
-  color: var(--color2);
-}
-
-.authLinksHeader a {
-  background-color: #dda15e;
+  margin-right: 30px;
+  background-color: var(--color4);
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
@@ -58,9 +47,18 @@
   transition: background-color 0.3s ease;
 }
 
-.authLinksHeader a:hover {
-  background-color: #d67607;
+.authButton:hover {
+  background-color: var(--color6);
 }
+.textBtn{
+  color: black;
+}
+.authLinksHeader {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
 
 .buttonMobile{
   display:none;

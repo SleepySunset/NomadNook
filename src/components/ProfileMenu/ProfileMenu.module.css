@@ -4,13 +4,14 @@
   justify-content: center;
   gap:20px;
   align-items: center;
-  background-color: var(--color4);
+  background-color: var(--color6);
   width: 300px;
   position: absolute;
   top: var(--headerHeight);
   right: 0;
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 0px 0px 13px 0px rgb(127, 127, 126);
 }
 
 .userIcon {
@@ -36,4 +37,8 @@
 .close:hover{
   cursor: pointer;
   color: #565656
+}
+.adminOpt{
+  color: var(--color5);
+
 }
