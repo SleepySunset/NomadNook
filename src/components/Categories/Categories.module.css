@@ -39,6 +39,8 @@
     transition: all 0.3s ease;
     flex: 0 0 auto;
     min-width: 100px;
+    opacity: 0;
+    animation: appear 0.5s forwards;
 }
 .selected {
     background: #BC6C25;
@@ -61,7 +63,36 @@
     width: 20px;
     height: 20px;
 }
+.clearButton{
+    display: flex;
+    aspect-ratio: 1/1;
+    justify-content: center;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: appear 0.5s forwards;
 
+    &:hover {
+        background-color: #BC6C25;
+        color: white;
+        border-color: #BC6C25;
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+    
+}
 
 @media (max-width: 768px) {
     .categories {

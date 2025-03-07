@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import styles from "./AddCabin.module.css";
+import { ENDPOINTS } from "../../config/config";  
 
 const AddCabin = ({ onClose }) => {
-  const END_POINT_CABIN =
-    "https://nomadnook-nomadnook.up.railway.app/api/alojamientos/guardar";
+  const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
