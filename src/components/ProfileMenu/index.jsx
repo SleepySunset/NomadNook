@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext";
 import styles from "./ProfileMenu.module.css";
 import { useState } from "react";
@@ -39,10 +39,14 @@ const ProfileMenu = () => {
           <p>
             ¡Hola, {user.name} {user.lastName}!
           </p>
+          {user.role == "ADMIN" && (
+            <Link to="/administracion">
+              <span className={styles.adminLink}>Ver panel de administración</span>
+            </Link>
+          )}
           <span className={styles.logout} onClick={handleLogout}>
             Cerrar sesión
           </span>
-          {user.role}
         </div>
       )}
     </div>
