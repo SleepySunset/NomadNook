@@ -17,12 +17,6 @@
 .headerAdmin {
   background-color: var(--color4);
 }
-.userIcon {
-  margin-right: 30px;
-}
-.userIcon:hover {
-  cursor: pointer;
-}
 
 .logoLink {
   display: flex;
@@ -50,10 +44,13 @@
   gap: 20px;
   align-items: center;
 }
+.textBtn{
+  color: var(--color2);
+}
 
 .authLinksHeader a {
   background-color: #dda15e;
-  color: black;
+  color: white;
   padding: 10px 15px;
   border-radius: 5px;
   text-decoration: none;
@@ -65,6 +62,14 @@
   background-color: #d67607;
 }
 
+.buttonMobile{
+  display:none;
+}
+
+.mobileMenu{
+  display:none;
+}
+
 @media (max-width: 768px) {
   .header {
     width: 100%;
@@ -72,7 +77,102 @@
     text-align: center;
     height: var(--headerHeightMobile);
   }
+
   .slogan {
     display: none;
+  }
+
+  .authButton {
+    display: none;
+  }
+
+  .menuMobile {
+    display: none;
+  }
+
+  .menuMobile {
+    display: block;
+  }
+
+  .authLinksHeader > .hidden {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: #222;
+    border-left: 3px solid #f4a261;
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .mobileMenu.active {
+    right: 0;
+  }
+
+  .closeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .mobileMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 50px 0 0 0;
+    width: 100%;
+  }
+
+  .mobileMenu li {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .mobileMenu a {
+    color: #ffffff;
+    background-color: #dda15e;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 15px;
+    display: block;
+    width: 80%;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .mobileMenu a:hover {
+    background-color: #d67607;
+    transform: scale(1.05);
+  }
+
+  .buttonMobile {
+    display: block;
+    background-color: #dda15e;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .buttonMobile:hover {
+    background-color: #d67607;
+    transform: scale(1.05);
   }
 }

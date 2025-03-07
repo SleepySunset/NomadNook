@@ -1,0 +1,39 @@
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap:20px;
+  align-items: center;
+  background-color: var(--color4);
+  width: 300px;
+  position: absolute;
+  top: var(--headerHeight);
+  right: 0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.userIcon {
+  margin-right: 30px;
+}
+.userIcon:hover {
+  cursor: pointer;
+  opacity: 20;
+}
+
+.logout:hover{
+  cursor: pointer;
+  color: #565656
+}
+
+.close{
+  position: absolute;
+  margin-right: 10px;
+  right: 0;
+  top: 0;
+  font-size: 35px;
+}
+.close:hover{
+  cursor: pointer;
+  color: #565656
+}

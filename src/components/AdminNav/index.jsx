@@ -11,7 +11,7 @@ const AdminNav = ({ activeOpt }) => {
   return (
     <nav className={styles.navAdmin}>
       <ul className={styles.navMenu}>
-        <Link to="/admin">
+        <Link to="/administracion">
           <li
             className={`${styles.navOpt} ${
               activeOpt === "home" ? styles.active : null
@@ -30,7 +30,7 @@ const AdminNav = ({ activeOpt }) => {
             </span>
           </li>
         </Link>
-        <Link to="/admin/cabinmanagement">
+        <Link to="/administracion/cabinmanagement">
           <li
             className={`${styles.navOpt} ${
               activeOpt === "cabin" ? styles.active : null
