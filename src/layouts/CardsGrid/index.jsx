@@ -37,7 +37,11 @@ const CardsGrid = ({cabins, selectedCategories}) => {
 
   return (
     <div className={styles.container}>
-      {selectedCategories.length > 0 && <h3 className={styles.counter}>{filteredCabins.length} alojamientos encontrados</h3>}
+      {selectedCategories.length > 0 && (
+        <h3 className={styles.counter}>
+          {filteredCabins.length} de {cabins.length} alojamientos
+        </h3>
+      )}
         <div className={styles.cardsContainer}>
           {(pageCabins.length > 0)? (
             pageCabins.map((cabin) => (
