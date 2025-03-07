@@ -6,35 +6,40 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 const Home = () => {
-  const [data, setData] = useState([])
+  const [cabins, setCabins] = useState([])
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const END_POINT = "https://nomadnook-nomadnook.up.railway.app/api/alojamientos/listarTodos";
+  const endpoint = "https://nomadnook-nomadnook.up.railway.app/api/alojamientos/listarTodos"
+  useEffect(() => {
+    const fetchCabins = async () => {
+      try {
+        const response = await axios(endpoint);
+        setCabins(response.data.sort(() => Math.random() - 0.5));
+      } catch (error) {
+        console.error("Error al obtener las cabañas:", error);
+      }
+    };
+
+    fetchCabins();
+  }, []);
 
   useEffect(() => {
-    axios(END_POINT).then((res) => {
-      setData(res.data);
+    const categoriesMap = new Map();
+    
+    cabins.forEach(cabin => {
+      cabin.categorias.forEach(category => {
+        categoriesMap.set(category.id, category);
+      });
     });
-  }, []);
-  const addCategories = () => data.map( (cabin) => {
-    if (cabin.tipo && !categories.includes(cabin.tipo)) {
-      setCategories([...categories,  cabin.tipo]);
-    }
-    return ;
-  });
-  addCategories();
-  const cabins = data
-  ? [...data].sort(() => Math.random() - 0.5)
-  : [];
 
+    setCategories(Array.from(categoriesMap.values()));
+  }, [cabins]);
 
   return (
     <main className={styles.home}>
-      
-      <Categories categories={categories} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories}/>
-      <Searchbar/>
-      <CardsGrid cabins={cabins} selectedCategories={selectedCategories}/>
-      
+      <Categories categories={categories} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
+      <Searchbar />
+      <CardsGrid cabins={cabins} selectedCategories={selectedCategories} />
     </main>
   );
 };

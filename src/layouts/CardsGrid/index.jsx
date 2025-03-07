@@ -10,7 +10,14 @@ const CardsGrid = ({cabins, selectedCategories}) => {
         const productsPerPage = 10;
 
         useEffect(() => {
-          setFilteredCabins((selectedCategories.length > 0) ? (cabins.filter((cabin) => selectedCategories.includes(cabin.tipo))) : (cabins));
+          if (selectedCategories.length > 0) {
+            const filtered = cabins.filter(cabin => 
+              cabin.categorias.some(category => selectedCategories.includes(category.id))
+            );
+            setFilteredCabins(filtered);
+          } else {
+            setFilteredCabins(cabins);
+          }
         }, [selectedCategories, cabins]);
         
         const handlePageChange = (data) => {
