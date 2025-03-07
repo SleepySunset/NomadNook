@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Gallery from "@/components/Gallery";
 import axios from "axios";
-
+import { ENDPOINTS } from "../../config/config";
 const CabinDetail = () => {
   const { id } = useParams();
-  const END_POINT = `https://nomadnook-nomadnook.up.railway.app/api/alojamientos/buscar/${id}`
+  const END_POINT = `${ENDPOINTS.GET_CABIN_BY_ID}/${id}`
   const [showModal, setShowModal] = useState(false);
   const [cabin, setCabin] = useState([]);
 

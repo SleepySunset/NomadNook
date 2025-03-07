@@ -187,10 +187,9 @@
     transform: scale(1.1);
 }
 
-/* 📌 Estilos responsivos */
 @media (max-width: 1440px) {
     .wrapper {
-        padding: 30px 15px;
+        padding: 150px 15px 30px 30px;
     }
 
     .formulario {
