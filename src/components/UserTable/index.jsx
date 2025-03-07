@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "./UserTable.module.css";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useAuth } from "../../hooks/AuthContext";
 import { ENDPOINTS } from "../../config/config";
 
 const UserTable = () => {
   const { user } = useAuth();
   const [data, setData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
   const END_POINT = ENDPOINTS.GET_ALL_USERS;
 
   useEffect(() => {
@@ -24,38 +25,90 @@ const UserTable = () => {
         console.log(res.data);
       });
   }, [END_POINT, user]);
+
+  const handleConfirm = () => {
+    if (!selectedUser) return;
+    const endpointUrl =
+      selectedUser.rol === "ADMIN"
+        ? `${ENDPOINTS.REMOVE_ADMIN_ROLE}/${selectedUser.id}`
+        : `${ENDPOINTS.ADD_ADMIN_ROLE}/${selectedUser.id}`;
+    axios
+      .put(endpointUrl, null, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then(() => {
+        setData((prevData) =>
+          prevData.map((user) =>
+            user.id === selectedUser.id
+              ? { ...user, rol: user.rol === "ADMIN" ? "CLIENTE" : "ADMIN" }
+              : user
+          )
+        );
+        setIsModalOpen(false);
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nombre</th>
-          <th>Rol</th>
-          <th>Correo</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((user) => (
-          <tr key={user.id}>
-            <td>{user.id}</td>
-            <td>
-              {user.nombre} {user.apellido}
-            </td>
-            <td>{user.rol}</td>
-            <td>{user.email}</td>
-            <td>
-              <span className={styles.editBtn}>
-                <ModeEditOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
-              </span>
-              <span className={styles.deleteBtn}>
-                <DeleteOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
-              </span>
-            </td>
+    <div className={styles.tableContainer}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th>Permisos de Admin</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data.map((user) => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>
+                {user.nombre} {user.apellido}
+              </td>
+              <td>{user.rol}</td>
+              <td>
+                <button
+                  className={styles.tableBtn}
+                  onClick={() => {
+                    setSelectedUser(user);
+                    setIsModalOpen(true);
+                  }}
+                >
+                  {user.rol === "ADMIN" ? "Desactivar" : "Activar"}
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {isModalOpen && selectedUser && (
+        <div className={styles.modalContainer}>
+          <div className={styles.modalContent}>
+            <h3 className={styles.modalTitle}>
+              {selectedUser.rol === "CLIENTE"
+                ? `Esta acción otorgará permisos de administración al usuario ${selectedUser.nombre} ${selectedUser.apellido}`
+                : `Esta acción retirará los permisos de administración al usuario ${selectedUser.nombre} ${selectedUser.apellido}`}
+            </h3>
+            <span className={styles.modalText}>¿Está seguro de esto?</span>
+            <div className={styles.modalBtnContainer}>
+              <button className={styles.modalBtn} onClick={handleConfirm}>
+                Sí
+              </button>
+              <button
+                className={styles.modalBtn}
+                onClick={() => setIsModalOpen(false)}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

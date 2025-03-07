@@ -9,7 +9,7 @@
   .container {
     background-color: #fff;
     padding: 40px;
-    width: 50%;
+    width: 100%;
     flex-grow: 1;
     margin-left: 8%;
     border-radius: 35px;
