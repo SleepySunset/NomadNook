@@ -1,18 +1,22 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../Header/Header.module.css";
-import PersonIcon from "@mui/icons-material/Person";
-import { Menu, X } from "lucide-react";
+import { useAuth } from "../../hooks/AuthContext";
+import "react-initials-avatar/lib/ReactInitialsAvatar.css";
+import ProfileMenu from "../../components/ProfileMenu";
 
-const Header = ({ user }) => {
-  const [isOpen, setIsOpen] = useState(false);
+
+const Header = ({userType}) => {
+  const { user } = useAuth();
   const location = useLocation();
-  const isAuthPage = location.pathname === "/Login" || location.pathname === "/Register";
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/register";
 
   return (
     <header
       className={`${styles.header} ${
-        user === "admin" ? styles.headerAdmin : styles.headerUser
+        userType === "ADMIN"
+          ? styles.headerAdmin
+          : styles.headerUser
       }`}
     >
       <div className={styles.logoContainer}>
@@ -27,51 +31,22 @@ const Header = ({ user }) => {
           </h3>
         </Link>
       </div>
-
       {!isAuthPage && (
         <nav className={styles.authLinksHeader}>
-          {user === "admin" ? (
-            <span className={styles.userIcon}>
-              <PersonIcon fontSize="large" sx={{ color: "#FFF" }} />
-            </span>
+          {user ? (
+            <ProfileMenu/>
           ) : (
             <>
-              <div className="hidden md:flex gap-4">
-                <Link to="/Register" className={styles.authButton}>
-                  Crear Cuenta
-                </Link>
-                <Link to="/Login" className={styles.authButton}>
-                  Iniciar Sesión
-                </Link>
-              </div>
-              <button
-                className={styles.buttonMobile}
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
+              <Link to="/register" className={styles.authButton}>
+                <span className={styles.textBtn}>Crear Cuenta</span>
+              </Link>
+              <Link to="/login" className={styles.authButton}>
+                <span className={styles.textBtn}>Iniciar Sesión</span>
+              </Link>
             </>
           )}
         </nav>
       )}
-
-      <div className={`${styles.mobileMenu} ${isOpen ? styles.active : ""}`}>
-        <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
-          <X size={24} />
-        </button>
-        <ul>
-          <li>
-            <Link to="/Register" className={styles.authButton} onClick={() => setIsOpen(false)}>
-              Crear Cuenta
-            </Link>
-          </li>
-          <li>
-            <Link to="/Login" className={styles.authButton} onClick={() => setIsOpen(false)}>
-              Iniciar Sesión
-            </Link>
-          </li>
-        </ul>
-      </div>
     </header>
   );
 };

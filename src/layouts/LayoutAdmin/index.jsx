@@ -1,4 +1,3 @@
-import Footer from "../Footer";
 import Header from "../Header";
 import { Outlet } from "react-router-dom";
 import styles from "./LayoutAdmin.module.css";
@@ -6,9 +5,8 @@ import styles from "./LayoutAdmin.module.css";
 const LayoutAdmin = () => {
   return (
     <div className={styles.layout}>
-      <Header user={"admin"} />
+      <Header userType="ADMIN"/>
       <Outlet />
-      <Footer />
     </div>
   );
 };

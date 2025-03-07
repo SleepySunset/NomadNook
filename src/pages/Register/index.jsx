@@ -1,8 +1,10 @@
 import { useState } from "react";
 import styles from "./Register.module.css";
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
-const Index = () => {
+const Register = () => {
+  const END_POINT = "https://nomadnook-nomadnook.up.railway.app/api/auth/register"
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
@@ -68,10 +70,21 @@ const Index = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (validateForm()) {
-      alert(`Bienvenido ${formData.nombre}`);
+      try{
+        const response = await axios.post(END_POINT,
+          {nombre: formData.nombre,
+          apellido: formData.apellido,
+          email: formData.email,
+          password: formData.password
+          }
+        )
+        console.log(response)
+      }catch(error){
+        console.log(error)
+      }
     }
   };
 
@@ -141,7 +154,7 @@ const Index = () => {
         <div className={styles.loginLink}>
           <p>
             ¿Ya tienes una cuenta?{" "}
-            <Link to="/Login" className={styles.login}>
+            <Link to="/login" className={styles.login}>
               Iniciar Sesión
             </Link>
           </p>
@@ -151,4 +164,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Register;

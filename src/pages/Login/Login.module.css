@@ -1,25 +1,18 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #FCECDD;
-}
-
 .wrapper {
+
+    background-color: var(--color3);
     width: 100%;
-    height: 690px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-position: center 120px;
-    background-repeat: no-repeat;
     backdrop-filter: blur(30px);
     border-radius: 10px;
-    padding: 130px 650px 10px 650px;
 }
 
-.wrapper .formulario {
+.formulario {
+    margin-top: var(--headerHeight);
     width: 100%;
     max-width: 400px;
     padding: 20px;
@@ -29,7 +22,7 @@ html, body {
 }
 
 .wrapperSecundario {
-    margin: -10px;
+    margin: 10px;
     padding: 15px 20px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.9);
@@ -68,6 +61,11 @@ html, body {
     padding-left: 10px;
 }
 
+.errorText{
+    color:red;
+    text-align: center;
+}
+
 .inputError::placeholder {
     color: red;
 }
@@ -101,8 +99,8 @@ html, body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-top: 15px;
-    padding: 10px 0;
+    margin: 15px 0;
+    padding: 0 10px;
 }
 
 .rememberMe {
@@ -155,6 +153,9 @@ html, body {
 
 .registerLink a:hover {
     text-decoration: underline;
+}
+.checkbox:hover{
+ cursor: pointer;
 }
 
 .loginMethodsContainer {
