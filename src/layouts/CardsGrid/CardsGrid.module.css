@@ -2,7 +2,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3rem 0;    
+    padding: 3rem 0;   
+    .counter{
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--color1)
+        ;
+    } 
 
     .cardsContainer{
         display: grid;
