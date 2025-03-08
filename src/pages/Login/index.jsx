@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./Login.module.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useAuth } from "../../hooks/AuthContext";
 
 const Login = () => {
@@ -44,7 +45,14 @@ const Login = () => {
   
     try {
       await login(formData);
-      navigate("/"); // Solo si el login es exitoso
+      Swal.fire({
+                title: "Ingreso Exitoso!",
+                text: "Redirigiéndote a la página de inicio...",
+                icon: "success",
+                timer: 2000,
+                showConfirmButton: false,
+              });
+              setTimeout(() => navigate("/"), 2000);
     } catch (error) {
       console.error("Error de autenticación:", error);
       
