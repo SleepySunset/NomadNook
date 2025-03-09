@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./UserTable.module.css";
 import { useAuth } from "../../hooks/AuthContext";
 import { ENDPOINTS } from "../../config/config";
+import Swal from "sweetalert2";
 
 const UserTable = () => {
   const { user } = useAuth();
@@ -22,16 +23,17 @@ const UserTable = () => {
       })
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       });
   }, [END_POINT, user]);
 
   const handleConfirm = () => {
     if (!selectedUser) return;
-    const endpointUrl =
-      selectedUser.rol === "ADMIN"
-        ? `${ENDPOINTS.REMOVE_ADMIN_ROLE}/${selectedUser.id}`
-        : `${ENDPOINTS.ADD_ADMIN_ROLE}/${selectedUser.id}`;
+
+    const isCurrentlyAdmin = selectedUser.rol === "ADMIN"; // Verifica el rol actual
+    const endpointUrl = isCurrentlyAdmin
+      ? `${ENDPOINTS.REMOVE_ADMIN_ROLE}/${selectedUser.id}`
+      : `${ENDPOINTS.ADD_ADMIN_ROLE}/${selectedUser.id}`;
+
     axios
       .put(endpointUrl, null, {
         headers: {
@@ -42,11 +44,32 @@ const UserTable = () => {
         setData((prevData) =>
           prevData.map((user) =>
             user.id === selectedUser.id
-              ? { ...user, rol: user.rol === "ADMIN" ? "CLIENTE" : "ADMIN" }
+              ? { ...user, rol: isCurrentlyAdmin ? "CLIENTE" : "ADMIN" }
               : user
           )
         );
         setIsModalOpen(false);
+
+        // Alerta para promoción a Admin
+        if (!isCurrentlyAdmin) {
+          Swal.fire({
+            title: "Permisos de Admin otorgados",
+            text: `El usuario ${selectedUser.nombre} ${selectedUser.apellido} ahora tiene permisos de Administrador.`,
+            icon: "success",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "var(--color4)",
+          });
+        } 
+        // Alerta para degradación a Cliente
+        else {
+          Swal.fire({
+            title: "Permisos de Admin removidos",
+            text: `El usuario ${selectedUser.nombre} ${selectedUser.apellido} ahora es Cliente.`,
+            icon: "warning",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "var(--color4)",
+          });
+        }
       })
       .catch((err) => console.error(err));
   };
