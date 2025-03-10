@@ -17,6 +17,11 @@ const CabinDetail = () => {
         console.log(res.data);
       })
   }, [END_POINT]);
+  useEffect(() => {
+    axios(`${ENDPOINTS.GET_CABIN_FEATURES}/${cabin.id}`).then((res) => {
+      console.log(res.data);
+    });
+  }, [cabin.id]);
 
 
   useEffect(() => {

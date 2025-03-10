@@ -1,19 +1,22 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "./AddCabin.module.css";
-import { ENDPOINTS } from "../../config/config";  
+import { ENDPOINTS, API_BASE_URL } from "../../config/config";  
 import { useAuth } from "../../hooks/AuthContext";
 import { Navigate } from "react-router-dom";
 
 const AddCabin = ({ onClose }) => {
   const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
   const END_POINT_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
+  const END_POINT_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
   const { user, loading } = useAuth();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
+  const [features, setFeatures] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [capacity, setCapacity] = useState("");
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
@@ -38,6 +41,27 @@ const AddCabin = ({ onClose }) => {
       fetchCategories();
     }
   }, [END_POINT_CATEGORIES, user?.token]);
+  
+
+  useEffect(() => {
+    if (user?.token) {
+      const fetchFeatures = async () => {
+        try {
+          const response = await axios.get(END_POINT_FEATURES, {
+            headers: {
+              'Authorization': `Bearer ${user.token}`
+            }
+          });
+          setFeatures(response.data);
+          console.log(response.data);
+          
+        } catch (error) {
+          console.log("Error al cargar categorías:", error);
+        }
+      };
+      fetchFeatures();
+    }
+  }, [END_POINT_FEATURES, user?.token]);
 
   if (loading) {
     return <p>Cargando...</p>;
@@ -53,6 +77,16 @@ const AddCabin = ({ onClose }) => {
         return prev.filter(id => id !== categoryId);
       } else {
         return [...prev, categoryId];
+      }
+    });
+  };
+
+  const handleFeatureChange = (featureId) => {
+    setSelectedFeatures(prev => {
+      if (prev.includes(featureId)) {
+        return prev.filter(id => id !== featureId);
+      } else {
+        return [...prev, featureId];
       }
     });
   };
@@ -105,7 +139,17 @@ const AddCabin = ({ onClose }) => {
       const categoryPromises = selectedCategories.map(categoryId => 
         axios({
           method: "post",
-          url: `https://nomadnook-nomadnook.up.railway.app/api/alojamientos/${cabinId}/categorias/${categoryId}`,
+          url: `${API_BASE_URL}/api/alojamientos/${cabinId}/categorias/${categoryId}`,
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+      );
+      const featuresPromises = selectedFeatures.map(featureId => 
+        axios({
+          method: "post",
+          url: `${API_BASE_URL}/api/alojamientos/${cabinId}/caracteristicas/${featureId}`,
           headers: {
             'Authorization': `Bearer ${user.token}`,
             'Content-Type': 'application/json'
@@ -117,11 +161,13 @@ const AddCabin = ({ onClose }) => {
         await Promise.all(categoryPromises);
         console.log("Todas las categorías fueron asignadas correctamente");
 
+        await Promise.all(featuresPromises);
+        console.log("Todas las características fueron asignadas correctamente");
         // Luego enviamos las imágenes una a una
         const imagePromises = images.map(imageUrl => 
           axios({
             method: "post",
-            url: `https://nomadnook-nomadnook.up.railway.app/api/imagenes/guardar`,
+            url: `${API_BASE_URL}/api/imagenes/guardar`,
             headers: {
               'Authorization': `Bearer ${user.token}`,
               'Content-Type': 'application/json'
@@ -156,7 +202,7 @@ const AddCabin = ({ onClose }) => {
       setAddress("");
       setImages([]);
       setSelectedCategories([]);
-
+      setSelectedFeatures([]);
       onClose();
 
     } catch (err) {
@@ -201,6 +247,20 @@ const AddCabin = ({ onClose }) => {
                   className={styles.categoryCheckbox}
                 />
                 {category.nombre}
+              </label>
+            ))}
+          </div>
+          <label className={styles.label}>Seleccione las características</label>
+          <div className={styles.featuresContainer}>
+            {features.map((feature) => (
+              <label key={feature.id} className={styles.featureLabel}>
+                <input
+                  type="checkbox"
+                  checked={selectedFeatures.includes(feature.id)}
+                  onChange={() => handleFeatureChange(feature.id)}
+                  className={styles.featureCheckbox}
+                />
+                {feature.nombre}
               </label>
             ))}
           </div>
