@@ -4,6 +4,7 @@ import styles from "./AddCabin.module.css";
 import { ENDPOINTS, API_BASE_URL } from "../../config/config";  
 import { useAuth } from "../../hooks/AuthContext";
 import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddCabin = ({ onClose }) => {
   const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
@@ -134,6 +135,12 @@ const AddCabin = ({ onClose }) => {
 
       const cabinId = response.data.id;
       console.log("Cabaña creada con ID:", cabinId);
+            Swal.fire({
+                      title: "Cabaña añadida!",
+                      icon: "success",
+                      timer: 2000,
+                      showConfirmButton: false,
+                    });
 
       // Primero asignamos las categorías
       const categoryPromises = selectedCategories.map(categoryId => 

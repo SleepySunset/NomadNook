@@ -1,8 +1,8 @@
 import { MdCabin } from "react-icons/md";
-import DateRangeIcon from "@mui/icons-material/DateRange";
+// import DateRangeIcon from "@mui/icons-material/DateRange";
 import { FaUserEdit } from "react-icons/fa";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import SettingsIcon from "@mui/icons-material/Settings";
+// import QueryStatsIcon from "@mui/icons-material/QueryStats";
+// import SettingsIcon from "@mui/icons-material/Settings";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import styles from "./AdminNav.module.css";
 import { Link } from "react-router-dom";
@@ -55,11 +55,13 @@ const AdminNav = ({ activeOpt }) => {
               activeOpt === "user" ? styles.active : null
             }`}
           >
-            <FaUserEdit sx={{ color: "#565656" }} fontSize="large" />
-            <span className={styles.navText}>Gestión de usuarios</span>
+            <FaUserEdit sx={{ color: activeOpt === "user" ? "#bc6c25" : "#565656" }} fontSize="large" />
+            <span className={
+                activeOpt === "user" ? styles.activeText : styles.navText
+              }>Gestión de usuarios</span>
           </li>
         </Link>
-        <li className={styles.navOpt}>
+        {/* <li className={styles.navOpt}>
           <DateRangeIcon sx={{ color: "#565656" }} fontSize="small" />
           <span className={styles.navText}>Gestión de reservas</span>
         </li>
@@ -71,7 +73,7 @@ const AdminNav = ({ activeOpt }) => {
         <li className={styles.navOpt}>
           <SettingsIcon sx={{ color: "#565656" }} fontSize="small" />
           <span className={styles.navText}>Configuración del sitio</span>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );
