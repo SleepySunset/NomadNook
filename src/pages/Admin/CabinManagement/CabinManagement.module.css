@@ -29,11 +29,12 @@
 }
 .upperContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  width: 100%;
 }
 .addCabinBtn {
-  max-width: 200px;
+  width: 180px;
   padding: 10px 20px;
   background-color: var(--color5);
   border: none;

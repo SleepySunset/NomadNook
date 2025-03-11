@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/AuthContext";
 import styles from "./ProfileMenu.module.css";
 import { useState } from "react";
 import Avatar from "react-initials-avatar";
+import Swal from "sweetalert2";
 
 const ProfileMenu = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -15,6 +16,13 @@ const ProfileMenu = () => {
 
   const handleLogout = () => {
     logout();
+          Swal.fire({
+                    title: "Has cerrado sesión con éxito",
+                    text: "Nos vemos pronto. ¡Las mejores cabañas te esperan para tu próxima escapada!",
+                    icon: "success",
+                    timer: 3000,
+                    showConfirmButton: false,
+                  });
     navigate("/");
   };
 
@@ -39,10 +47,14 @@ const ProfileMenu = () => {
           <p>
             ¡Hola, {user.name} {user.lastName}!
           </p>
+          {user.role == "ADMIN" && (
+            <Link to="/administracion">
+              <span className={styles.adminOpt}>Ver panel de administración</span>
+            </Link>
+          )}
           <span className={styles.logout} onClick={handleLogout}>
             Cerrar sesión
           </span>
-          {user.role}
         </div>
       )}
     </div>

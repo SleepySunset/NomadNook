@@ -9,5 +9,5 @@ a{
   text-decoration: none;
 }
 a:visited{
-  color:#565656;
+  color: inherit;
 }

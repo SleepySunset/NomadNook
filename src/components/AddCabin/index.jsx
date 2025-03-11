@@ -1,20 +1,62 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./AddCabin.module.css";
 import { ENDPOINTS } from "../../config/config";  
+import { useAuth } from "../../hooks/AuthContext";
+import { Navigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AddCabin = ({ onClose }) => {
   const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
+  const END_POINT_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
+  const { user, loading } = useAuth();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [type, setType] = useState("PLAYA");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [capacity, setCapacity] = useState("");
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
   const [images, setImages] = useState([]);
   // const [responseStatus, setResponseStatus] = useState("");
+
+  useEffect(() => {
+    if (user?.token) {
+      const fetchCategories = async () => {
+        try {
+          const response = await axios.get(END_POINT_CATEGORIES, {
+            headers: {
+              'Authorization': `Bearer ${user.token}`
+            }
+          });
+          setCategories(response.data);
+        } catch (error) {
+          console.log("Error al cargar categorías:", error);
+        }
+      };
+      fetchCategories();
+    }
+  }, [END_POINT_CATEGORIES, user?.token]);
+
+  if (loading) {
+    return <p>Cargando...</p>;
+  }
+
+  if (!user?.token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategories(prev => {
+      if (prev.includes(categoryId)) {
+        return prev.filter(id => id !== categoryId);
+      } else {
+        return [...prev, categoryId];
+      }
+    });
+  };
 
   const addImageInput = () => {
     setImages([...images, ""]);
@@ -35,31 +77,97 @@ const AddCabin = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formattedImages = images.map((imageUrl) => ({ url: imageUrl }));
-
     try {
-      const response = axios({
+      const response = await axios({
         method: "post",
         url: END_POINT_CABIN,
+        headers: {
+          'Authorization': `Bearer ${user.token}`,
+          'Content-Type': 'application/json'
+        },
         data: {
           titulo: title,
           descripcion: description,
-          tipo: type,
-          capacidad: capacity,
-          precioPorNoche: pricePerNight,
+          capacidad: parseInt(capacity),
+          precioPorNoche: parseFloat(pricePerNight),
           ubicacion: location,
           direccion: address,
           disponible: true,
           propietario: {
-            id: 1,
-          },
-          imagenes: formattedImages,
-        },
+            id: 2
+          }
+        }
       });
-      // setResponseStatus(response.data.message);
-      console.log("Respuesta del servidor: ", response);
+
+      const cabinId = response.data.id;
+      console.log("Cabaña creada con ID:", cabinId);
+            Swal.fire({
+                      title: "Cabaña añadida!",
+                      icon: "success",
+                      timer: 2000,
+                      showConfirmButton: false,
+                    });
+
+      // Primero asignamos las categorías
+      const categoryPromises = selectedCategories.map(categoryId => 
+        axios({
+          method: "post",
+          url: `https://nomadnook-nomadnook.up.railway.app/api/alojamientos/${cabinId}/categorias/${categoryId}`,
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+      );
+
+      try {
+        await Promise.all(categoryPromises);
+        console.log("Todas las categorías fueron asignadas correctamente");
+
+        // Luego enviamos las imágenes una a una
+        const imagePromises = images.map(imageUrl => 
+          axios({
+            method: "post",
+            url: `https://nomadnook-nomadnook.up.railway.app/api/imagenes/guardar`,
+            headers: {
+              'Authorization': `Bearer ${user.token}`,
+              'Content-Type': 'application/json'
+            },
+            data: {
+              url: imageUrl,
+              alojamiento: {
+                id: cabinId
+              }
+            }
+          })
+        );
+
+        await Promise.all(imagePromises);
+        console.log("Todas las imágenes fueron guardadas correctamente");
+
+      } catch (error) {
+        if (error.response) {
+          console.error("Error con la respuesta:", error.response.data);
+        } else if (error.request) {
+          console.error("Error con la petición:", error.request);
+        } else {
+          console.error("Error:", error.message);
+        }
+      }
+
+      setTitle("");
+      setDescription("");
+      setCapacity("");
+      setPricePerNight("");
+      setLocation("");
+      setAddress("");
+      setImages([]);
+      setSelectedCategories([]);
+
+      onClose();
+
     } catch (err) {
-        console.log(err)
+        console.log("Error al crear la cabaña:", err.response?.data || err.message);
     }
   };
 
@@ -89,23 +197,20 @@ const AddCabin = ({ onClose }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <label className={styles.label}>Seleccione el tipo de cabaña</label>
-          <select
-            required
-            className={styles.select}
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          >
-            <option value="" disabled>
-              Seleccione el tipo
-            </option>
-            <option value="PLAYA">Playa</option>
-            <option value="MONTANA">Montaña</option>
-            <option value="NEVADA">Nevada</option>
-            <option value="SELVA">Selva</option>
-            <option value="BOSQUE">Bosque</option>
-            <option value="CAMPO">Campo</option>
-          </select>
+          <label className={styles.label}>Seleccione las categorías</label>
+          <div className={styles.categoriesContainer}>
+            {categories.map((category) => (
+              <label key={category.id} className={styles.categoryLabel}>
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(category.id)}
+                  onChange={() => handleCategoryChange(category.id)}
+                  className={styles.categoryCheckbox}
+                />
+                {category.nombre}
+              </label>
+            ))}
+          </div>
           <label className={styles.label}>Ingrese el precio por noche</label>
           <input
             required

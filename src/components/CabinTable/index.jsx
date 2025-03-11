@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import styles from "./AdminTable.module.css";
+import styles from "./CabinTable.module.css";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { ENDPOINTS } from "../../config/config";
 
-const AdminTable = () => {
+const CabinTable = () => {
   const [data, setData] = useState([]);
   const END_POINT = ENDPOINTS.GET_ALL_CABINS;
 
@@ -46,4 +46,4 @@ const AdminTable = () => {
   );
 };
 
-export default AdminTable;
+export default CabinTable;

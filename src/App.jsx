@@ -9,6 +9,7 @@ import CabinDetail from "./pages/CabinDetail";
 import NotFound from "./pages/NotFound";
 import CabinManagement from "./pages/Admin/CabinManagement";
 import LayoutAdmin from "./layouts/LayoutAdmin";
+import UserManagement from "./pages/Admin/UserManagement"
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/" element={<LayoutAdmin />}>
         <Route path="/administracion" element={<AdminPanel />} />
         <Route path="/administracion/cabinmanagement" element={<CabinManagement />} />
+        <Route path="/administracion/usermanagement" element={<UserManagement />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

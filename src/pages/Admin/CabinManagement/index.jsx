@@ -6,7 +6,7 @@ import styles from "./CabinManagement.module.css";
 import AdminNav from "../../../components/AdminNav";
 import Searchbar from "../../../components/Searchbar";
 import AddCabin from "@/components/AddCabin";
-import AdminTable from "../../../components/AdminTable";
+import CabinTable from "../../../components/CabinTable";
 
 const CabinManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,7 +45,7 @@ const CabinManagement = () => {
   try {
     decoded = jwtDecode(user.token);
 
-    if (decoded.role !== "ROLE_ADMIN") {
+    if (decoded.role !== "ADMIN") {
       console.log("Acceso denegado. Rol actual:", decoded.role);
       return <Navigate to="/not-authorized" replace />;
     }
@@ -66,7 +66,7 @@ const CabinManagement = () => {
             </button>
             {isModalOpen && <AddCabin onClose={closeModal} />}
           </div>
-          <AdminTable />
+          <CabinTable />
         </div>
       </main>
       <div className={styles.mobileWarning}>

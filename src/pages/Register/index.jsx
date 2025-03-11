@@ -1,19 +1,24 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Register.module.css";
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../config/config";
+
 const Register = () => {
-  const END_POINT = ENDPOINTS.REGISTER
+  const END_POINT = ENDPOINTS.REGISTER;
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: "",
     apellido: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
-
+  const [serverMessage, setServerMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -24,6 +29,7 @@ const Register = () => {
       ...errors,
       [e.target.name]: "",
     });
+    setServerMessage("");
   };
 
   const validateForm = () => {
@@ -31,6 +37,8 @@ const Register = () => {
 
     if (!formData.nombre.trim()) {
       newErrors.nombre = "El nombre es obligatorio.";
+    } else if (formData.nombre.trim().length < 3) {
+      newErrors.nombre = "El nombre debe tener al menos 3 caracteres.";
     } else if (!/^[a-zA-Z\s]+$/.test(formData.nombre)) {
       newErrors.nombre = "El nombre solo puede contener letras.";
     }
@@ -55,35 +63,40 @@ const Register = () => {
       newErrors.password = "Debe contener al menos una letra y un número.";
     }
 
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) {
-      setFormData((prevData) => {
-        const updatedData = { ...prevData };
-        Object.keys(newErrors).forEach((field) => {
-          updatedData[field] = "";
-        });
-        return updatedData;
-      });
+    if (!formData.confirmPassword.trim()) {
+      newErrors.confirmPassword = "Debes repetir la contraseña.";
+    } else if (formData.confirmPassword !== formData.password) {
+      newErrors.confirmPassword = "Las contraseñas no coinciden.";
     }
 
+    setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      try{
-        const response = await axios.post(END_POINT,
-          {nombre: formData.nombre,
-          apellido: formData.apellido,
-          email: formData.email,
-          password: formData.password
-          }
-        )
-        console.log(response)
-      }catch(error){
-        console.log(error)
+      try {
+        const response = await axios.post(END_POINT, formData);
+        console.log(response);
+        Swal.fire({
+          title: "Usuario creado con éxito!",
+          text: "Redirigiéndote a la página de inicio...",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        setTimeout(() => navigate("/"), 2000);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Ese mail ya se encuentra en uso. Prueba con otro.",
+            confirmButtonColor:"#606c38",
+            footer: '<a href="#">¿Olvidaste tu contraseña?</a>',
+          });
+        }
       }
     }
   };
@@ -91,69 +104,34 @@ const Register = () => {
   return (
     <div className={styles.wrapper}>
       <form className={styles.formulario} onSubmit={handleSubmit}>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Nombre</label>
-          <div className={styles.inputBox}>
-            <input
-              type="text"
-              name="nombre"
-              className={`${styles.input} ${errors.nombre ? styles.inputError : ""}`}
-              value={formData.nombre}
-              onChange={handleChange}
-              placeholder={errors.nombre || "Ingresa tu Nombre"}
-              required
-            />
+        {["nombre", "apellido", "email", "password", "confirmPassword"].map((field) => (
+          <div key={field} className={styles.inputContainer}>
+            <label className={styles.label}>
+              {field === "password" ? "Contraseña" : field === "confirmPassword" ? "Repetir Contraseña" : field.charAt(0).toUpperCase() + field.slice(1)}
+            </label>
+            <div className={styles.inputBox}>
+              <input
+                type={field === "password" || field === "confirmPassword" ? "password" : "text"}
+                name={field}
+                className={`${styles.input} ${errors[field] ? styles.inputError : ""}`}
+                value={formData[field]}
+                onChange={handleChange}
+                placeholder={field === "password" ? "Ingresa tu Contraseña" : field === "confirmPassword" ? "Repite tu contraseña" : `Ingresa tu ${field.charAt(0).toUpperCase() + field.slice(1)}`}
+                required
+              />
+            </div>
+            {errors[field] && <p className={styles.errorMessage}>{errors[field]}</p>}
           </div>
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Apellido</label>
-          <div className={styles.inputBox}>
-            <input
-              type="text"
-              name="apellido"
-              className={`${styles.input} ${errors.apellido ? styles.inputError : ""}`}
-              value={formData.apellido}
-              onChange={handleChange}
-              placeholder={errors.apellido || "Ingresa tu Apellido"}
-              required
-            />
-          </div>
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Correo Electrónico</label>
-          <div className={styles.inputBox}>
-            <input
-              type="text"
-              name="email"
-              className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
-              value={formData.email}
-              onChange={handleChange}
-              placeholder={errors.email || "Ingresa tu Correo Electrónico"}
-              required
-            />
-          </div>
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Contraseña</label>
-          <div className={styles.inputBox}>
-            <input
-              type="password"
-              name="password"
-              className={`${styles.input} ${errors.password ? styles.inputError : ""}`}
-              value={formData.password}
-              onChange={handleChange}
-              placeholder={errors.password || "Ingresa tu Contraseña"}
-              required
-            />
-          </div>
-        </div>
+        ))}
+
+        {serverMessage && <p className={styles.serverMessage}>{serverMessage}</p>}
 
         <button type="submit" className={styles.button}>
           Crear Cuenta
         </button>
         <div className={styles.loginLink}>
           <p>
-            ¿Ya tienes una cuenta?{" "}
+            ¿Ya tienes una cuenta?{' '}
             <Link to="/login" className={styles.login}>
               Iniciar Sesión
             </Link>
