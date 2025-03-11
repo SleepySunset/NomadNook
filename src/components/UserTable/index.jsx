@@ -51,6 +51,7 @@ const UserTable = () => {
         setIsModalOpen(false);
 
         // Alerta para promoción a Admin
+        
         if (!isCurrentlyAdmin) {
           Swal.fire({
             title: "Permisos de Admin otorgados",
@@ -60,6 +61,7 @@ const UserTable = () => {
             confirmButtonColor: "var(--color4)",
           });
         } 
+
         // Alerta para degradación a Cliente
         else {
           Swal.fire({
