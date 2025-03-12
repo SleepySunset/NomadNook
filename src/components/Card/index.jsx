@@ -1,31 +1,121 @@
-import { Link } from "react-router-dom"
-import styles from "./Card.module.css"
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Heart, Share2 } from "lucide-react";
+import styles from "./Card.module.css";
+import Swal from "sweetalert2";
+import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { useAuth } from "../../hooks/AuthContext";
 
-const Card = ({id, title, description, images, pricePerNight}) => {
+const Card = ({ id, title, description, images, pricePerNight, addToFavorites, removeFromFavorites, isFavorite: initialFavorite }) => {
+  const { user } = useAuth();
+  const navigate = useNavigate(); // Mover useNavigate al inicio del componente
+
+  const [favorite, setFavorite] = useState(initialFavorite);
+  const [isOpen, setIsOpen] = useState(false);
+  const url = window.location.origin + `/cabin/${id}`;
+
+  useEffect(() => {
+    setFavorite(initialFavorite);
+  }, [initialFavorite]);
+
+  let isAuthenticated = user?.token ? true : false;
+
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      Swal.fire({
+        title: "¡Atención!",
+        icon: "info",
+        iconColor: "var(--color1)",
+        html: `Para agregar a favoritos, primero debes identificarte.`,
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText: "Identificarme",
+        confirmButtonColor: "var(--color4)",
+        cancelButtonText: "Omitir",
+        cancelButtonColor: "#444",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+
+      return;
+    }
+
+    if (favorite) {
+      removeFromFavorites && removeFromFavorites(id);
+      setFavorite(false);
+    } else {
+      addToFavorites && addToFavorites({ id, title, description, images, pricePerNight });
+      setFavorite(true);
+    }
+  };
+
+  const shareOnSocial = (e, platform) => {
+    e.preventDefault();
+    e.stopPropagation();
+    switch (platform) {
+      case "whatsapp":
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent("Descubrí este rincón increíble para una escapada perfecta. Su nombre es " + title + ". ¿Más información?: " + url)}`, '_blank');
+        break;
+      case "instagram":
+        alert("Instagram no admite compartir directamente links. Copiá y compartí el enlace manualmente: " + url);
+        break;
+      case "x":
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent( "Descubrí este rincón increíble para una escapada perfecta. Su nombre es " + title + ". ¿Más información?: " + url)}`, '_blank');
+        break;
+      case "facebook":
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url + "Descubrí este rincón increíble para una escapada perfecta. Su nombre es ")}`, '_blank');
+        break;
+      default:
+        alert("Red social no válida.");
+    }
+  };
 
   return (
     <div className={styles.container}>
-      <Link to={`/cabin/${id}`}>
+      <Link to={`/cabin/${id}`} className={styles.cardLink}>
         <div className={styles.imageContainer}>
           {images && images.length > 0 && (
-            <img
-            className={styles.image}
-              src={images[0].url}
-              alt={title}
-            />
+            <img className={styles.image} src={images[0].url} alt={title} />
+          )}
+          <span className={styles.price}>Precio por noche ${pricePerNight}</span>
+          <div className={styles.iconButtons}>
+            <button className={styles.iconButton} onClick={handleFavoriteClick}>
+              <Heart className={`${styles.heartIcon} ${favorite ? styles.favoriteActive : ""}`} size={20} />
+            </button>
+            <button className={styles.iconButton} onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(!isOpen); }}>
+              <Share2 size={20} />
+            </button>
+          </div>
+          {isOpen && (
+            <div className={styles.sharePopup} onClick={(e) => e.stopPropagation()}>
+              <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "whatsapp")}>
+                <FaWhatsapp className={styles.whatsapp} />
+              </button>
+              <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "instagram")}>
+                <FaInstagram className={styles.instagram} />
+              </button>
+              <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "x")}>
+                <FaTwitter className={styles.twitter} />
+              </button>
+              <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "facebook")}>
+                <FaFacebook className={styles.facebook} />
+              </button>
+            </div>
           )}
         </div>
-        </Link>
-        <div className={styles.text}>  
-          <h3 className={styles.title}>{title}</h3>
-      
-          <p className={styles.description}>{description}</p>
-          <span className={styles.price}>Precio por noche ${pricePerNight}</span>
-        </div>
-        
-      
+      </Link>
+      <div className={styles.text}>
+        <h3 className={styles.title}>{title}</h3>
+        <p className={styles.description}>{description}</p>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

@@ -47,7 +47,9 @@ const Register = () => {
       newErrors.apellido = "El apellido es obligatorio.";
     } else if (!/^[a-zA-Z\s]+$/.test(formData.apellido)) {
       newErrors.apellido = "El apellido solo puede contener letras.";
-    }
+    } else if (formData.apellido.length < 2){ newErrors.apellido = "El apellido debe ser mayor o igual a 2 caracteres";
+
+    } 
 
     if (!formData.email.trim()) {
       newErrors.email = "El correo electrónico es obligatorio.";

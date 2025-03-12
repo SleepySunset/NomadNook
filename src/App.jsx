@@ -6,10 +6,12 @@ import Register from "./pages/Register";
 import LayoutUser from "./layouts/LayoutUser";
 import AdminPanel from "./pages/Admin/AdminPanel";
 import CabinDetail from "./pages/CabinDetail";
+import Favorite from "./pages/Favorite";
 import NotFound from "./pages/NotFound";
 import CabinManagement from "./pages/Admin/CabinManagement";
 import LayoutAdmin from "./layouts/LayoutAdmin";
 import UserManagement from "./pages/Admin/UserManagement"
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cabin/:id" element={<CabinDetail />} />
+        <Route path="/favorite" element={<Favorite />} />
       </Route>
       <Route path="/" element={<LayoutAdmin />}>
         <Route path="/administracion" element={<AdminPanel />} />
