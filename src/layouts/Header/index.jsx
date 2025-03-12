@@ -22,17 +22,27 @@ const Header = ({userType}) => {
       }`}
     >
       <div className={styles.logoContainer}>
-        <Link to="/" className={styles.logoLink}>
+        <Link
+         to="/"
+         className={styles.logoLink}
+         onClick={(e) => {
+           if (window.location.pathname === "/") {
+             e.preventDefault();
+              window.location.reload();
+           }
+        }}
+       >
           <img
             src="/white_full_logo.png"
             alt="White-logo"
             className={styles.whitelogo}
-          />
-          <h3 className={styles.slogan}>
-            Viajar es vivir, hospedarte es sentir
-          </h3>
-        </Link>
-      </div>
+         />
+         <h3 className={styles.slogan}>
+           Viajar es vivir, hospedarte es sentir
+         </h3>
+       </Link>
+     </div>
+
       {!isAuthPage && (
         <nav className={styles.authLinksHeader}>
           {user ? (
