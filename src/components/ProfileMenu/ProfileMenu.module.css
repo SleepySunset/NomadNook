@@ -1,44 +1,141 @@
+.profileWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userIcon {
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+.userIcon:hover {
+  opacity: 0.7;
+}
+
 .profileContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap:20px;
   align-items: center;
+  gap: 15px;
   background-color: var(--color6);
-  width: 300px;
+  width: 380px;
+  min-height: 250px;
   position: absolute;
-  top: var(--headerHeight);
+  top: -20px;
   right: 0;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 13px 0px rgb(127, 127, 126);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.userIcon {
-  margin-right: 30px;
-}
-.userIcon:hover {
-  cursor: pointer;
-  opacity: 20;
-}
-
-.logout:hover{
-  cursor: pointer;
-  color: #565656
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px 10px 0 0;
 }
 
-.close{
-  position: absolute;
-  margin-right: 10px;
-  right: 0;
-  top: 0;
-  font-size: 35px;
+.avatar {
+  cursor:pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: black !important;
+  color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-style: inherit;
+  font-weight: inherit;
 }
-.close:hover{
+
+.profileDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.userName {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+}
+
+.email {
+  font-size: 14px;
+  margin: 0;
+  color: #565656;
+}
+
+.profileOptions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 20px;
+  gap: 10px;
+}
+
+.menuOption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
-  color: #565656
+  transition: color 0.3s;
 }
-.adminOpt{
+
+.favorite {
+  display:flex;
+  gap: 5px;
+}
+
+.adminOpt {
   color: var(--color5);
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.adminOpt:hover {
+  color: #ff5733;
+}
 
+.logout {
+  margin-top: 35px;
+  display:flex;
+  align-self: center;
+  cursor: pointer;
+  color: #565656;
+  font-weight: bold;
+  transition: color 0.3s;
+  gap: 5px;
+}
+.logout:hover {
+  color: red;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.close:hover {
+  color: #565656;
 }
