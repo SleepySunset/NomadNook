@@ -4,6 +4,7 @@ import styles from "./ProfileMenu.module.css";
 import { useState } from "react";
 import Avatar from "react-initials-avatar";
 import Swal from "sweetalert2";
+import { Settings, LogOut, FolderHeart } from "lucide-react";
 
 const ProfileMenu = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -16,13 +17,13 @@ const ProfileMenu = () => {
 
   const handleLogout = () => {
     logout();
-          Swal.fire({
-                    title: "Has cerrado sesión con éxito",
-                    text: "Nos vemos pronto. ¡Las mejores cabañas te esperan para tu próxima escapada!",
-                    icon: "success",
-                    timer: 3000,
-                    showConfirmButton: false,
-                  });
+    Swal.fire({
+      title: "Has cerrado sesión con éxito",
+      text: "Nos vemos pronto. ¡Las mejores cabañas te esperan para tu próxima escapada!",
+      icon: "success",
+      timer: 3000,
+      showConfirmButton: false,
+    });
     navigate("/");
   };
 
@@ -32,28 +33,46 @@ const ProfileMenu = () => {
 
   return (
     <div className={styles.profileWrapper}>
-      <span className={styles.userIcon} onClick={handleAvatarClick}>
-        <Avatar name={`${user.name} ${user.lastName}`} />
-      </span>
-
-      {isProfileMenuOpen && (
-        <div className={styles.profileContainer}>
-          <span className={styles.close} onClick={handleAvatarClick}>
-            {" "}
-            &times;
-          </span>
-          <span>{user.email}</span>
+      {!isProfileMenuOpen && (
+        <span className={styles.userIcon} onClick={handleAvatarClick}>
           <Avatar name={`${user.name} ${user.lastName}`} />
-          <p>
-            ¡Hola, {user.name} {user.lastName}!
-          </p>
-          {user.role == "ADMIN" && (
-            <Link to="/administracion">
-              <span className={styles.adminOpt}>Ver panel de administración</span>
+        </span>
+      )}
+
+{isProfileMenuOpen && (
+        <div className={styles.profileContainer}>
+          <div className={styles.profileHeader}>
+            <Avatar name={`${user.name} ${user.lastName}`} className={styles.avatar} />
+            <div className={styles.profileDetails}>
+            </div>
+            <div className={styles.userDetails}>
+              <p className={styles.userName}>{user.name} {user.lastName}</p>
+              <span className={styles.email}>{user.email}</span>
+            
+            </div>
+          </div>
+          
+        <div className={styles.profileOptions}>
+          {user.role === "ADMIN" && (
+              <Link to="/administracion" className={styles.menuOption}>
+              <Settings className={styles.optionIcon} size={20} />
+              <span>Ver panel de administración</span>
             </Link>
           )}
-          <span className={styles.logout} onClick={handleLogout}>
+
+            <Link to="/favorite" className={styles.favorite}>
+              <FolderHeart className={styles.favorite} size={20} />
+              <span>Mis favoritos</span>
+            </Link>
+
+          <div className={styles.logout} onClick={handleLogout}>
+            <LogOut className={styles.optionIcon} size={20} />
             Cerrar sesión
+          </div>
+        </div>
+
+          <span className={styles.close} onClick={handleAvatarClick}>
+            &times;
           </span>
         </div>
       )}

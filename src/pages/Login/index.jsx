@@ -39,9 +39,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoginError(""); // Reiniciar mensaje de error
+    setLoginError("");
   
-    if (!validateForm()) return; // Validar formulario antes de enviar
+    if (!validateForm()) return;
   
     try {
       await login(formData);
@@ -56,7 +56,6 @@ const Login = () => {
     } catch (error) {
       console.error("Error de autenticación:", error);
       
-      // Verifica si el error tiene respuesta del servidor
       const errorMessage =
         error.response?.data?.message || "Credenciales inválidas.";
       

@@ -101,6 +101,7 @@ const AddCabin = ({ onClose }) => {
 
       const cabinId = response.data.id;
       console.log("Cabaña creada con ID:", cabinId);
+      // Mensaje de Cabaña Añadida
             Swal.fire({
                       title: "Cabaña añadida!",
                       icon: "success",
