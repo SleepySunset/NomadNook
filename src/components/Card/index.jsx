@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, Share2 } from "lucide-react";
+import { Heart, Share2, Copy } from "lucide-react";
 import styles from "./Card.module.css";
 import Swal from "sweetalert2";
-import { FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { useAuth } from "../../hooks/AuthContext";
 
 const Card = ({ id, title, description, images, pricePerNight, addToFavorites, removeFromFavorites, isFavorite: initialFavorite }) => {
   const { user } = useAuth();
-  const navigate = useNavigate(); // Mover useNavigate al inicio del componente
+  const navigate = useNavigate();
 
   const [favorite, setFavorite] = useState(initialFavorite);
   const [isOpen, setIsOpen] = useState(false);
@@ -55,6 +55,9 @@ const Card = ({ id, title, description, images, pricePerNight, addToFavorites, r
     }
   };
 
+
+  // Compartir
+
   const shareOnSocial = (e, platform) => {
     e.preventDefault();
     e.stopPropagation();
@@ -62,7 +65,7 @@ const Card = ({ id, title, description, images, pricePerNight, addToFavorites, r
       case "whatsapp":
         window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent("Descubrí este rincón increíble para una escapada perfecta. Su nombre es " + title + ". ¿Más información?: " + url)}`, '_blank');
         break;
-      case "instagram":
+      case "copy":
         alert("Instagram no admite compartir directamente links. Copiá y compartí el enlace manualmente: " + url);
         break;
       case "x":
@@ -75,6 +78,31 @@ const Card = ({ id, title, description, images, pricePerNight, addToFavorites, r
         alert("Red social no válida.");
     }
   };
+
+  const copyToClipboard = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    navigator.clipboard.writeText(url)
+    .then(() => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Enlace copiado al portapapeles"
+      });
+    })
+    .catch(err => console.error("Error al copiar:", err));
+};
 
   return (
     <div className={styles.container}>
@@ -94,11 +122,11 @@ const Card = ({ id, title, description, images, pricePerNight, addToFavorites, r
           </div>
           {isOpen && (
             <div className={styles.sharePopup} onClick={(e) => e.stopPropagation()}>
+              <button className={styles.shareButton} onClick={copyToClipboard}>
+                <Copy size={20} className={styles.copy} />
+              </button>
               <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "whatsapp")}>
                 <FaWhatsapp className={styles.whatsapp} />
-              </button>
-              <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "instagram")}>
-                <FaInstagram className={styles.instagram} />
               </button>
               <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "x")}>
                 <FaTwitter className={styles.twitter} />
