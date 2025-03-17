@@ -1,52 +1,65 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "./AddCabin.module.css";
-import { ENDPOINTS } from "../../config/config";  
-import { useAuth } from "../../hooks/AuthContext";
+import { ENDPOINTS, API_BASE_URL } from "@/config/config";  
+import { useAuth } from "@/hooks/AuthContext";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fas, far, fab);
 
 const AddCabin = ({ onClose }) => {
   const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
   const END_POINT_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
-  const { user, loading } = useAuth();
+  const END_POINT_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
+  const { user } = useAuth();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
+  const [features, setFeatures] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [capacity, setCapacity] = useState("");
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
   const [images, setImages] = useState([]);
-  // const [responseStatus, setResponseStatus] = useState("");
-
+  
+  
   useEffect(() => {
     if (user?.token) {
       const fetchCategories = async () => {
         try {
-          const response = await axios.get(END_POINT_CATEGORIES, {
-            headers: {
-              'Authorization': `Bearer ${user.token}`
-            }
-          });
+          const response = await axios.get(END_POINT_CATEGORIES);
           setCategories(response.data);
         } catch (error) {
-          console.log("Error al cargar categorías:", error);
+          console.error("Error al cargar categorías:", error);
         }
       };
+      
+      const fetchFeatures = async () => {
+        try {
+          const response = await axios.get(END_POINT_FEATURES);
+          setFeatures(response.data);
+          
+        } catch (error) {
+          console.error("Error al cargar características:", error);
+        }
+      };
+      
       fetchCategories();
+      fetchFeatures();
+    }else{
+      return <Navigate to="/login" replace />;
     }
-  }, [END_POINT_CATEGORIES, user?.token]);
-
-  if (loading) {
-    return <p>Cargando...</p>;
-  }
-
-  if (!user?.token) {
-    return <Navigate to="/login" replace />;
-  }
+  }, [END_POINT_CATEGORIES, END_POINT_FEATURES, user?.token]);
+  
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories(prev => {
@@ -54,6 +67,16 @@ const AddCabin = ({ onClose }) => {
         return prev.filter(id => id !== categoryId);
       } else {
         return [...prev, categoryId];
+      }
+    });
+  };
+
+  const handleFeatureChange = (featureId) => {
+    setSelectedFeatures(prev => {
+      if (prev.includes(featureId)) {
+        return prev.filter(id => id !== featureId);
+      } else {
+        return [...prev, featureId];
       }
     });
   };
@@ -72,6 +95,22 @@ const AddCabin = ({ onClose }) => {
     const updatedImages = [...images];
     updatedImages[index] = value;
     setImages(updatedImages);
+  };
+
+  const getIconComponent = (iconName) => {
+    try {
+      const iconExists = Object.keys(library.definitions).some(prefix =>
+        Object.keys(library.definitions[prefix]).includes(iconName)
+      );
+
+      if (iconExists) {
+        return ["fas", iconName];
+      }
+      return ["fas", "question-circle"];
+    } catch (error) {
+      console.error("Error al verificar el icono:", error);
+      return ["fas", "question-circle"];
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -109,11 +148,20 @@ const AddCabin = ({ onClose }) => {
                       showConfirmButton: false,
                     });
 
-      // Primero asignamos las categorías
       const categoryPromises = selectedCategories.map(categoryId => 
         axios({
           method: "post",
-          url: `https://nomadnook-nomadnook.up.railway.app/api/alojamientos/${cabinId}/categorias/${categoryId}`,
+          url: `${API_BASE_URL}/api/alojamientos/${cabinId}/categorias/${categoryId}`,
+          headers: {
+            'Authorization': `Bearer ${user.token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+      );
+      const featuresPromises = selectedFeatures.map(featureId => 
+        axios({
+          method: "post",
+          url: `${API_BASE_URL}/api/alojamientos/${cabinId}/caracteristicas/${featureId}`,
           headers: {
             'Authorization': `Bearer ${user.token}`,
             'Content-Type': 'application/json'
@@ -125,11 +173,13 @@ const AddCabin = ({ onClose }) => {
         await Promise.all(categoryPromises);
         console.log("Todas las categorías fueron asignadas correctamente");
 
-        // Luego enviamos las imágenes una a una
+        await Promise.all(featuresPromises);
+        console.log("Todas las características fueron asignadas correctamente");
+
         const imagePromises = images.map(imageUrl => 
           axios({
             method: "post",
-            url: `https://nomadnook-nomadnook.up.railway.app/api/imagenes/guardar`,
+            url: `${API_BASE_URL}/api/imagenes/guardar`,
             headers: {
               'Authorization': `Bearer ${user.token}`,
               'Content-Type': 'application/json'
@@ -164,11 +214,11 @@ const AddCabin = ({ onClose }) => {
       setAddress("");
       setImages([]);
       setSelectedCategories([]);
-
+      setSelectedFeatures([]);
       onClose();
 
     } catch (err) {
-        console.log("Error al crear la cabaña:", err.response?.data || err.message);
+        console.error("Error al crear la cabaña:", err.response?.data || err.message);
     }
   };
 
@@ -206,9 +256,25 @@ const AddCabin = ({ onClose }) => {
                   type="checkbox"
                   checked={selectedCategories.includes(category.id)}
                   onChange={() => handleCategoryChange(category.id)}
-                  className={styles.categoryCheckbox}
                 />
                 {category.nombre}
+              </label>
+            ))}
+          </div>
+          <label className={styles.label}>Seleccione las características</label>
+          <div className={styles.featuresContainer}>
+            {features.map((feature) => (
+              <label key={feature.id} className={styles.featureLabel}>
+                <input
+                  type="checkbox"
+                  checked={selectedFeatures.includes(feature.id)}
+                  onChange={() => handleFeatureChange(feature.id)}
+                />
+                <FontAwesomeIcon 
+                  icon={getIconComponent(feature.icono)} 
+                  className={styles.featureIcon} 
+                />
+                {feature.nombre}
               </label>
             ))}
           </div>
