@@ -18,6 +18,7 @@
   padding: 20px 25px;
   display: flex;
   align-items: center;
+  min-width: max-content;
 }
 .navOpt:hover {
   cursor: pointer;

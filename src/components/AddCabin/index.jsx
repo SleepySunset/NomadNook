@@ -1,16 +1,23 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "./AddCabin.module.css";
-import { ENDPOINTS, API_BASE_URL } from "../../config/config";  
-import { useAuth } from "../../hooks/AuthContext";
+import { ENDPOINTS, API_BASE_URL } from "@/config/config";  
+import { useAuth } from "@/hooks/AuthContext";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fas, far, fab);
 
 const AddCabin = ({ onClose }) => {
   const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
   const END_POINT_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
   const END_POINT_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -23,54 +30,36 @@ const AddCabin = ({ onClose }) => {
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
   const [images, setImages] = useState([]);
-  // const [responseStatus, setResponseStatus] = useState("");
-
+  
+  
   useEffect(() => {
     if (user?.token) {
       const fetchCategories = async () => {
         try {
-          const response = await axios.get(END_POINT_CATEGORIES, {
-            headers: {
-              'Authorization': `Bearer ${user.token}`
-            }
-          });
+          const response = await axios.get(END_POINT_CATEGORIES);
           setCategories(response.data);
         } catch (error) {
-          console.log("Error al cargar categorías:", error);
+          console.error("Error al cargar categorías:", error);
         }
       };
-      fetchCategories();
-    }
-  }, [END_POINT_CATEGORIES, user?.token]);
-  
-
-  useEffect(() => {
-    if (user?.token) {
+      
       const fetchFeatures = async () => {
         try {
-          const response = await axios.get(END_POINT_FEATURES, {
-            headers: {
-              'Authorization': `Bearer ${user.token}`
-            }
-          });
+          const response = await axios.get(END_POINT_FEATURES);
           setFeatures(response.data);
-          console.log(response.data);
           
         } catch (error) {
-          console.log("Error al cargar categorías:", error);
+          console.error("Error al cargar características:", error);
         }
       };
+      
+      fetchCategories();
       fetchFeatures();
+    }else{
+      return <Navigate to="/login" replace />;
     }
-  }, [END_POINT_FEATURES, user?.token]);
-
-  if (loading) {
-    return <p>Cargando...</p>;
-  }
-
-  if (!user?.token) {
-    return <Navigate to="/login" replace />;
-  }
+  }, [END_POINT_CATEGORIES, END_POINT_FEATURES, user?.token]);
+  
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategories(prev => {
@@ -108,6 +97,22 @@ const AddCabin = ({ onClose }) => {
     setImages(updatedImages);
   };
 
+  const getIconComponent = (iconName) => {
+    try {
+      const iconExists = Object.keys(library.definitions).some(prefix =>
+        Object.keys(library.definitions[prefix]).includes(iconName)
+      );
+
+      if (iconExists) {
+        return ["fas", iconName];
+      }
+      return ["fas", "question-circle"];
+    } catch (error) {
+      console.error("Error al verificar el icono:", error);
+      return ["fas", "question-circle"];
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -142,7 +147,6 @@ const AddCabin = ({ onClose }) => {
                       showConfirmButton: false,
                     });
 
-      // Primero asignamos las categorías
       const categoryPromises = selectedCategories.map(categoryId => 
         axios({
           method: "post",
@@ -170,7 +174,7 @@ const AddCabin = ({ onClose }) => {
 
         await Promise.all(featuresPromises);
         console.log("Todas las características fueron asignadas correctamente");
-        // Luego enviamos las imágenes una a una
+
         const imagePromises = images.map(imageUrl => 
           axios({
             method: "post",
@@ -213,7 +217,7 @@ const AddCabin = ({ onClose }) => {
       onClose();
 
     } catch (err) {
-        console.log("Error al crear la cabaña:", err.response?.data || err.message);
+        console.error("Error al crear la cabaña:", err.response?.data || err.message);
     }
   };
 
@@ -251,7 +255,6 @@ const AddCabin = ({ onClose }) => {
                   type="checkbox"
                   checked={selectedCategories.includes(category.id)}
                   onChange={() => handleCategoryChange(category.id)}
-                  className={styles.categoryCheckbox}
                 />
                 {category.nombre}
               </label>
@@ -265,7 +268,10 @@ const AddCabin = ({ onClose }) => {
                   type="checkbox"
                   checked={selectedFeatures.includes(feature.id)}
                   onChange={() => handleFeatureChange(feature.id)}
-                  className={styles.featureCheckbox}
+                />
+                <FontAwesomeIcon 
+                  icon={getIconComponent(feature.icono)} 
+                  className={styles.featureIcon} 
                 />
                 {feature.nombre}
               </label>

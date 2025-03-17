@@ -5,12 +5,41 @@ import { Link } from "react-router-dom";
 import Gallery from "@/components/Gallery";
 import axios from "axios";
 import { ENDPOINTS } from "../../config/config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+// Agregar todos los iconos a la librería
+library.add(fas, far, fab);
+
+// Función para verificar si un icono existe en Font Awesome
+const getIconComponent = (iconName) => {
+  try {
+    // Intentar obtener el icono
+    const icon = library.definitions.fas[iconName] || 
+                 library.definitions.far[iconName] || 
+                 library.definitions.fab[iconName];
+    
+    if (icon) {
+      return ["fas", iconName];
+    }
+    
+    // Si no existe, retornar un icono por defecto
+    return ["fas", "question-circle"];
+  } catch (error) {
+    console.error("Error al verificar el icono:", error);
+    return ["fas", "question-circle"];
+  }
+};
+
 const CabinDetail = () => {
   const { id } = useParams();
   const END_POINT = `${ENDPOINTS.GET_CABIN_BY_ID}/${id}`
   const [showModal, setShowModal] = useState(false);
   const [cabin, setCabin] = useState([]);
-
+  const [features, setFeatures] = useState([]);
   useEffect(() => {
     axios(END_POINT).then((res) => {
         setCabin(res.data);
@@ -18,10 +47,12 @@ const CabinDetail = () => {
       })
   }, [END_POINT]);
   useEffect(() => {
-    axios(`${ENDPOINTS.GET_CABIN_FEATURES}/${cabin.id}`).then((res) => {
+    axios(`${ENDPOINTS.GET_CABIN_FEATURES}/${id}`).then((res) => {
       console.log(res.data);
+      setFeatures(res.data);
+      console.log(features);
     });
-  }, [cabin.id]);
+  }, [id]);
 
 
   useEffect(() => {
@@ -90,6 +121,18 @@ const CabinDetail = () => {
             ${cabin.precioPorNoche} por noche
           </span>
           <p className={styles.description}>{cabin.descripcion}</p>
+        </div>
+        <div className={styles.featuresContainer}>
+          {features.map((feature) => (
+            <div className={styles.feature} key={feature.id}>
+              <FontAwesomeIcon 
+                icon={getIconComponent(feature.icono)}
+                size="lg" 
+                className={styles.featureIcon} 
+              />
+              <p>{feature.nombre}</p>
+            </div>
+          ))}
         </div>
       </div>
       {showModal && (
