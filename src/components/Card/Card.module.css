@@ -10,6 +10,7 @@
 
 .text {
     padding: 20px;
+    text-align: left;
 }
 
 .price {
@@ -109,6 +110,14 @@
 
   div:where(.swal2-icon).swal2-info {
     color: var(--color5);
+  }
+
+  .description{
+    color:#6b6b6b; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-width: 100%;
   }
 
 @media (max-width: 480px) {
