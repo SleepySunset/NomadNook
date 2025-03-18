@@ -16,7 +16,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        gap: .5rem;
+        gap: 1rem;
         margin-top: 2rem;
         
         .back {
@@ -53,8 +53,8 @@
         }
         .title{
             text-align: left;
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 500;
         }
         .imagesContainer{
             width: 100%;
@@ -104,6 +104,7 @@
                 padding: .4rem .8rem;
                 height: 1.7rem;
                 border-radius: .4rem;
+                background-color: var(--color6);
                 border: 1px solid var(--color2);
                 display: flex;
                 justify-content: center;
@@ -116,15 +117,115 @@
                 }
             }
         }
-        .text{
+        .content{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
 
-            .description{
-                font-size: .9rem;
+            .info{
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                .description{
+                    font-size: 1rem;
+                    font-weight: 500;
+                }
+                .featuresContainer{
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    gap: 1rem;
+                    background-color: var(--color3);
+
+                    &::before{
+                        content: "";
+                        display: block;
+                        height: 1.5px;
+                        width: 80%;
+                        background-color: #b5b5b5;
+                        margin-bottom: .5rem;
+                    }
+                    .title{
+                        font-size: 1.4rem;
+                        font-weight: 600;
+                    }
+
+                    .features{
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        max-width: max-content;
+                        row-gap: .7rem;
+                        column-gap: .5rem;
+
+                        .feature{
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            gap: .5rem;
+                            .text{
+                                font-size: .8rem;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+                }
             }
-            .price{
-                font-size: 1.5rem;
-                font-weight: 700;
+            .reserveContainer{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                width: 40%;
+                height: 100%;
+                background-color: var(--color6);
+                border-radius: .7rem;
+                padding: 1rem;
+                
+                .reserve{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .price{
+                    font-size: .9rem;
+                    font-weight: 400;
+                    .value{
+                        font-size: 1.1rem;
+                        font-weight: 700;
+                    }
+                }
+                
             }
+        }
+    }
+
+    .loadingContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        margin-top: 2rem;
+        .loading{
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--color1);
+        }
+    }
+
+    .notFound{
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--color1);
+        margin-top: 2rem;
+        display: flex;
+
+        .notFoundText{
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--color1);
         }
     }
 
