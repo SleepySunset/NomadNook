@@ -1,4 +1,5 @@
 // const API_BASE_URL_AWS = "http://nomadnook-env-1.eba-k2m2rsbd.us-east-1.elasticbeanstalk.com";
+// const API_BASE_URL_RAILWAY = "https://nomadnook-nomadnook.up.railway.app";
 const API_BASE_URL_CLOUDFRONT = "https://d27f1re7xc3m2a.cloudfront.net";
 
 export const API_BASE_URL = API_BASE_URL_CLOUDFRONT;
@@ -13,6 +14,13 @@ export const ENDPOINTS = {
 
     // CATEGORIAS
     GET_ALL_CATEGORIES: `${API_BASE_URL}/api/categorias/listarTodos`,
+
+    // CARACTERISTICAS
+    GET_ALL_FEATURES: `${API_BASE_URL}/api/caracteristicas/listarTodos`,
+    GET_CABIN_FEATURES: `${API_BASE_URL}/api/caracteristicas/buscar/alojamiento`,
+    ADD_FEATURE: `${API_BASE_URL}/api/caracteristicas/guardar`,
+    DELETE_FEATURE: `${API_BASE_URL}/api/caracteristicas/eliminar`,
+    UPDATE_FEATURE: `${API_BASE_URL}/api/caracteristicas/actualizar`,
 
     // USUARIOS
     LOGIN: `${API_BASE_URL}/api/auth/login`,

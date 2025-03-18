@@ -15,6 +15,7 @@ const CardsGrid = ({cabins, selectedCategories}) => {
               cabin.categorias.some(category => selectedCategories.includes(category.id))
             );
             setFilteredCabins(filtered);
+            setCurrentPage(0);
           } else {
             setFilteredCabins(cabins);
           }
