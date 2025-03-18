@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, Share2, Copy } from "lucide-react";
+import { Heart, Share2, Copy } from "lucide-react"; //Star
 import styles from "./Card.module.css";
 import Swal from "sweetalert2";
-import { FaFacebook, FaTwitter, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { useAuth } from "../../hooks/AuthContext";
 
 const Card = ({ id, title, description, images, pricePerNight, addToFavorites, removeFromFavorites, isFavorite: initialFavorite }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
-
+    // const rating = 4.96; //de momento para ver valoración
+  
   const [favorite, setFavorite] = useState(initialFavorite);
   const [isOpen, setIsOpen] = useState(false);
   const url = window.location.origin + `/cabin/${id}`;
@@ -129,7 +130,7 @@ const Card = ({ id, title, description, images, pricePerNight, addToFavorites, r
                 <FaWhatsapp className={styles.whatsapp} />
               </button>
               <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "x")}>
-                <FaTwitter className={styles.twitter} />
+              <img src="/x.jpeg" className={styles.x} />
               </button>
               <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "facebook")}>
                 <FaFacebook className={styles.facebook} />
@@ -139,7 +140,13 @@ const Card = ({ id, title, description, images, pricePerNight, addToFavorites, r
         </div>
       </Link>
       <div className={styles.text}>
+        <div className={styles.header}>
         <h3 className={styles.title}>{title}</h3>
+          {/* <div className={styles.rating}>
+            <span className={styles.value}>{rating.toFixed(2)}</span>
+            <Star className={styles.star}></Star>
+            </div> */}
+            </div>
         <p className={styles.description}>{description}</p>
       </div>
     </div>
