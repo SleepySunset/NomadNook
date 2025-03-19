@@ -9,6 +9,8 @@ export const ENDPOINTS = {
     GET_ALL_CABINS: `${API_BASE_URL}/api/alojamientos/listarTodos`,
     GET_CABIN_BY_ID: `${API_BASE_URL}/api/alojamientos/buscar`,
     ADD_CABIN: `${API_BASE_URL}/api/alojamientos/guardar`,
+    DELETE_CABIN: `${API_BASE_URL}/api/alojamientos/eliminar`,
+    UPDATE_CABIN: `${API_BASE_URL}/api/alojamientos/actualizar`,
 
     // CATEGORIAS
     GET_ALL_CATEGORIES: `${API_BASE_URL}/api/categorias/listarTodos`,
