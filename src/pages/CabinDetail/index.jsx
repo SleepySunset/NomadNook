@@ -76,20 +76,20 @@ const CabinDetail = () => {
     setShowModal(false);
   };
 
-  if (Object.keys(cabin).length === 0) {
-    return (
-      <main className={styles.detail}>
-        <div className={styles.notFound}>
-          <p className={styles.notFoundText}>Cabaña no encontrada.</p>
-        </div>
-      </main>
-    )
-  }
   if (loading) {
     return (
       <main className={styles.detail}>
         <div className={styles.loadingContainer}>
           <p className={styles.loading} color="red">Cargando...</p>
+        </div>
+      </main>
+    )
+  }
+  if (Object.keys(cabin).length === 0) {
+    return (
+      <main className={styles.detail}>
+        <div className={styles.notFound}>
+          <p className={styles.notFoundText}>Cabaña no encontrada.</p>
         </div>
       </main>
     )
@@ -131,7 +131,12 @@ const CabinDetail = () => {
         )}
         <div className={styles.content}>
           <div className={styles.info}>
-            <p className={styles.description}>{cabin.descripcion}</p>
+            <div className={styles.description}>
+              <h3 className={styles.title}>Descripción</h3>
+              <p className={styles.text}>
+                {cabin.descripcion}
+              </p>
+              </div>
             <div className={styles.featuresContainer}>
               <h3 className={styles.title}>Características</h3>
               <div className={styles.features}>
