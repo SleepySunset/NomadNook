@@ -1,10 +1,8 @@
+import styles from "./EditCabin.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import styles from "./AddCabin.module.css";
-import { ENDPOINTS, API_BASE_URL } from "@/config/config";  
-import { useAuth } from "@/hooks/AuthContext";
-import { Navigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { API_BASE_URL, ENDPOINTS } from "../../config/config";
+import { useAuth } from "../../hooks/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -13,58 +11,81 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 
 library.add(fas, far, fab);
 
-const AddCabin = ({ onClose }) => {
-  const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
-  const END_POINT_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
-  const END_POINT_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
-  const { user } = useAuth();
-
+const EditCabin = ({ id, onClose }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
-  const [features, setFeatures] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [capacity, setCapacity] = useState("");
+  const [features, setFeatures] = useState([]);
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
-  const [images, setImages] = useState([]);
-  
-  
+  // const [images, setImages] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+
+  const END_POINT_GET_CABIN_BY_ID = ENDPOINTS.GET_CABIN_BY_ID;
+  const END_POINT_UPDATE_CABIN = ENDPOINTS.UPDATE_CABIN;
+  const END_POINT_GET_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
+  const END_POINT_GET_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
+  const END_POINT_UPDATE_CATEGORIES = `${API_BASE_URL}/api/alojamientos/${id}/categorias`;
+  const END_POINT_UPDATE_FEATURES = `${API_BASE_URL}/api/alojamientos/${id}/caracteristicas`;
+
+  const { user } = useAuth();
+
   useEffect(() => {
-    if (user?.token) {
-      const fetchCategories = async () => {
-        try {
-          const response = await axios.get(END_POINT_CATEGORIES);
-          setCategories(response.data);
-        } catch (error) {
-          console.error("Error al cargar categorías:", error);
-        }
-      };
-      
-      const fetchFeatures = async () => {
-        try {
-          const response = await axios.get(END_POINT_FEATURES);
-          setFeatures(response.data);
-          
-        } catch (error) {
-          console.error("Error al cargar características:", error);
-        }
-      };
-      
-      fetchCategories();
-      fetchFeatures();
-    }else{
-      return <Navigate to="/login" replace />;
-    }
-  }, [END_POINT_CATEGORIES, END_POINT_FEATURES, user?.token]);
-  
+    const fetchFeatures = async () => {
+      try {
+        const response = await axios.get(END_POINT_GET_FEATURES);
+        setFeatures(response.data);
+      } catch (error) {
+        console.error("Error al cargar características:", error);
+      }
+    };
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(END_POINT_GET_CATEGORIES);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error al cargar categorías:", error);
+      }
+    };
+    const fetchCabin = async () => {
+      try {
+        const response = await axios(`${END_POINT_GET_CABIN_BY_ID}/${id}`);
+        setTitle(response.data.titulo);
+        setDescription(response.data.descripcion);
+        setCapacity(response.data.capacidad);
+        setPricePerNight(response.data.precioPorNoche);
+        setLocation(response.data.ubicacion);
+        setAddress(response.data.direccion);
+        setSelectedCategories(
+          response.data.categorias.map((categoria) => categoria.id)
+        );
+        setSelectedFeatures(
+          response.data.caracteristicas.map(
+            (caracteristica) => caracteristica.id
+          )
+        );
+      } catch (error) {
+        console.error("Error al obtener la cabaña:", error);
+      }
+    };
+
+    fetchCabin();
+    fetchCategories();
+    fetchFeatures();
+  }, [
+    id,
+    END_POINT_GET_CABIN_BY_ID,
+    END_POINT_GET_CATEGORIES,
+    END_POINT_GET_FEATURES,
+  ]);
 
   const handleCategoryChange = (categoryId) => {
-    setSelectedCategories(prev => {
+    setSelectedCategories((prev) => {
       if (prev.includes(categoryId)) {
-        return prev.filter(id => id !== categoryId);
+        return prev.filter((id) => id !== categoryId);
       } else {
         return [...prev, categoryId];
       }
@@ -72,34 +93,18 @@ const AddCabin = ({ onClose }) => {
   };
 
   const handleFeatureChange = (featureId) => {
-    setSelectedFeatures(prev => {
+    setSelectedFeatures((prev) => {
       if (prev.includes(featureId)) {
-        return prev.filter(id => id !== featureId);
+        return prev.filter((id) => id !== featureId);
       } else {
         return [...prev, featureId];
       }
     });
   };
 
-  const addImageInput = () => {
-    setImages([...images, ""]);
-  };
-
-  const deleteImageInput = (index) => {
-    if (images.length > 1) {
-      setImages(images.filter((_, i) => i !== index));
-    }
-  };
-
-  const handleImageChange = (index, value) => {
-    const updatedImages = [...images];
-    updatedImages[index] = value;
-    setImages(updatedImages);
-  };
-
   const getIconComponent = (iconName) => {
     try {
-      const iconExists = Object.keys(library.definitions).some(prefix =>
+      const iconExists = Object.keys(library.definitions).some((prefix) =>
         Object.keys(library.definitions[prefix]).includes(iconName)
       );
 
@@ -117,108 +122,73 @@ const AddCabin = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      const response = await axios({
-        method: "post",
-        url: END_POINT_CABIN,
-        headers: {
-          'Authorization': `Bearer ${user.token}`,
-          'Content-Type': 'application/json'
-        },
-        data: {
+      const response = await axios.put(
+        `${END_POINT_UPDATE_CABIN}/${id}`,
+        {
           titulo: title,
           descripcion: description,
-          capacidad: parseInt(capacity),
+          capacidad: parseInt(capacity, 10),
           precioPorNoche: parseFloat(pricePerNight),
           ubicacion: location,
           direccion: address,
           disponible: true,
           propietario: {
-            id: 2
-          }
+            id: 1,
+          },
+          imagenes: [],
+          categorias: [],
+          caracteristicas: selectedCategories,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
-
-      const cabinId = response.data.id;
-      console.log("Cabaña creada con ID:", cabinId);
-      // Mensaje de Cabaña Añadida
-            Swal.fire({
-                      title: "Cabaña añadida!",
-                      icon: "success",
-                      timer: 2000,
-                      showConfirmButton: false,
-                    });
-
-      const categoryPromises = selectedCategories.map(categoryId => 
-        axios({
-          method: "post",
-          url: `${API_BASE_URL}/api/alojamientos/${cabinId}/categorias/${categoryId}`,
-          headers: {
-            'Authorization': `Bearer ${user.token}`,
-            'Content-Type': 'application/json'
-          }
-        })
-      );
-      const featuresPromises = selectedFeatures.map(featureId => 
-        axios({
-          method: "post",
-          url: `${API_BASE_URL}/api/alojamientos/${cabinId}/caracteristicas/${featureId}`,
-          headers: {
-            'Authorization': `Bearer ${user.token}`,
-            'Content-Type': 'application/json'
-          }
-        })
       );
 
-      try {
-        await Promise.all(categoryPromises);
-        console.log("Todas las categorías fueron asignadas correctamente");
-
-        await Promise.all(featuresPromises);
-        console.log("Todas las características fueron asignadas correctamente");
-
-        const imagePromises = images.map(imageUrl => 
-          axios({
-            method: "post",
-            url: `${API_BASE_URL}/api/imagenes/guardar`,
-            headers: {
-              'Authorization': `Bearer ${user.token}`,
-              'Content-Type': 'application/json'
-            },
-            data: {
-              url: imageUrl,
-              alojamiento: {
-                id: cabinId
-              }
-            }
-          })
-        );
-
-        await Promise.all(imagePromises);
-        console.log("Todas las imágenes fueron guardadas correctamente");
-
-      } catch (error) {
-        if (error.response) {
-          console.error("Error con la respuesta:", error.response.data);
-        } else if (error.request) {
-          console.error("Error con la petición:", error.request);
-        } else {
-          console.error("Error:", error.message);
+      const responseCategories = await axios.post(
+        END_POINT_UPDATE_CATEGORIES,
+        selectedCategories.map((categoryId) => ({ id: categoryId })),
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
         }
-      }
+      );
+
+      const responseFeatures = await axios.post(
+        END_POINT_UPDATE_FEATURES,
+        selectedFeatures.map((featureId) => ({ id: featureId })),
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       setTitle("");
       setDescription("");
+      setCategories([]);
       setCapacity("");
       setPricePerNight("");
       setLocation("");
       setAddress("");
-      setImages([]);
+      // setImages
       setSelectedCategories([]);
       setSelectedFeatures([]);
       onClose();
 
-    } catch (err) {
-        console.error("Error al crear la cabaña:", err.response?.data || err.message);
+      console.log(
+        "Cabaña actualizada con éxito:",
+        response.data,
+        responseCategories.data,
+        responseFeatures.data
+      );
+    } catch (error) {
+      console.log("Error al actualizar la cabaña: ", error);
     }
   };
 
@@ -228,7 +198,7 @@ const AddCabin = ({ onClose }) => {
         <span className={styles.closeButton} onClick={onClose}>
           &times;
         </span>
-        <h2 className={styles.title}>Agregar una nueva cabaña</h2>
+        <h2 className={styles.title}>Editar cabaña</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label}>Ingrese el nombre de la cabaña</label>
           <input
@@ -256,6 +226,7 @@ const AddCabin = ({ onClose }) => {
                   type="checkbox"
                   checked={selectedCategories.includes(category.id)}
                   onChange={() => handleCategoryChange(category.id)}
+                  className={styles.categoryCheckbox}
                 />
                 {category.nombre}
               </label>
@@ -270,9 +241,9 @@ const AddCabin = ({ onClose }) => {
                   checked={selectedFeatures.includes(feature.id)}
                   onChange={() => handleFeatureChange(feature.id)}
                 />
-                <FontAwesomeIcon 
-                  icon={getIconComponent(feature.icono)} 
-                  className={styles.featureIcon} 
+                <FontAwesomeIcon
+                  icon={getIconComponent(feature.icono)}
+                  className={styles.featureIcon}
                 />
                 {feature.nombre}
               </label>
@@ -325,7 +296,7 @@ const AddCabin = ({ onClose }) => {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
-          <label className={styles.label}>
+          {/* <label className={styles.label}>
             Cargue aquí las imágenes correspondientes a su cabaña
           </label>
           {images.map((image, index) => (
@@ -353,20 +324,20 @@ const AddCabin = ({ onClose }) => {
             onClick={addImageInput}
           >
             Agregar url
-          </button>
+          </button> */}
 
           <button className={styles.submitBtn} type="submit">
-            Guardar cabaña
+            Actualizar cabaña
           </button>
           {/* {responseStatus == "success" ? (
-            <div>Cabaña agregada con éxito</div>
-          ) : (
-            <div>No se ha podido agregar la cabaña</div>
-          )} */}
+                <div>Cabaña agregada con éxito</div>
+              ) : (
+                <div>No se ha podido agregar la cabaña</div>
+              )} */}
         </form>
       </div>
     </div>
   );
 };
 
-export default AddCabin;
+export default EditCabin;

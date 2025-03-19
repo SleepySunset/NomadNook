@@ -10,6 +10,7 @@
 
 .text {
     padding: 20px;
+    text-align: left;
 }
 
 .price {
@@ -102,13 +103,62 @@
     cursor: pointer;
   }
   
+  .x  {
+    background: none;
+    border: none;
+    cursor: pointer;
+    object-fit: contain;
+    width:17px;
+    height: 17px;
+  }
+
   .whatsapp { color: green; }
   .instagram { color: #E1306C; }
-  .twitter { color: #1DA1F2; }
   .facebook { color: #1877F2; }
 
   div:where(.swal2-icon).swal2-info {
     color: var(--color5);
+  }
+
+ .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; 
+ }
+
+ .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .description{
+    color:#6b6b6b; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    max-width: 100%;
+  }
+
+  .rating {
+    display: flex;
+    position:relative;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .value {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .star {
+    width: 1rem;
+    height: 1rem;
+    color: #000000;
+    fill:#FFD700;
   }
 
 @media (max-width: 480px) {

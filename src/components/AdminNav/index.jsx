@@ -1,11 +1,13 @@
-import { MdCabin } from "react-icons/md";
-// import DateRangeIcon from "@mui/icons-material/DateRange";
-import { FaUserEdit } from "react-icons/fa";
-// import QueryStatsIcon from "@mui/icons-material/QueryStats";
-// import SettingsIcon from "@mui/icons-material/Settings";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import styles from "./AdminNav.module.css";
 import { Link } from "react-router-dom";
+import styles from "./AdminNav.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+
+library.add(fas, far, fab);
 
 const AdminNav = ({ activeOpt }) => {
   return (
@@ -17,9 +19,13 @@ const AdminNav = ({ activeOpt }) => {
               activeOpt === "home" ? styles.active : null
             }`}
           >
-            <KeyboardBackspaceIcon
-              sx={{ color: activeOpt === "home" ? "#bc6c25" : "#565656" }}
-              fontSize="small"
+            <FontAwesomeIcon 
+              icon={["fas", "arrow-left"]} 
+              size="lg"
+              style={{ 
+                color: activeOpt === "home" ? "#bc6c25" : "#565656",
+                fontSize: "1.5rem"
+              }}
             />
             <span
               className={
@@ -36,9 +42,13 @@ const AdminNav = ({ activeOpt }) => {
               activeOpt === "cabin" ? styles.active : null
             }`}
           >
-            <MdCabin
-              sx={{ color: activeOpt === "cabin" ? "#bc6c25" : "#565656" }}
-              fontSize="large"
+            <FontAwesomeIcon 
+              icon={["fas", "house"]} 
+              size="lg"
+              style={{ 
+                color: activeOpt === "cabin" ? "#bc6c25" : "#565656",
+                fontSize: "1.5rem"
+              }}
             />
             <span
               className={
@@ -55,10 +65,44 @@ const AdminNav = ({ activeOpt }) => {
               activeOpt === "user" ? styles.active : null
             }`}
           >
-            <FaUserEdit sx={{ color: activeOpt === "user" ? "#bc6c25" : "#565656" }} fontSize="large" />
-            <span className={
+            <FontAwesomeIcon 
+              icon={["fas", "users"]} 
+              size="lg"
+              style={{ 
+                color: activeOpt === "user" ? "#bc6c25" : "#565656",
+                fontSize: "1.5rem"
+              }}
+            />
+            <span
+              className={
                 activeOpt === "user" ? styles.activeText : styles.navText
-              }>Gestión de usuarios</span>
+              }
+            >
+              Gestión de usuarios
+            </span>
+          </li>
+        </Link>
+        <Link to="/administracion/featuresmanagement">
+          <li
+            className={`${styles.navOpt} ${
+              activeOpt === "features" ? styles.active : null
+            }`}
+          >
+            <FontAwesomeIcon 
+              icon={["fas", "list-check"]} 
+              size="lg"
+              style={{ 
+                color: activeOpt === "features" ? "#bc6c25" : "#565656",
+                fontSize: "1.5rem"
+              }}
+            />
+            <span
+              className={
+                activeOpt === "features" ? styles.activeText : styles.navText
+              }
+            >
+              Gestión de características
+            </span>
           </li>
         </Link>
         {/* <li className={styles.navOpt}>
