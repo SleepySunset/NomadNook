@@ -1,5 +1,5 @@
 import styles from "./Home.module.css";
-import Categories from "@/components/Categories"
+import Categories from "@/components/Categories";
 import Searchbar from "@/components/Searchbar";
 import CardsGrid from "@/layouts/CardsGrid";
 import axios from "axios";
@@ -7,9 +7,10 @@ import { useState, useEffect } from "react";
 import { ENDPOINTS } from '../../config/config';
 
 const Home = () => {
-  const [cabins, setCabins] = useState([])
+  const [cabins, setCabins] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
 
   useEffect(() => {
     const fetchCabins = async () => {
@@ -20,27 +21,39 @@ const Home = () => {
         console.error("Error al obtener las cabañas:", error);
       }
     };
-
     fetchCabins();
   }, []);
 
   useEffect(() => {
     const categoriesMap = new Map();
-    
     cabins.forEach(cabin => {
       cabin.categorias.forEach(category => {
         categoriesMap.set(category.id, category);
       });
     });
-
     setCategories(Array.from(categoriesMap.values()));
   }, [cabins]);
 
+  const handleDateRangeChange = (startDate, endDate) => {
+    setDateRange({ startDate, endDate });
+  };
+
   return (
     <main className={styles.home}>
-      <Categories categories={categories} selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
-      <Searchbar />
-      <CardsGrid cabins={cabins} selectedCategories={selectedCategories} />
+      <Categories 
+        categories={categories} 
+        selectedCategories={selectedCategories} 
+        setSelectedCategories={setSelectedCategories} 
+      />
+      <Searchbar 
+        onDateSelection={handleDateRangeChange}
+        selectedDates={dateRange}
+      />
+      <CardsGrid 
+        cabins={cabins} 
+        selectedCategories={selectedCategories}
+        dateRange={dateRange}
+      />
     </main>
   );
 };
