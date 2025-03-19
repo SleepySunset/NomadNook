@@ -13,8 +13,8 @@ const CabinTable = () => {
   const [selectedCabinDelete, setSelectedCabinDelete] = useState(null);
   const [selectedCabinEdit, setSelectedCabinEdit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const END_POINT = ENDPOINTS.GET_ALL_CABINS;
-  const END_POINT_DELETE = ENDPOINTS.DELETE_CABIN;
+  const END_POINT_GET_CABINS = ENDPOINTS.GET_ALL_CABINS;
+  const END_POINT_DELETE_CABIN = ENDPOINTS.DELETE_CABIN;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -22,26 +22,24 @@ const CabinTable = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setSelectedCabinEdit(null);
+    setSelectedCabinDelete(null);
   };
 
 
   useEffect(() => {
-    axios(END_POINT).then((res) => {
+    axios(END_POINT_GET_CABINS).then((res) => {
       setData(res.data);
       console.log(res.data);
     });
-  }, [END_POINT]);
+  }, [END_POINT_GET_CABINS, selectedCabinEdit]);
 
-  const handleEdit = () => {
-    if (!selectedCabinEdit) return;
-    openModal();
-  };
 
   const handleDelete = async () => {
     if (!selectedCabinDelete) return;
 
     try {
-      await axios.delete(`${END_POINT_DELETE}/${selectedCabinDelete.id}`, {
+      await axios.delete(`${END_POINT_DELETE_CABIN}/${selectedCabinDelete.id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "application/json",
@@ -57,13 +55,13 @@ const CabinTable = () => {
   };
 
   return (
-    <div>
+    <div className={styles.tableContainer}>
       <table className={styles.table}>
         <thead>
           <tr>
             <th>Id</th>
             <th>Nombre</th>
-            <th>Tipo</th>
+            <th>Categorías</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -77,7 +75,7 @@ const CabinTable = () => {
                 <span
                   onClick={() => {
                     setSelectedCabinEdit(cabin);
-                    handleEdit();
+                    openModal();
                   }}
                   className={styles.actionBtn}
                 >

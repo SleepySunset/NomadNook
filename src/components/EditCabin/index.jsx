@@ -1,44 +1,197 @@
 import styles from "./EditCabin.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { ENDPOINTS } from "../../config/config";
+import { API_BASE_URL, ENDPOINTS } from "../../config/config";
+import { useAuth } from "../../hooks/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fas, far, fab);
 
 const EditCabin = ({ id, onClose }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [capacity, setCapacity] = useState("");
+  const [features, setFeatures] = useState([]);
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
   // const [images, setImages] = useState([]);
-  // const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
 
-  const END_POINT_GET_BY_ID = ENDPOINTS.GET_CABIN_BY_ID;
+  const END_POINT_GET_CABIN_BY_ID = ENDPOINTS.GET_CABIN_BY_ID;
+  const END_POINT_UPDATE_CABIN = ENDPOINTS.UPDATE_CABIN;
+  const END_POINT_GET_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
+  const END_POINT_GET_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
+  const END_POINT_UPDATE_CATEGORIES = `${API_BASE_URL}/api/alojamientos/${id}/categorias`;
+  const END_POINT_UPDATE_FEATURES = `${API_BASE_URL}/api/alojamientos/${id}/caracteristicas`;
+
+  const { user } = useAuth();
 
   useEffect(() => {
+    const fetchFeatures = async () => {
+      try {
+        const response = await axios.get(END_POINT_GET_FEATURES);
+        setFeatures(response.data);
+      } catch (error) {
+        console.error("Error al cargar características:", error);
+      }
+    };
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(END_POINT_GET_CATEGORIES);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error al cargar categorías:", error);
+      }
+    };
     const fetchCabin = async () => {
       try {
-        const response = await axios(`${END_POINT_GET_BY_ID}/${id}`);
+        const response = await axios(`${END_POINT_GET_CABIN_BY_ID}/${id}`);
         setTitle(response.data.titulo);
         setDescription(response.data.descripcion);
         setCapacity(response.data.capacidad);
         setPricePerNight(response.data.precioPorNoche);
         setLocation(response.data.ubicacion);
         setAddress(response.data.direccion);
-        // setSelectedCategories(response.data.categorias);
+        setSelectedCategories(
+          response.data.categorias.map((categoria) => categoria.id)
+        );
+        setSelectedFeatures(
+          response.data.caracteristicas.map(
+            (caracteristica) => caracteristica.id
+          )
+        );
       } catch (error) {
         console.error("Error al obtener la cabaña:", error);
       }
     };
 
     fetchCabin();
-  }, [id, END_POINT_GET_BY_ID]);
+    fetchCategories();
+    fetchFeatures();
+  }, [
+    id,
+    END_POINT_GET_CABIN_BY_ID,
+    END_POINT_GET_CATEGORIES,
+    END_POINT_GET_FEATURES,
+  ]);
 
-  const handleSubmit = () => {
+  const handleCategoryChange = (categoryId) => {
+    setSelectedCategories((prev) => {
+      if (prev.includes(categoryId)) {
+        return prev.filter((id) => id !== categoryId);
+      } else {
+        return [...prev, categoryId];
+      }
+    });
+  };
 
-  }
- 
+  const handleFeatureChange = (featureId) => {
+    setSelectedFeatures((prev) => {
+      if (prev.includes(featureId)) {
+        return prev.filter((id) => id !== featureId);
+      } else {
+        return [...prev, featureId];
+      }
+    });
+  };
+
+  const getIconComponent = (iconName) => {
+    try {
+      const iconExists = Object.keys(library.definitions).some((prefix) =>
+        Object.keys(library.definitions[prefix]).includes(iconName)
+      );
+
+      if (iconExists) {
+        return ["fas", iconName];
+      }
+      return ["fas", "question-circle"];
+    } catch (error) {
+      console.error("Error al verificar el icono:", error);
+      return ["fas", "question-circle"];
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.put(
+        `${END_POINT_UPDATE_CABIN}/${id}`,
+        {
+          titulo: title,
+          descripcion: description,
+          capacidad: parseInt(capacity, 10),
+          precioPorNoche: parseFloat(pricePerNight),
+          ubicacion: location,
+          direccion: address,
+          disponible: true,
+          propietario: {
+            id: 1,
+          },
+          imagenes: [],
+          categorias: [],
+          caracteristicas: selectedCategories,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseCategories = await axios.post(
+        END_POINT_UPDATE_CATEGORIES,
+        selectedCategories.map((categoryId) => ({ id: categoryId })),
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseFeatures = await axios.post(
+        END_POINT_UPDATE_FEATURES,
+        selectedFeatures.map((featureId) => ({ id: featureId })),
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setTitle("");
+      setDescription("");
+      setCategories([]);
+      setCapacity("");
+      setPricePerNight("");
+      setLocation("");
+      setAddress("");
+      // setImages
+      setSelectedCategories([]);
+      setSelectedFeatures([]);
+      onClose();
+
+      console.log(
+        "Cabaña actualizada con éxito:",
+        response.data,
+        responseCategories.data,
+        responseFeatures.data
+      );
+    } catch (error) {
+      console.log("Error al actualizar la cabaña: ", error);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.modalContent}>
@@ -66,7 +219,7 @@ const EditCabin = ({ id, onClose }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <label className={styles.label}>Seleccione las categorías</label>
-          {/* <div className={styles.categoriesContainer}>
+          <div className={styles.categoriesContainer}>
             {categories.map((category) => (
               <label key={category.id} className={styles.categoryLabel}>
                 <input
@@ -78,7 +231,24 @@ const EditCabin = ({ id, onClose }) => {
                 {category.nombre}
               </label>
             ))}
-          </div> */}
+          </div>
+          <label className={styles.label}>Seleccione las características</label>
+          <div className={styles.featuresContainer}>
+            {features.map((feature) => (
+              <label key={feature.id} className={styles.featureLabel}>
+                <input
+                  type="checkbox"
+                  checked={selectedFeatures.includes(feature.id)}
+                  onChange={() => handleFeatureChange(feature.id)}
+                />
+                <FontAwesomeIcon
+                  icon={getIconComponent(feature.icono)}
+                  className={styles.featureIcon}
+                />
+                {feature.nombre}
+              </label>
+            ))}
+          </div>
           <label className={styles.label}>Ingrese el precio por noche</label>
           <input
             required
