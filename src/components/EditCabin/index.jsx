@@ -20,9 +20,13 @@ const EditCabin = ({ id, onClose }) => {
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
-  // const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [selectedImageToDelete, setSelectedImageToDelete] = useState(null)
+
+
 
   const END_POINT_GET_CABIN_BY_ID = ENDPOINTS.GET_CABIN_BY_ID;
   const END_POINT_UPDATE_CABIN = ENDPOINTS.UPDATE_CABIN;
@@ -30,6 +34,7 @@ const EditCabin = ({ id, onClose }) => {
   const END_POINT_GET_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
   const END_POINT_UPDATE_CATEGORIES = `${API_BASE_URL}/api/alojamientos/${id}/categorias`;
   const END_POINT_UPDATE_FEATURES = `${API_BASE_URL}/api/alojamientos/${id}/caracteristicas`;
+  const END_POINT_DELETE_IMAGE = ENDPOINTS.DELETE_IMAGE;
 
   const { user } = useAuth();
 
@@ -67,6 +72,7 @@ const EditCabin = ({ id, onClose }) => {
             (caracteristica) => caracteristica.id
           )
         );
+        setImages(response.data.imagenes)
       } catch (error) {
         console.error("Error al obtener la cabaña:", error);
       }
@@ -117,6 +123,21 @@ const EditCabin = ({ id, onClose }) => {
       return ["fas", "question-circle"];
     }
   };
+
+  const handleDeleteImage = async(imageId) =>{
+    try{
+      await axios.delete(`${END_POINT_DELETE_IMAGE}/${imageId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+    }catch(error){
+      console.log("Error al eliminar la imagen: ", error)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -296,35 +317,41 @@ const EditCabin = ({ id, onClose }) => {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
-          {/* <label className={styles.label}>
+          <label className={styles.label}>
             Cargue aquí las imágenes correspondientes a su cabaña
           </label>
-          {images.map((image, index) => (
-            <div key={index} className={styles.imageInputContainer}>
-              <input
-                required
-                className={styles.input}
-                type="text"
-                value={image}
-                onChange={(e) => handleImageChange(index, e.target.value)}
-                placeholder={`URL de imagen ${index + 1}`}
+          <div className={styles.imageContainer}>
+          {images.map((image) => (
+            <div key={image.id} className={styles.imageInputContainer}>
+              <img
+                src={image.url}
+                className={styles.imageSize}
               />
-              <button
-                type="button"
-                className={styles.imgInputBtn}
-                onClick={() => deleteImageInput(index)}
-              >
-                -
-              </button>
+              <span onClick={()=> {setIsConfirmOpen(true), setSelectedImageToDelete(image.id)}}>&times;</span>
             </div>
           ))}
-          <button
-            type="button"
-            className={styles.imgInputBtn}
-            onClick={addImageInput}
-          >
-            Agregar url
-          </button> */}
+          </div>
+          {isConfirmOpen && (
+                  <div className={styles.modalContainer}>
+                    <div className={styles.modalContent}>
+                      <h3 className={styles.modalTitle}>
+                        Esta acción es permanente,
+                      </h3>
+                      <span className={styles.modalText}>¿Está seguro de eliminar esta imagen?</span>
+                      <div className={styles.modalBtnContainer}>
+                        <button className={styles.modalBtn} onClick={handleDeleteImage(selectedImageToDelete)}>
+                          Sí
+                        </button>
+                        <button
+                          className={styles.modalBtn}
+                          onClick={() => setIsConfirmOpen(false)}
+                        >
+                          No
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+          )}
 
           <button className={styles.submitBtn} type="submit">
             Actualizar cabaña

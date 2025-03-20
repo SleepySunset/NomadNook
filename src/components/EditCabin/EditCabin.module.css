@@ -90,3 +90,11 @@
   .submitBtn:hover {
     background: var(--color4);
   }
+
+  .imageContainer{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .imageSize{
+    width: 100px;
+  }

@@ -27,5 +27,8 @@ export const ENDPOINTS = {
     REGISTER: `${API_BASE_URL}/api/auth/register`,
     GET_ALL_USERS: `${API_BASE_URL}/api/usuarios/listarTodos`,
     ADD_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/asignar-admin`,
-    REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`
+    REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`,
+
+    //IMAGENES
+    DELETE_IMAGE: `${API_BASE_URL}/api/imagenes/eliminar`
 }; 
