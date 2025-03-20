@@ -1,0 +1,143 @@
+.calendarContainer {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    width: 300px;
+    z-index: 1000;
+  }
+  
+  .calendarContent {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navButton {
+    background: none;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .navButton:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .monthTitle {
+    font-weight: 500;
+    margin: 0;
+    font-size: 16px;
+    text-transform: capitalize;
+  }
+  
+  .weekdayHeader {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  
+  .weekday {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    padding: 8px 0;
+  }
+  
+  .calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  
+  .calendarDay {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    position: relative;
+  }
+  
+  .calendarDay:hover:not(.pastDay) {
+    background-color: #f0f0f0;
+  }
+  
+  .emptyDay {
+    height: 36px;
+  }
+  
+  .selected {
+    background-color: #556B2F; 
+    color: white;
+  }
+  
+  .selected:hover {
+    background-color: #4A5E25 !important; 
+  }
+  
+  .pastDay {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .startDate, .endDate {
+    border-radius: 50%; 
+  }
+  
+  
+  .inRange {
+    position: relative;
+  }
+  
+  .inRange::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(85, 107, 47, 0.2); 
+    z-index: -1;
+    border-radius: 0;
+  }
+  
+  
+  .dayInRange {
+    background-color: rgba(85, 107, 47, 0.2); 
+  }
+  
+  .clearButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+  
+  .clearButton {
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #556B2F; 
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .clearButton:hover {
+    text-decoration: underline;
+  }
