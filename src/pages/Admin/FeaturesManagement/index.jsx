@@ -8,7 +8,7 @@ import Searchbar from "@/components/Searchbar";
 import AddFeature from "@/components/AddFeature";
 import FeaturesTable from "@/components/FeaturesTable";
 
-const CabinManagement = () => {
+const FeaturesManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, loading } = useAuth();
   useEffect(() => {
@@ -78,4 +78,4 @@ const CabinManagement = () => {
   );
 };
 
-export default CabinManagement;
+export default FeaturesManagement;
