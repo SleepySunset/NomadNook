@@ -12,6 +12,10 @@ export const ENDPOINTS = {
 
     // CATEGORIAS
     GET_ALL_CATEGORIES: `${API_BASE_URL}/api/categorias/listarTodos`,
+    ADD_CATEGORY: `${API_BASE_URL}/api/categorias/guardar`,
+    DELETE_CATEGORY: `${API_BASE_URL}/api/categorias/eliminar`,
+    UPDATE_CATEGORY: `${API_BASE_URL}/api/categorias/actualizar`,
+
 
     // CARACTERISTICAS
     GET_ALL_FEATURES: `${API_BASE_URL}/api/caracteristicas/listarTodos`,
@@ -25,5 +29,9 @@ export const ENDPOINTS = {
     REGISTER: `${API_BASE_URL}/api/auth/register`,
     GET_ALL_USERS: `${API_BASE_URL}/api/usuarios/listarTodos`,
     ADD_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/asignar-admin`,
-    REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`
+    REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`,
+
+    // DISPONIBILIDAD
+    GET_CABINS_BY_DATE_RANGE: (fechaInicio, fechaFin) => `${API_BASE_URL}/api/alojamientos/disponibles?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`,
+    GET_UNAVAILABLE_DATES: (alojamientoId, fechaInicio, fechaFin) => `${API_BASE_URL}/api/disponibilidades/noDisponible/${alojamientoId}?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`,
 }; 
