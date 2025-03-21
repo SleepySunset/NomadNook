@@ -14,8 +14,8 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 library.add(fas, far, fab);
 
 const getAvailableIcons = () => {
-  const icons = [];
-  
+  const icons =[];
+
   Object.keys(library.definitions.fas || {}).forEach(iconName => {
     icons.push({
       name: iconName,
@@ -29,14 +29,14 @@ const getAvailableIcons = () => {
       prefix: "far"
     });
   });
-  
+
   Object.keys(library.definitions.fab || {}).forEach(iconName => {
     icons.push({
       name: iconName,
       prefix: "fab"
     });
   });
-  
+
   return icons;
 };
 
@@ -48,11 +48,10 @@ const AddFeature = ({ onClose, editingFeature }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [mostrarGaleria, setMostrarGaleria] = useState(false);
   const [busquedaIcono, setBusquedaIcono] = useState("");
-  const [existingFeatures, setExistingFeatures] = useState([]);
-  
+  const [existingFeatures, setExistingFeatures] = useState();
+  const [iconsToShow, setIconsToShow] = useState(50);
+
   const { user, loading } = useAuth();
-
-
 
   useEffect(() => {
     const fetchFeatures = async () => {
@@ -71,14 +70,11 @@ const AddFeature = ({ onClose, editingFeature }) => {
 
   const iconosFiltrados = useMemo(() => {
     const todosLosIconos = getAvailableIcons();
-    if (!busquedaIcono) {
-      return todosLosIconos.slice(0, 50);
-    }
-
-    return todosLosIconos.filter(icono => 
+    const filtered = todosLosIconos.filter(icono =>
       icono.name.toLowerCase().includes(busquedaIcono.toLowerCase())
     );
-  }, [busquedaIcono]);
+    return filtered.slice(0, iconsToShow);
+  }, [busquedaIcono, iconsToShow]);
 
   useEffect(() => {
     if (!loading && !user?.token) {
@@ -93,33 +89,33 @@ const AddFeature = ({ onClose, editingFeature }) => {
     setFeedback({ tipo: "", mensaje: "" });
 
     if (!nombre.trim()) {
-      setFeedback({ 
-        tipo: "error", 
-        mensaje: "El nombre es obligatorio" 
+      setFeedback({
+        tipo: "error",
+        mensaje: "El nombre es obligatorio"
       });
       setIsLoading(false);
       return;
     }
 
     if (!iconoSeleccionado) {
-      setFeedback({ 
-        tipo: "error", 
-        mensaje: "Debes seleccionar un icono" 
+      setFeedback({
+        tipo: "error",
+        mensaje: "Debes seleccionar un icono"
       });
       setIsLoading(false);
       return;
     }
 
     const nombreExiste = existingFeatures.some(
-      feature => 
-        feature.nombre.toLowerCase() === nombre.toLowerCase() && 
+      feature =>
+        feature.nombre.toLowerCase() === nombre.toLowerCase() &&
         (!editingFeature || feature.id !== editingFeature.id)
     );
 
     if (nombreExiste) {
-      setFeedback({ 
-        tipo: "error", 
-        mensaje: "Ya existe una característica con este nombre" 
+      setFeedback({
+        tipo: "error",
+        mensaje: "Ya existe una característica con este nombre"
       });
       setIsLoading(false);
       return;
@@ -135,7 +131,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
         icono: iconoSeleccionado
       };
 
-     
+
       await axios({
         method: "post",
         url: ENDPOINTS.ADD_FEATURE,
@@ -161,9 +157,9 @@ const AddFeature = ({ onClose, editingFeature }) => {
 
     } catch (error) {
       console.error("Error completo:", error);
-      setFeedback({ 
-        tipo: "error", 
-        mensaje: error.response?.data?.mensaje || "Error al crear la característica" 
+      setFeedback({
+        tipo: "error",
+        mensaje: error.response?.data?.mensaje || "Error al crear la característica"
       });
     } finally {
       setIsLoading(false);
@@ -174,6 +170,16 @@ const AddFeature = ({ onClose, editingFeature }) => {
     setIconoSeleccionado(icono.name);
     setMostrarGaleria(false);
   };
+
+  const handleLoadMoreIcons = () => {
+    setIconsToShow(prevCount => prevCount + 50);
+  };
+
+  const allFilteredIcons = useMemo(() => {
+    return getAvailableIcons().filter(icono =>
+      icono.name.toLowerCase().includes(busquedaIcono.toLowerCase())
+    );
+  }, [busquedaIcono]);
 
   return (
     <div className={styles.container}>
@@ -190,7 +196,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
               {feedback.mensaje}
             </div>
           )}
-          
+
           <label className={styles.label}>Nombre de la característica</label>
           <input
             required
@@ -205,13 +211,13 @@ const AddFeature = ({ onClose, editingFeature }) => {
           <div className={styles.iconSelector}>
             {iconoSeleccionado ? (
               <div className={styles.selectedIcon}>
-                <FontAwesomeIcon 
-                  icon={["fas", iconoSeleccionado]} 
+                <FontAwesomeIcon
+                  icon={["fas", iconoSeleccionado]}
                   size="lg"
                   className={styles.iconPreview}
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => setIconoSeleccionado("")}
                   className={styles.removeIcon}
                 >
@@ -219,7 +225,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
                 </button>
               </div>
             ) : (
-              <button 
+              <button
                 type="button"
                 onClick={() => setMostrarGaleria(true)}
                 className={styles.selectIconButton}
@@ -249,14 +255,21 @@ const AddFeature = ({ onClose, editingFeature }) => {
                     className={styles.iconButton}
                     onClick={() => seleccionarIcono(icono)}
                   >
-                    <FontAwesomeIcon 
-                      icon={[icono.prefix, icono.name]} 
+                    <FontAwesomeIcon
+                      icon={[icono.prefix, icono.name]}
                       size="lg"
                       className={styles.iconPreview}
                     />
                     <span className={styles.iconName}>{icono.name}</span>
                   </button>
                 ))}
+                {iconosFiltrados.length < allFilteredIcons.length && (
+                  <div className={styles.loadMoreContainer}>
+                    <button onClick={handleLoadMoreIcons} className={styles.loadMoreButton}>
+                      Ver más
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}

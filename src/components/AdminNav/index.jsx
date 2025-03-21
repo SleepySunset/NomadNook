@@ -105,6 +105,29 @@ const AdminNav = ({ activeOpt }) => {
             </span>
           </li>
         </Link>
+        <Link to="/administracion/categoriesmanagement">
+          <li
+            className={`${styles.navOpt} ${
+              activeOpt === "categories" ? styles.active : null
+            }`}
+          >
+            <FontAwesomeIcon 
+              icon={["fas", "list"]} 
+              size="lg"
+              style={{ 
+                color: activeOpt === "categories" ? "#bc6c25" : "#565656",
+                fontSize: "1.5rem"
+              }}
+            />
+            <span
+              className={
+                activeOpt === "categories" ? styles.activeText : styles.navText
+              }
+            >
+              Gestión de categorias
+            </span>
+          </li>
+        </Link>
         {/* <li className={styles.navOpt}>
           <DateRangeIcon sx={{ color: "#565656" }} fontSize="small" />
           <span className={styles.navText}>Gestión de reservas</span>
