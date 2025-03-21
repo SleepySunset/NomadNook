@@ -4,11 +4,10 @@ import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import styles from "./FeaturesManagement.module.css";
 import AdminNav from "@/components/AdminNav";
-import Searchbar from "@/components/Searchbar";
 import AddFeature from "@/components/AddFeature";
 import FeaturesTable from "@/components/FeaturesTable";
 
-const CabinManagement = () => {
+const FeaturesManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, loading } = useAuth();
   useEffect(() => {
@@ -60,7 +59,6 @@ const CabinManagement = () => {
         <AdminNav activeOpt="features" />
         <div className={styles.container}>
           <div className={styles.upperContainer}>
-            <Searchbar />
             <button className={styles.addFeatureBtn} onClick={openModal}>
               Agregar característica
             </button>
@@ -78,4 +76,4 @@ const CabinManagement = () => {
   );
 };
 
-export default CabinManagement;
+export default FeaturesManagement;

@@ -10,6 +10,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
+import Calendar from "./Calendar";
 
 library.add(fas, far, fab);
 
@@ -38,6 +39,9 @@ const CabinDetail = () => {
   const [cabin, setCabin] = useState({});
   const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [unavailableDates, setUnavailableDates] = useState([]); // Ejemplo de fechas deshabilitadas
+
+
   useEffect(() => {
     axios(END_POINT).then((res) => {
       setCabin(res.data);
@@ -46,6 +50,18 @@ const CabinDetail = () => {
         console.log(res.data);
         setFeatures(res.data);
       });
+        axios({
+          method: "get",
+          url: ENDPOINTS.GET_UNAVAILABLE_DATES(res.data.id, "2025-03-01","2025-05-01"),
+          
+        }).then((res) => {
+          setUnavailableDates(res.data.diasNoDisponibles);
+          console.log(res.data) // Asumiendo que res.data es un array de strings 'yyyy-mm-dd'
+        })
+        .catch((err) => {
+          console.error("Error fetching unavailable dates:", err);
+        });;
+
     }).catch((err) => {
       console.log(err);
     }).finally(() => {
@@ -153,14 +169,24 @@ const CabinDetail = () => {
               </div>
             </div>
           </div>
-          <div className={styles.reserveContainer}>
-            <p className={styles.price}>
-              <span className={styles.value}>${cabin.precioPorNoche} USD</span> por noche
-            </p>
+          <div className={styles.sideContainer}>
+            <div className={styles.priceContainer}>
+              <p className={styles.price}>
+                <span className={styles.value}>${cabin.precioPorNoche} USD</span> por noche
+              </p>
+            </div>
             <div className={styles.reserve}>
-
-              {/* aqui va la logica para reservar */}
-
+              <Calendar disabledDates={unavailableDates} />
+              <div className={styles.legend}>
+                <div className={styles.legendItem}>
+                  <div className={styles.availableLegend}></div>
+                  <span>Disponible</span>
+                </div>
+                <div className={styles.legendItem}>
+                  <div className={styles.unavailableLegend}></div>
+                  <span>No disponible</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
