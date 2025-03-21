@@ -9,6 +9,8 @@ export const ENDPOINTS = {
     GET_ALL_CABINS: `${API_BASE_URL}/api/alojamientos/listarTodos`,
     GET_CABIN_BY_ID: `${API_BASE_URL}/api/alojamientos/buscar`,
     ADD_CABIN: `${API_BASE_URL}/api/alojamientos/guardar`,
+    DELETE_CABIN: `${API_BASE_URL}/api/alojamientos/eliminar`,
+    UPDATE_CABIN: `${API_BASE_URL}/api/alojamientos/actualizar`,
 
     // CATEGORIAS
     GET_ALL_CATEGORIES: `${API_BASE_URL}/api/categorias/listarTodos`,
@@ -31,7 +33,17 @@ export const ENDPOINTS = {
     ADD_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/asignar-admin`,
     REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`,
 
+
     // DISPONIBILIDAD
     GET_CABINS_BY_DATE_RANGE: (fechaInicio, fechaFin) => `${API_BASE_URL}/api/alojamientos/disponibles?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`,
     GET_UNAVAILABLE_DATES: (alojamientoId, fechaInicio, fechaFin) => `${API_BASE_URL}/api/disponibilidades/noDisponible/${alojamientoId}?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`,
+
+    //IMAGENES
+    UPLOAD_IMAGES: `${API_BASE_URL}/api/imagenes/upload`,
+    DELETE_IMAGE: `${API_BASE_URL}/api/imagenes/eliminar`,
+
+    //FAVORITOS
+    GET_ALL_FAVORITES: `${API_BASE_URL}/api/favoritos/usuario`,
+    ADD_FAVORITE: `${API_BASE_URL}/api/favoritos/marcar`,
+    REMOVE_FAVORITE: `${API_BASE_URL}/api/favoritos/quitar`
 }; 

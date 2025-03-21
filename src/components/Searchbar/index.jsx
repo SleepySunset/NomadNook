@@ -66,6 +66,7 @@ const Searchbar = ({ onSearchTermChange, handleSubmit, setDates }) => {
       // Si el clic es fuera del searchbar completamente, cerrar todo
       if (!isClickInsideSearchbar) {
         setShowSuggestions(false);
+
       }
     };
     
@@ -177,10 +178,12 @@ const Searchbar = ({ onSearchTermChange, handleSubmit, setDates }) => {
         </div>
         
         <Calendar setCheckIn={setCheckIn} checkIn={checkIn} checkOut={checkOut} setCheckOut={setCheckOut}/>
+
         <button type="submit" className={styles.icon}>
           <SearchIcon />
         </button>
       </form>
+
     </div>
   );
 };

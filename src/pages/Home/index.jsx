@@ -34,6 +34,7 @@ const Home = () => {
         setIsLoading(false);
       }
     };
+
     const fetchCabinsByDate = async () => {
       try {
         setIsLoading(true);
@@ -128,6 +129,10 @@ if (selectedCategories && selectedCategories.length > 0) {
       setDisplayedCabins(allCabins);
     }
   }
+
+  const handleDateRangeChange = (startDate, endDate) => {
+    setDateRange({ startDate, endDate });
+  };
 
   return (
     <main className={styles.home}>

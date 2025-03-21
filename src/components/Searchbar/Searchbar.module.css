@@ -37,7 +37,7 @@
     font-size: 16px;
     background: transparent;
   }
-    
+   
   .icon {
     display: flex;
     align-items: center;
@@ -46,13 +46,13 @@
     height: 40px;
     border: none;
     border-radius: 50%;
+
     background-color: #556B2F;
     color: white;
     cursor: pointer;
     position: relative;
     z-index: 152; /* Para asegurarnos que está sobre las sugerencias */
   }
-    
   .calendarButton {
     display: flex;
     align-items: center;
@@ -76,11 +76,12 @@
     font-size: 14px;
   }
     
+
   .calendarPopup {
     position: absolute;
     top: 100%;
     right: 0;
-    z-index: 155; /* Mayor que las sugerencias */
+    z-index: 100; 
     margin-top: 10px;
     opacity: 0;
     transform: translateY(-10px);
@@ -88,6 +89,7 @@
     visibility: hidden;
   }
     
+
   .calendarPopupVisible {
     opacity: 1;
     transform: translateY(0);
