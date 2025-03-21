@@ -11,7 +11,7 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { useAuth } from "@/hooks/AuthContext";
 import Swal from "sweetalert2";
-import UpdateFeature from "@/components/UpdateFeature";
+import UpdateCategory from "../UpdateCategory";
 
 library.add(fas, far, fab);
 
@@ -143,8 +143,8 @@ const CategoriesTable = () => {
       </table>
 
       {editingCategory && (
-        <UpdateFeature
-          feature={editingCategory}
+        <UpdateCategory
+          category={editingCategory}
           onClose={handleCloseEdit}
         />
       )}
