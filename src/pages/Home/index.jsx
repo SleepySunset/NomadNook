@@ -12,8 +12,6 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [dateRange, setDateRange] = useState({ checkIn: null, checkOut: null });
-  const [byDate, setByDate] = useState(false)
-
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,23 +33,8 @@ const Home = () => {
       }
     };
 
-    const fetchCabinsByDate = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios(ENDPOINTS.GET_CABINS_BY_DATE_RANGE(dateRange.checkIn, dateRange.checkOut));
-        const cabinsData = response.data.sort(() => Math.random() - 0.5);
-        setAllCabins(cabinsData);
-        setDisplayedCabins(cabinsData);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error al obtener las cabañas:", error);
-        setError("Error al cargar las cabañas. Por favor, intenta nuevamente más tarde.");
-        setIsLoading(false);
-      }
-    };
-    
-    byDate?fetchCabinsByDate():fetchCabins();
-  }, [byDate, dateRange]);
+    fetchCabins();
+  }, []);
 
   // Extraer categorías únicas
   useEffect(() => {
@@ -72,36 +55,38 @@ const Home = () => {
 
   // Aplicar filtros cuando cambien los criterios
   useEffect(() => {
-    let results = [...allCabins];
-// Filtrar por categorías seleccionadas
-if (selectedCategories && selectedCategories.length > 0) {
-  results = results.filter(cabin => 
-    cabin.categorias && Array.isArray(cabin.categorias) &&
-    cabin.categorias.some(category => 
-      selectedCategories.includes(category.id)
-    )
-  );
-  setDisplayedCabins(results);
-}else{
-  setDisplayedCabins(results)
-}
-  }, [allCabins,selectedCategories, ]);
-
-
-
+    applyFilters();
+  }, [allCabins, selectedCategories, dateRange, searchTerm]);
 
   const handleSearchTermChange = (term) => {
     setSearchTerm(term);
   };
-  const handleSubmit = (e)=>{
-    e.preventDefault()
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    applyFilters();
+  };
+
+  const applyFilters = async () => {
     try {
+      setIsLoading(true);
       let results = [...allCabins];
+
+      // Filtrar por categorías seleccionadas
+      if (selectedCategories && selectedCategories.length > 0) {
+        results = results.filter(cabin => 
+          cabin.categorias && Array.isArray(cabin.categorias) &&
+          cabin.categorias.some(category => 
+            selectedCategories.includes(category.id)
+          )
+        );
+      }
+
       // Filtrar por disponibilidad de fechas
-      if(dateRange.checkIn && dateRange.checkOut){
-        setByDate(true)
-      }else{
-        setByDate(false)
+      if (dateRange.checkIn && dateRange.checkOut) {
+        const response = await axios(ENDPOINTS.GET_CABINS_BY_DATE_RANGE(dateRange.checkIn, dateRange.checkOut));
+        const availableCabins = response.data;
+        results = results.filter(cabin => availableCabins.some(availableCabin => availableCabin.id === cabin.id));
       }
 
       // Filtrar por término de búsqueda
@@ -114,24 +99,13 @@ if (selectedCategories && selectedCategories.length > 0) {
         );
       }
 
-      
-
-      console.log("fechas")
-      console.log(dateRange)
-
-
-      console.log("results")
-      console.log(results)
       setDisplayedCabins(results);
+      setIsLoading(false);
     } catch (err) {
       console.error("Error al filtrar cabañas:", err);
-      // Si hay un error en el filtrado, mostramos todas las cabañas
       setDisplayedCabins(allCabins);
+      setIsLoading(false);
     }
-  }
-
-  const handleDateRangeChange = (startDate, endDate) => {
-    setDateRange({ startDate, endDate });
   };
 
   return (
