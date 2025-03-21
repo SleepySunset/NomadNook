@@ -223,6 +223,8 @@ const EditCabin = ({ id, onClose }) => {
       setImages([]);
       setSelectedCategories([]);
       setSelectedFeatures([]);
+      setSelectedImages([]);
+      onClose();
 
       console.log(
         "Cabaña actualizada con éxito:",
@@ -263,31 +265,49 @@ const EditCabin = ({ id, onClose }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <label className={styles.label}>Seleccione las categorías</label>
-          <div className={styles.categoriesContainer}>
+          <div className={styles.optionsContainer}>
             {categories.map((category) => (
-              <label key={category.id} className={styles.categoryLabel}>
+              <label
+                key={category.id}
+                className={`${styles.optionLabel} ${
+                  selectedCategories.includes(category.id)
+                    ? styles.selected
+                    : ""
+                }`}
+              >
                 <input
                   type="checkbox"
                   checked={selectedCategories.includes(category.id)}
                   onChange={() => handleCategoryChange(category.id)}
-                  className={styles.categoryCheckbox}
+                  className={styles.hiddenCheckbox}
+                />
+                <FontAwesomeIcon
+                  icon={getIconComponent(category.icono)}
+                  size="lg"
+                  className={styles.icon}
                 />
                 {category.nombre}
               </label>
             ))}
           </div>
           <label className={styles.label}>Seleccione las características</label>
-          <div className={styles.featuresContainer}>
+          <div className={styles.optionsContainer}>
             {features.map((feature) => (
-              <label key={feature.id} className={styles.featureLabel}>
+              <label
+                key={feature.id}
+                className={`${styles.optionLabel} ${
+                  selectedFeatures.includes(feature.id) ? styles.selected : ""
+                }`}
+              >
                 <input
                   type="checkbox"
                   checked={selectedFeatures.includes(feature.id)}
                   onChange={() => handleFeatureChange(feature.id)}
+                  className={styles.hiddenCheckbox}
                 />
                 <FontAwesomeIcon
                   icon={getIconComponent(feature.icono)}
-                  className={styles.featureIcon}
+                  className={styles.icon}
                 />
                 {feature.nombre}
               </label>
@@ -342,45 +362,52 @@ const EditCabin = ({ id, onClose }) => {
           />
 
           <label className={styles.label}>Edite las imágenes cargadas</label>
-          <div className={styles.imageContainer}>
-            {images.map((image) => (
-              <div key={image.id} className={styles.imageInputContainer}>
-                <img src={image.url} className={styles.imageSize} />
-                <span
-                  key={image.id}
-                  className={styles.close}
-                  onClick={() => {
-                    setIsConfirmOpen(true);
-                    setSelectedImageToDelete(image.id);
-                  }}
-                >
-                  &times;
-                </span>
-              </div>
-            ))}
-          </div>
+          {images.length === 0 ? (
+            <span>No hay imágenes disponibles</span>
+          ) : (
+            <div className={styles.imageContainer}>
+              {images.map((image) => (
+                <div key={image.id} className={styles.imageInputContainer}>
+                  <img
+                    src={image.url}
+                    className={styles.imageSize}
+                    alt="Imagen cargada"
+                  />
+                  <span
+                    className={styles.close}
+                    onClick={() => {
+                      setIsConfirmOpen(true);
+                      setSelectedImageToDelete(image.id);
+                    }}
+                  >
+                    &times;
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
           <label className={styles.label}>
             Agregue imágenes extra a su cabaña
           </label>
           <ImageUploader onImagesSelected={setSelectedImages} />
           {isConfirmOpen && (
-            <div className={styles.modalContainer}>
-              <div className={styles.modalContent}>
-                <h3 className={styles.modalTitle}>
+            <div className={styles.confirmDeleteContainer}>
+              <div className={styles.confirmDeleteContent}>
+                <h3 className={styles.confirmDeleteTitle}>
                   Esta acción es permanente,
                 </h3>
-                <span className={styles.modalText}>
+                <span className={styles.confirmDeleteText}>
                   ¿Está seguro de eliminar esta imagen?
                 </span>
-                <div className={styles.modalBtnContainer}>
+                <div className={styles.confirmDeleteBtnContainer}>
                   <button
-                    className={styles.modalBtn}
+                    className={styles.confirmDeleteBtn}
                     onClick={() => handleDeleteImage(selectedImageToDelete)}
                   >
                     Sí
                   </button>
                   <button
-                    className={styles.modalBtn}
+                    className={styles.confirmDeleteBtn}
                     onClick={() => setIsConfirmOpen(false)}
                   >
                     No

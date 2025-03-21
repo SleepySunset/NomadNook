@@ -83,6 +83,7 @@ const UserTable = () => {
           <tr>
             <th>Id</th>
             <th>Nombre</th>
+            <th>Correo</th>
             <th>Rol</th>
             <th>Permisos de Admin</th>
           </tr>
@@ -93,6 +94,9 @@ const UserTable = () => {
               <td>{user.id}</td>
               <td>
                 {user.nombre} {user.apellido}
+              </td>
+              <td>
+                {user.email}
               </td>
               <td>{user.rol}</td>
               <td>
