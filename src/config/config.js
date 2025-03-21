@@ -27,5 +27,14 @@ export const ENDPOINTS = {
     REGISTER: `${API_BASE_URL}/api/auth/register`,
     GET_ALL_USERS: `${API_BASE_URL}/api/usuarios/listarTodos`,
     ADD_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/asignar-admin`,
-    REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`
+    REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`,
+
+    //IMAGENES
+    UPLOAD_IMAGES: `${API_BASE_URL}/api/imagenes/upload`,
+    DELETE_IMAGE: `${API_BASE_URL}/api/imagenes/eliminar`,
+
+    //FAVORITOS
+    GET_ALL_FAVORITES: `${API_BASE_URL}/api/favoritos/usuario`,
+    ADD_FAVORITE: `${API_BASE_URL}/api/favoritos/marcar`,
+    REMOVE_FAVORITE: `${API_BASE_URL}/api/favoritos/quitar`
 }; 

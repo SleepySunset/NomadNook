@@ -8,21 +8,26 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
+import ImageUploader from "../ImageUploader";
 
 library.add(fas, far, fab);
 
 const EditCabin = ({ id, onClose }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [categories, setCategories] = useState([]);
   const [capacity, setCapacity] = useState("");
-  const [features, setFeatures] = useState([]);
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
-  // const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [features, setFeatures] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [selectedImageToDelete, setSelectedImageToDelete] = useState(null);
+
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const END_POINT_GET_CABIN_BY_ID = ENDPOINTS.GET_CABIN_BY_ID;
   const END_POINT_UPDATE_CABIN = ENDPOINTS.UPDATE_CABIN;
@@ -30,6 +35,8 @@ const EditCabin = ({ id, onClose }) => {
   const END_POINT_GET_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
   const END_POINT_UPDATE_CATEGORIES = `${API_BASE_URL}/api/alojamientos/${id}/categorias`;
   const END_POINT_UPDATE_FEATURES = `${API_BASE_URL}/api/alojamientos/${id}/caracteristicas`;
+  const END_POINT_UPLOAD_IMAGES = ENDPOINTS.UPLOAD_IMAGES;
+  const END_POINT_DELETE_IMAGE = ENDPOINTS.DELETE_IMAGE;
 
   const { user } = useAuth();
 
@@ -67,6 +74,7 @@ const EditCabin = ({ id, onClose }) => {
             (caracteristica) => caracteristica.id
           )
         );
+        setImages(response.data.imagenes);
       } catch (error) {
         console.error("Error al obtener la cabaña:", error);
       }
@@ -115,6 +123,25 @@ const EditCabin = ({ id, onClose }) => {
     } catch (error) {
       console.error("Error al verificar el icono:", error);
       return ["fas", "question-circle"];
+    }
+  };
+
+  const handleDeleteImage = async (imageId) => {
+    try {
+      await axios.delete(`${END_POINT_DELETE_IMAGE}/${imageId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      setImages((prevImages) =>
+        prevImages.filter((image) => image.id !== imageId)
+      );
+
+      setIsConfirmOpen(false);
+      setSelectedImageToDelete(null);
+    } catch (error) {
+      console.log("Error al eliminar la imagen: ", error);
     }
   };
 
@@ -169,6 +196,23 @@ const EditCabin = ({ id, onClose }) => {
         }
       );
 
+      const formData = new FormData();
+      formData.append("alojamiento", id);
+      selectedImages.forEach((image) => {
+        formData.append("files", image);
+      });
+
+      const responseImage = await axios.post(
+        END_POINT_UPLOAD_IMAGES,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       setTitle("");
       setDescription("");
       setCategories([]);
@@ -176,16 +220,16 @@ const EditCabin = ({ id, onClose }) => {
       setPricePerNight("");
       setLocation("");
       setAddress("");
-      // setImages
+      setImages([]);
       setSelectedCategories([]);
       setSelectedFeatures([]);
-      onClose();
 
       console.log(
         "Cabaña actualizada con éxito:",
         response.data,
         responseCategories.data,
-        responseFeatures.data
+        responseFeatures.data,
+        responseImage.data
       );
     } catch (error) {
       console.log("Error al actualizar la cabaña: ", error);
@@ -296,44 +340,59 @@ const EditCabin = ({ id, onClose }) => {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
-          {/* <label className={styles.label}>
-            Cargue aquí las imágenes correspondientes a su cabaña
+
+          <label className={styles.label}>Edite las imágenes cargadas</label>
+          <div className={styles.imageContainer}>
+            {images.map((image) => (
+              <div key={image.id} className={styles.imageInputContainer}>
+                <img src={image.url} className={styles.imageSize} />
+                <span
+                  key={image.id}
+                  className={styles.close}
+                  onClick={() => {
+                    setIsConfirmOpen(true);
+                    setSelectedImageToDelete(image.id);
+                  }}
+                >
+                  &times;
+                </span>
+              </div>
+            ))}
+          </div>
+          <label className={styles.label}>
+            Agregue imágenes extra a su cabaña
           </label>
-          {images.map((image, index) => (
-            <div key={index} className={styles.imageInputContainer}>
-              <input
-                required
-                className={styles.input}
-                type="text"
-                value={image}
-                onChange={(e) => handleImageChange(index, e.target.value)}
-                placeholder={`URL de imagen ${index + 1}`}
-              />
-              <button
-                type="button"
-                className={styles.imgInputBtn}
-                onClick={() => deleteImageInput(index)}
-              >
-                -
-              </button>
+          <ImageUploader onImagesSelected={setSelectedImages} />
+          {isConfirmOpen && (
+            <div className={styles.modalContainer}>
+              <div className={styles.modalContent}>
+                <h3 className={styles.modalTitle}>
+                  Esta acción es permanente,
+                </h3>
+                <span className={styles.modalText}>
+                  ¿Está seguro de eliminar esta imagen?
+                </span>
+                <div className={styles.modalBtnContainer}>
+                  <button
+                    className={styles.modalBtn}
+                    onClick={() => handleDeleteImage(selectedImageToDelete)}
+                  >
+                    Sí
+                  </button>
+                  <button
+                    className={styles.modalBtn}
+                    onClick={() => setIsConfirmOpen(false)}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
             </div>
-          ))}
-          <button
-            type="button"
-            className={styles.imgInputBtn}
-            onClick={addImageInput}
-          >
-            Agregar url
-          </button> */}
+          )}
 
           <button className={styles.submitBtn} type="submit">
             Actualizar cabaña
           </button>
-          {/* {responseStatus == "success" ? (
-                <div>Cabaña agregada con éxito</div>
-              ) : (
-                <div>No se ha podido agregar la cabaña</div>
-              )} */}
         </form>
       </div>
     </div>
