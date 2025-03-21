@@ -24,6 +24,11 @@
 
     .editBtn {
       cursor: pointer;
+      margin-right: 10px;
     }
+  }
+
+  .icon{
+    color: #565656;
   }
   

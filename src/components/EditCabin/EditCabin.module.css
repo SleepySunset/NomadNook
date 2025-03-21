@@ -1,100 +1,275 @@
 .container {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    top: 0;
-    right: -100;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #fff;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
-    z-index: 1000;
-    overflow: hidden;
-  }
-  .modalContent {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 500px;
-    max-height: 100vh;
-    overflow-y: auto;
-    box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
-    position: relative;
-  }
-  .closeButton {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 50px;
-    cursor: pointer;
-    color: #777;
-    transition: color 0.3s ease;
-  }
-  
-  .closeButton:hover {
-    color: #000;
-  }
-  
-  .title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-  }
-  
-  .input,
-  .select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border 0.3s ease-in-out;
-  }
-  
-  .input:focus,
-  .select:focus {
-    border: 1px solid var(--color5);
-    outline: none;
-    box-shadow: 0 0 5px var(--color5);
-  }
-  
-  .submitBtn {
-    align-self: center;
-    width: 200px;
-    background: var(--color5);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .submitBtn:hover {
-    background: var(--color4);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  z-index: 1000;
+  overflow: hidden;
+}
+.modalContent {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  max-height: 100vh;
+  overflow-y: auto;
+  box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 50px;
+  cursor: pointer;
+  color: #777;
+  transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+  color: #000;
+}
+
+.title {
+  text-align: center;
+  font-size: 25px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-top: 15px;
+  color: #555;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border 0.3s ease-in-out;
+}
+
+.input:focus,
+.select:focus {
+  border: 1px solid var(--color5);
+  outline: none;
+  box-shadow: 0 0 5px var(--color5);
+}
+
+.submitBtn {
+  align-self: center;
+  width: 200px;
+  background: var(--color5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.submitBtn:hover {
+  background: var(--color4);
+}
+
+.imageContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.imageInputContainer {
+  position: relative;
+  width: 170px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.imageInputContainer:hover {
+  transform: scale(1.05);
+}
+
+.imageSize {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: var(--color1);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.close:hover {
+  background-color: rgba(255, 0, 0, 1);
+}
+
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #fff;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, transform 0.1s;
+  border: 1px solid #ccc;
+
+  &:hover {
+    background-color: #cecdcd;
   }
 
-  .imageContainer{
-    display: flex;
-    flex-wrap: wrap;
+  &:active {
+    transform: scale(0.98);
   }
-  .imageSize{
-    width: 100px;
+
+  .icon {
+    color: #777;
   }
+}
+
+.hiddenCheckbox {
+  display: none;
+}
+
+.selected {
+  background-color: var(--color1, #ff6b6b);
+  color: white;
+  border-color: var(--color1, #ff6b6b);
+
+  .icon {
+    color: white;
+  }
+}
+
+.confirmDeleteContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none; 
+}
+
+.confirmDeleteContent {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  pointer-events: auto; 
+}
+
+.confirmDeleteTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.confirmDeleteText {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.confirmDeleteBtnContainer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.confirmDeleteBtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+.confirmDeleteBtn:first-child {
+  background-color: #e74c3c; 
+  color: white;
+}
+
+.confirmDeleteBtn:first-child:hover {
+  background-color: #c0392b;
+}
+
+.confirmDeleteBtn:last-child {
+  background-color: #bdc3c7; 
+  color: black;
+}
+
+.confirmDeleteBtn:last-child:hover {
+  background-color: #95a5a6;
+}
+
+
+body.modalOpen {
+  overflow: hidden;
+}

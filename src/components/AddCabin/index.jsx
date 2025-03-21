@@ -249,30 +249,49 @@ const AddCabin = ({ onClose }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <label className={styles.label}>Seleccione las categorías</label>
-          <div className={styles.categoriesContainer}>
+          <div className={styles.optionsContainer}>
             {categories.map((category) => (
-              <label key={category.id} className={styles.categoryLabel}>
+              <label
+                key={category.id}
+                className={`${styles.optionLabel} ${
+                  selectedCategories.includes(category.id)
+                    ? styles.selected
+                    : ""
+                }`}
+              >
                 <input
                   type="checkbox"
                   checked={selectedCategories.includes(category.id)}
                   onChange={() => handleCategoryChange(category.id)}
+                  className={styles.hiddenCheckbox}
+                />
+                <FontAwesomeIcon
+                  icon={getIconComponent(category.icono)}
+                  size="lg"
+                  className={styles.icon}
                 />
                 {category.nombre}
               </label>
             ))}
           </div>
           <label className={styles.label}>Seleccione las características</label>
-          <div className={styles.featuresContainer}>
+          <div className={styles.optionsContainer}>
             {features.map((feature) => (
-              <label key={feature.id} className={styles.featureLabel}>
+              <label
+                key={feature.id}
+                className={`${styles.optionLabel} ${
+                  selectedFeatures.includes(feature.id) ? styles.selected : ""
+                }`}
+              >
                 <input
                   type="checkbox"
                   checked={selectedFeatures.includes(feature.id)}
                   onChange={() => handleFeatureChange(feature.id)}
+                  className={styles.hiddenCheckbox}
                 />
-                <FontAwesomeIcon 
-                  icon={getIconComponent(feature.icono)} 
-                  className={styles.featureIcon} 
+                <FontAwesomeIcon
+                  icon={getIconComponent(feature.icono)}
+                  className={styles.icon}
                 />
                 {feature.nombre}
               </label>

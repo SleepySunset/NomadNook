@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "./CabinTable.module.css";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ENDPOINTS } from "../../config/config";
 import { useAuth } from "../../hooks/AuthContext";
 import EditCabin from "../EditCabin";
@@ -79,13 +78,13 @@ const CabinTable = () => {
                   }}
                   className={styles.actionBtn}
                 >
-                  <ModeEditOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
+                  <FontAwesomeIcon icon="fa-solid fa-pen" style={{ color: "#bc6c25", fontSize: "larger"}} />
                 </span>
                 <span
                   onClick={() => setSelectedCabinDelete(cabin)}
                   className={styles.actionBtn}
                 >
-                  <DeleteOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
+                  <FontAwesomeIcon icon="fa-solid fa-trash" style={{ color: "#bc6c25", fontSize: "larger" }} /> 
                 </span>
               </td>
             </tr>
