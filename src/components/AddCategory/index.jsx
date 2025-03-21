@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState, useEffect, useMemo } from "react";
-import { useAuth } from "../../hooks/AuthContext";
+import { useAuth } from "@/hooks/AuthContext";
 import { Navigate } from "react-router-dom";
-import styles from "./AddFeature.module.css";
-import { ENDPOINTS } from "../../config/config";
+import styles from "./AddCategory.module.css";
+import { ENDPOINTS } from "@/config/config";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -40,7 +40,7 @@ const getAvailableIcons = () => {
   return icons;
 };
 
-const AddFeature = ({ onClose, editingFeature }) => {
+const AddFeature = ({ onClose, editingCategory }) => {
 
   const [nombre, setNombre] = useState("");
   const [iconoSeleccionado, setIconoSeleccionado] = useState("");
@@ -48,18 +48,17 @@ const AddFeature = ({ onClose, editingFeature }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [mostrarGaleria, setMostrarGaleria] = useState(false);
   const [busquedaIcono, setBusquedaIcono] = useState("");
-  const [existingFeatures, setExistingFeatures] = useState();
+  const [existingCategories, setExistingCategories] = useState();
   const [iconsToShow, setIconsToShow] = useState(50);
-
   const { user, loading } = useAuth();
 
   useEffect(() => {
     const fetchFeatures = async () => {
       try {
-        const response = await axios.get(ENDPOINTS.GET_ALL_FEATURES);
-        setExistingFeatures(response.data);
+        const response = await axios.get(ENDPOINTS.GET_ALL_CATEGORIES);
+        setExistingCategories(response.data);
       } catch (error) {
-        console.error("Error al obtener las características:", error);
+        console.error("Error al obtener las categorías:", error);
       }
     };
 
@@ -106,16 +105,16 @@ const AddFeature = ({ onClose, editingFeature }) => {
       return;
     }
 
-    const nombreExiste = existingFeatures.some(
-      feature =>
-        feature.nombre.toLowerCase() === nombre.toLowerCase() &&
-        (!editingFeature || feature.id !== editingFeature.id)
+    const nombreExiste = existingCategories.some(
+      category =>
+        category.nombre.toLowerCase() === nombre.toLowerCase() &&
+        (!editingCategory || category.id !== editingCategory.id)
     );
 
     if (nombreExiste) {
       setFeedback({
         tipo: "error",
-        mensaje: "Ya existe una característica con este nombre"
+        mensaje: "Ya existe una categoría con este nombre"
       });
       setIsLoading(false);
       return;
@@ -134,7 +133,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
 
       await axios({
         method: "post",
-        url: ENDPOINTS.ADD_FEATURE,
+        url: ENDPOINTS.ADD_CATEGORY,
         headers: {
           'Authorization': `Bearer ${user.token}`,
           'Content-Type': 'application/json'
@@ -143,7 +142,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
       });
 
       Swal.fire({
-        title: "Característica añadida!",
+        title: "Categoría añadida!",
         icon: "success",
         timer: 2000,
         showConfirmButton: false,
@@ -159,7 +158,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
       console.error("Error completo:", error);
       setFeedback({
         tipo: "error",
-        mensaje: error.response?.data?.mensaje || "Error al crear la característica"
+        mensaje: error.response?.data?.mensaje || "Error al crear la categoría"
       });
     } finally {
       setIsLoading(false);
@@ -188,7 +187,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
           &times;
         </span>
         <h2 className={styles.title}>
-          Agregar una nueva característica
+          Agregar una nueva Categoría
         </h2>
         <form onSubmit={handleSubmit} className={styles.form}>
           {feedback.mensaje && (
@@ -197,7 +196,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
             </div>
           )}
 
-          <label className={styles.label}>Nombre de la característica</label>
+          <label className={styles.label}>Nombre de la Categoría</label>
           <input
             required
             className={styles.input}
@@ -275,7 +274,7 @@ const AddFeature = ({ onClose, editingFeature }) => {
           )}
 
           <button className={styles.submitBtn} type="submit" disabled={isLoading}>
-            {isLoading ? "Guardando..." : editingFeature ? "Actualizar característica" : "Guardar característica"}
+            {isLoading ? "Guardando..." : editingCategory ? "Actualizar Categoría" : "Guardar Categoría"}
           </button>
         </form>
       </div>

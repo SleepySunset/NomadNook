@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../../../hooks/AuthContext";
+import { useAuth } from "@/hooks/AuthContext";
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import styles from "./CabinManagement.module.css";
-import AdminNav from "../../../components/AdminNav";
-import AddCabin from "@/components/AddCabin";
-import CabinTable from "../../../components/CabinTable";
+import styles from "./CategoriesManagement.module.css";
+import AdminNav from "@/components/AdminNav";
+import CategoriesTable from "@/components/CategoriesTable";
+import AddCategory from "@/components/AddCategory"
 
-const CabinManagement = () => {
+const CategoriesManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, loading } = useAuth();
   useEffect(() => {
@@ -56,15 +56,15 @@ const CabinManagement = () => {
   return (
     <>
       <main className={styles.main}>
-        <AdminNav activeOpt="cabin" />
+        <AdminNav activeOpt="categories" />
         <div className={styles.container}>
           <div className={styles.upperContainer}>
-            <button className={styles.addCabinBtn} onClick={openModal}>
-              Agregar cabaña
+            <button className={styles.addBtn} onClick={openModal}>
+              Agregar categoria
             </button>
-            {isModalOpen && <AddCabin onClose={closeModal} />}
+            {isModalOpen && <AddCategory onClose={closeModal} />}
           </div>
-          <CabinTable />
+          <CategoriesTable />
         </div>
       </main>
       <div className={styles.mobileWarning}>
@@ -76,4 +76,4 @@ const CabinManagement = () => {
   );
 };
 
-export default CabinManagement;
+export default CategoriesManagement;
