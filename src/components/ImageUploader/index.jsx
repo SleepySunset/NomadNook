@@ -71,6 +71,7 @@ const ImageUploader = ({ onImagesSelected }) => {
       />
 
       <button
+      type="button"
         className={styles.uploadButton}
         onClick={() => fileInputRef.current.click()}
       >
