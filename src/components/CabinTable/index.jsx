@@ -6,7 +6,7 @@ import { ENDPOINTS } from "../../config/config";
 import { useAuth } from "../../hooks/AuthContext";
 import EditCabin from "../EditCabin";
 
-const CabinTable = () => {
+const CabinTable = ({onAddCabin}) => {
   const { user } = useAuth();
   const [data, setData] = useState([]);
   const [selectedCabinDelete, setSelectedCabinDelete] = useState(null);
@@ -31,7 +31,7 @@ const CabinTable = () => {
       setData(res.data);
       console.log(res.data);
     });
-  }, [END_POINT_GET_CABINS, selectedCabinEdit]);
+  }, [END_POINT_GET_CABINS, selectedCabinEdit, onAddCabin]);
 
 
   const handleDelete = async () => {

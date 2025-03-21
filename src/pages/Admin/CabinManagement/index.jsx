@@ -64,7 +64,7 @@ const CabinManagement = () => {
             </button>
             {isModalOpen && <AddCabin onClose={closeModal} />}
           </div>
-          <CabinTable />
+          <CabinTable onAddCabin={isModalOpen}/>
         </div>
       </main>
       <div className={styles.mobileWarning}>
