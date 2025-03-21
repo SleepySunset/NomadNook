@@ -1,28 +1,144 @@
-.form{
-    width: 600px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    background-color: white;
-}
-.input{
+.searchbarContainer {
+    position: relative;
     width: 100%;
-    padding: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    /* Aseguramos que el contenedor tenga un z-index apropiado */
+    z-index: 150;
+    margin-top: 1rem;
+  }
+    
+  .form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+    padding: 0 10px;
+    border-radius: 25px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 151; /* Más alto que el contenedor */
+  }
+  
+  .inputWrapper {
+    position: relative;
+    flex-grow: 1;
+    height: 100%;
+  }
+    
+  .input {
+    width: 100%;
+    height: 100%;
+    padding: 0 15px;
     border: none;
-}
-.input:focus{
     outline: none;
-}
-.icon{
-    background: none;
+    font-size: 16px;
+    background: transparent;
+  }
+    
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
     border: none;
-    margin: 0 6px;
-}
-
-@media (max-width: 768px) {
-    .form{
-        width:100%;
-        margin-top: 0px;
+    border-radius: 50%;
+    background-color: #556B2F;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    z-index: 152; /* Para asegurarnos que está sobre las sugerencias */
+  }
+    
+  .calendarButton {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    height: 100%;
+    border: none;
+    border-left: 1px solid #e0e0e0;
+    background: none;
+    cursor: pointer;
+    color: #333;
+    position: relative;
+    z-index: 152; /* Para asegurarnos que está sobre las sugerencias */
+  }
+    
+  .calendarButton:hover {
+    background-color: #f5f5f5;
+  }
+    
+  .dateText {
+    margin-right: 10px;
+    font-size: 14px;
+  }
+    
+  .calendarPopup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 155; /* Mayor que las sugerencias */
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    visibility: hidden;
+  }
+    
+  .calendarPopupVisible {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+  
+  /* Estilos para las sugerencias de autocompletado */
+  .suggestionsList {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 153; /* Menor que el calendario pero mayor que elementos generales */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .suggestionItem {
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .suggestionItem:last-child {
+    border-bottom: none;
+  }
+  
+  .suggestionItem:hover {
+    background-color: #f5f5f5;
+    color: #556B2F;
+  }
+    
+  @media (max-width: 768px) {
+    .dateText {
+      display: none;
     }
-}
+    .calendarButton {
+      padding: 0 10px;
+    }
+    .suggestionItem {
+      padding: 10px;
+    }
+  }
