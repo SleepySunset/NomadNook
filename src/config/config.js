@@ -30,5 +30,11 @@ export const ENDPOINTS = {
     REMOVE_ADMIN_ROLE: `${API_BASE_URL}/api/usuarios/desasignar-admin`,
 
     //IMAGENES
-    DELETE_IMAGE: `${API_BASE_URL}/api/imagenes/eliminar`
+    UPLOAD_IMAGES: `${API_BASE_URL}/api/imagenes/upload`,
+    DELETE_IMAGE: `${API_BASE_URL}/api/imagenes/eliminar`,
+
+    //FAVORITOS
+    GET_ALL_FAVORITES: `${API_BASE_URL}/api/favoritos/usuario`,
+    ADD_FAVORITE: `${API_BASE_URL}/api/favoritos/marcar`,
+    REMOVE_FAVORITE: `${API_BASE_URL}/api/favoritos/quitar`
 }; 

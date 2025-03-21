@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.data) {
         const newUser = {
+          id: response.data.id,
           email: response.data.email,
           name: response.data.nombre,
           lastName: response.data.apellido,

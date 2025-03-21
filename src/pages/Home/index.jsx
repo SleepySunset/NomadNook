@@ -52,7 +52,6 @@ const Home = () => {
       <CardsGrid 
         cabins={cabins} 
         selectedCategories={selectedCategories}
-        dateRange={dateRange}
       />
     </main>
   );

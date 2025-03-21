@@ -10,11 +10,6 @@ const Favorite = () => {
     setFavorites(storedFavorites);
   }, []);
 
-  const addToFavorites = (cabin) => {
-    const updatedFavorites = [...favorites, cabin];
-    setFavorites(updatedFavorites);
-    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-  };
 
   const removeFromFavorites = (id) => {
     const updatedFavorites = favorites.filter((fav) => fav.id !== id);
@@ -33,8 +28,6 @@ const Favorite = () => {
             <Card
               key={cabin.id}
               {...cabin}
-              isFavorite={true}
-              addToFavorites={addToFavorites}
               removeFromFavorites={removeFromFavorites}
             />
           ))}

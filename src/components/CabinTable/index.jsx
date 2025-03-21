@@ -70,7 +70,7 @@ const CabinTable = () => {
             <tr key={cabin.id}>
               <td>{cabin.id}</td>
               <td>{cabin.titulo}</td>
-              <td>{cabin.categorias.map((categoria) => categoria.nombre)}</td>
+              <td>{cabin.categorias.map((categoria) => categoria.nombre).join(", ")}</td>
               <td>
                 <span
                   onClick={() => {
