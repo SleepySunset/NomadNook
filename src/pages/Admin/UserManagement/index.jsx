@@ -1,6 +1,5 @@
 import AdminNav from "../../../components/AdminNav";
 import styles from "./UserManagement.module.css"
-import Searchbar from "../../../components/Searchbar";
 import UserTable from "../../../components/UserTable";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../hooks/AuthContext";
@@ -38,7 +37,6 @@ const UserManagement = () => {
             <AdminNav activeOpt="user" />
             <div className={styles.container}>
               <div className={styles.upperContainer}>
-                <Searchbar />
               </div>
               <UserTable/>
             </div>

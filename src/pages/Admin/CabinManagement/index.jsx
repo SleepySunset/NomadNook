@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import styles from "./CabinManagement.module.css";
 import AdminNav from "../../../components/AdminNav";
-import Searchbar from "../../../components/Searchbar";
 import AddCabin from "@/components/AddCabin";
 import CabinTable from "../../../components/CabinTable";
 
@@ -60,7 +59,6 @@ const CabinManagement = () => {
         <AdminNav activeOpt="cabin" />
         <div className={styles.container}>
           <div className={styles.upperContainer}>
-            <Searchbar />
             <button className={styles.addCabinBtn} onClick={openModal}>
               Agregar cabaña
             </button>
