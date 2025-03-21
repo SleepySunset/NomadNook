@@ -9,6 +9,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import ImageUploader from "../ImageUploader";
+import Swal from "sweetalert2";
 
 library.add(fas, far, fab);
 
@@ -179,7 +180,7 @@ const EditCabin = ({ id, onClose }) => {
           disponible: true,
           propietario: {
             id: 1,
-          }
+          },
         },
         {
           headers: {
@@ -210,33 +211,45 @@ const EditCabin = ({ id, onClose }) => {
           },
         }
       );
-      
-      if(selectedImages.length==!0){
+
+      if (selectedImages.length !==0) {
         const formData = new FormData();
-      formData.append("alojamiento", id);
-      selectedImages.forEach((image) => {
-        formData.append("files", image);
-      });
-      const responseImage = await axios.post(
-        END_POINT_UPLOAD_IMAGES,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            "Content-Type": "multipart/form-data",
-          },
+        formData.append("alojamiento", id);
+        selectedImages.forEach((image) => {
+          formData.append("files", image);
+        });
+        console.log("Imágenes antes de enviar:", selectedImages);
+
+        try {
+          const responseImage = await axios.post(
+            END_POINT_UPLOAD_IMAGES,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log(responseImage);
+        } catch (error) {
+          console.log("Error al cargar imagenes: ", error);
         }
-      );
-      console.log(responseImage)
       }
-       
+
       setIsSuccess(true);
       console.log(
         "Cabaña actualizada con éxito:",
         response.data,
         responseCategories.data,
-        responseFeatures.data,
+        responseFeatures.data
       );
+      Swal.fire({
+        title: "Cabaña editada con éxito!",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (error) {
       console.log("Error al actualizar la cabaña: ", error);
     }
@@ -405,12 +418,14 @@ const EditCabin = ({ id, onClose }) => {
                 </span>
                 <div className={styles.confirmDeleteBtnContainer}>
                   <button
+                    type="button"
                     className={styles.confirmDeleteBtn}
                     onClick={() => handleDeleteImage(selectedImageToDelete)}
                   >
                     Sí
                   </button>
                   <button
+                    type="button"
                     className={styles.confirmDeleteBtn}
                     onClick={() => setIsConfirmOpen(false)}
                   >

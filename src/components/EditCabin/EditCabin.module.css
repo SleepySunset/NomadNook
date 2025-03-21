@@ -252,12 +252,12 @@
 }
 
 .confirmDeleteBtn:first-child {
-  background-color: #e74c3c; 
+  background-color: var(--color5); 
   color: white;
 }
 
 .confirmDeleteBtn:first-child:hover {
-  background-color: #c0392b;
+  background-color: var(--color4);
 }
 
 .confirmDeleteBtn:last-child {
