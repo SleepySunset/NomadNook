@@ -28,6 +28,7 @@ const EditCabin = ({ id, onClose }) => {
   const [selectedImageToDelete, setSelectedImageToDelete] = useState(null);
 
   const [selectedImages, setSelectedImages] = useState([]);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const END_POINT_GET_CABIN_BY_ID = ENDPOINTS.GET_CABIN_BY_ID;
   const END_POINT_UPDATE_CABIN = ENDPOINTS.UPDATE_CABIN;
@@ -39,6 +40,23 @@ const EditCabin = ({ id, onClose }) => {
   const END_POINT_DELETE_IMAGE = ENDPOINTS.DELETE_IMAGE;
 
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTitle("");
+      setDescription("");
+      setCategories([]);
+      setCapacity("");
+      setPricePerNight("");
+      setLocation("");
+      setAddress("");
+      setImages([]);
+      setSelectedCategories([]);
+      setSelectedFeatures([]);
+      setSelectedImages([]);
+      onClose();
+    }
+  }, [isSuccess, onClose]);
 
   useEffect(() => {
     const fetchFeatures = async () => {
@@ -161,10 +179,7 @@ const EditCabin = ({ id, onClose }) => {
           disponible: true,
           propietario: {
             id: 1,
-          },
-          imagenes: [],
-          categorias: [],
-          caracteristicas: selectedCategories,
+          }
         },
         {
           headers: {
@@ -195,13 +210,13 @@ const EditCabin = ({ id, onClose }) => {
           },
         }
       );
-
-      const formData = new FormData();
+      
+      if(selectedImages.length==!0){
+        const formData = new FormData();
       formData.append("alojamiento", id);
       selectedImages.forEach((image) => {
         formData.append("files", image);
       });
-
       const responseImage = await axios.post(
         END_POINT_UPLOAD_IMAGES,
         formData,
@@ -212,26 +227,15 @@ const EditCabin = ({ id, onClose }) => {
           },
         }
       );
-
-      setTitle("");
-      setDescription("");
-      setCategories([]);
-      setCapacity("");
-      setPricePerNight("");
-      setLocation("");
-      setAddress("");
-      setImages([]);
-      setSelectedCategories([]);
-      setSelectedFeatures([]);
-      setSelectedImages([]);
-      onClose();
-
+      console.log(responseImage)
+      }
+       
+      setIsSuccess(true);
       console.log(
         "Cabaña actualizada con éxito:",
         response.data,
         responseCategories.data,
         responseFeatures.data,
-        responseImage.data
       );
     } catch (error) {
       console.log("Error al actualizar la cabaña: ", error);
