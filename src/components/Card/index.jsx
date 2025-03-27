@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Heart, Share2, Copy } from "lucide-react"; //Star
+import { Heart, Share2, Copy, MapPin } from "lucide-react"; //Star
 import styles from "./Card.module.css";
 import Swal from "sweetalert2";
 import { FaFacebook, FaWhatsapp } from "react-icons/fa";
@@ -9,7 +9,7 @@ import { useAuth } from "../../hooks/AuthContext";
 const Card = ({
   id,
   title,
-  description,
+  ubicacion,
   images,
   pricePerNight,
   removeFromFavorites
@@ -63,7 +63,7 @@ const Card = ({
       updatedFavorites = updatedFavorites.filter((fav) => fav.id !== id);
       removeFromFavorites && removeFromFavorites(id);
     } else {
-      updatedFavorites.push({ id, title, description, images, pricePerNight });
+      updatedFavorites.push({ id, title, ubicacion, images, pricePerNight });
     }
 
     // 🌟 Guardar en localStorage y actualizar estado
@@ -244,7 +244,10 @@ const Card = ({
             <Star className={styles.star}></Star>
             </div> */}
         </div>
-        <p className={styles.description}>{description}</p>
+        <div className={styles.ubicacionContainer}>
+        <MapPin className={styles.ubicacionIcon}/>
+        <p className={styles.ubicacion}>{ubicacion}</p>
+        </div>
       </div>
     </div>
   );
