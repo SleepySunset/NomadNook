@@ -12,6 +12,11 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import Calendar from "./Calendar";
 
+import { Heart, Share2, Copy } from "lucide-react";
+import { FaFacebook, FaWhatsapp } from "react-icons/fa";
+import { useFavorite } from "../../hooks/useFavorite";
+import { shareOnSocial, copyToClipboard } from "../../utils/shareUtils";
+
 library.add(fas, far, fab);
 
 const getIconComponent = (iconName) => {
@@ -40,7 +45,17 @@ const CabinDetail = () => {
   const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [unavailableDates, setUnavailableDates] = useState([]); // Ejemplo de fechas deshabilitadas
+  const [isOpen, setIsOpen] = useState(false);
 
+  const shareUrl = window.location.href;
+
+  const { favorite, toggleFavorite } = useFavorite({
+    id: cabin.id,
+    title: cabin.titulo,
+    description: cabin.descripcion,
+    images: cabin.imagenes,
+    pricePerNight: cabin.precioPorNoche,
+  });
 
   useEffect(() => {
     axios(END_POINT).then((res) => {
@@ -53,7 +68,7 @@ const CabinDetail = () => {
         axios({
           method: "get",
           url: ENDPOINTS.GET_UNAVAILABLE_DATES(res.data.id, "2025-03-01","2025-05-01"),
-          
+
         }).then((res) => {
           setUnavailableDates(res.data.diasNoDisponibles);
           console.log(res.data) // Asumiendo que res.data es un array de strings 'yyyy-mm-dd'
@@ -68,7 +83,7 @@ const CabinDetail = () => {
       setLoading(false);
     });
   }, [END_POINT]);
-  
+
 
   useEffect(() => {
     // Al abrir el modal, oculta el scroll del body
@@ -115,7 +130,41 @@ const CabinDetail = () => {
     <main className={styles.detail}>
       <div className={styles.container}>
         <Link to="/" className={styles.back}></Link>
-        <h1 className={styles.title}>{cabin.titulo}</h1>
+        <div className={styles.titleRow}>
+          <h1 className={styles.title}>{cabin.titulo}</h1>
+          <div className={styles.iconButtons}>
+            <button className={styles.iconButton} onClick={toggleFavorite}>
+              <Heart className={`${styles.heartIcon} ${favorite ? styles.favoriteActive : ""}`} size={20} />
+            </button>
+            <button
+              className={styles.iconButton}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+              }}
+            >
+              <Share2 size={20} />
+            </button>
+            {isOpen && (
+              <div className={styles.sharePopup} onClick={(e) => e.stopPropagation()}>
+                <button className={styles.shareButton} onClick={(e) => copyToClipboard(e, shareUrl)}>
+                <Copy size={20} className={styles.copy} />
+                </button>
+                <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "whatsapp", cabin.titulo, shareUrl)}>
+                <FaWhatsapp className={styles.whatsapp} />
+                </button>
+                <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "x", cabin.titulo, shareUrl)}>
+                  <img src="/x.jpeg" className={styles.x} />
+                </button>
+                <button className={styles.shareButton} onClick={(e) => shareOnSocial(e, "facebook", cabin.titulo, shareUrl)}>
+                <FaFacebook className={styles.facebook} />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         {cabin.imagenes && cabin.imagenes.length > 0 ? (
           <div className={styles.imagesContainer}>
             <img
@@ -191,6 +240,35 @@ const CabinDetail = () => {
           </div>
         </div>
       </div>
+      <div className={styles.politicsContainer}>
+  <h4 className={styles.title}>Lo que necesitas saber antes de reservar</h4>
+  <div className={styles.politics}>
+    {/* Columna izquierda */}
+    <div className={styles.politicsColumn}>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}>Política de Reservas</h4>
+        <p>Se requiere un pago total para confirmar la reserva.</p>
+        <p>Cambios de fecha sujetos a disponibilidad y posibles costos adicionales.</p>
+      </div>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}>Política de Uso y Normas del Alojamiento</h4>
+        <p>Se prohíben fiestas y eventos sin autorización previa. Horario de check-in y check-out establecido. Responsabilidad por daños durante la estadía.</p>
+      </div>
+    </div>
+
+    {/* Columna derecha */}
+    <div className={styles.politicsColumn}>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}>Política de Privacidad y Datos</h4>
+        <p>La información de los usuarios será protegida y utilizada solo para gestionar reservas. No se compartirán datos con terceros sin consentimiento.</p>
+      </div>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}>Política de Cancelación y Reembolsos</h4>
+        <p>Cancelaciones con más de 15 días de anticipación recibirán un reembolso completo/parcial. Cancelaciones tardías pueden estar sujetas a cargos.</p>
+      </div>
+    </div>
+  </div>
+</div>
       {showModal && (
         <Gallery images={cabin.imagenes} onClose={handleCloseModal} />
       )}
