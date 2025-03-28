@@ -1,0 +1,84 @@
+.container {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    z-index: 1000;
+    overflow: hidden;
+  }
+  .modalContainer {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 80%;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  .modalContent{
+    display: flex;
+
+  }
+  .closeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 50px;
+    cursor: pointer;
+    color: #777;
+    transition: color 0.3s ease;
+  }
+  
+  .closeButton:hover {
+    color: #000;
+  }
+  
+  .mainTitle {
+    text-align: left;
+    font-size: 35px;
+    color: #333;
+    margin-bottom: 50px;
+  }
+
+  .secondTitle{
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+
+  .secondContainer{
+    width: 50%;
+  }
+  .mainText{
+    font-size: 18px;
+    margin: 8px 0;
+  }
+
+  .thirdContainer{
+    margin-bottom: 50px;
+  }
+  .cardContainer{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #c5c3c3;
+    border-radius: 20px;
+    padding: 20px;
+    gap: 30px;
+  }
+
+  .cardImage{
+    width: 200px;
+    border-radius: 20px;
+  }
+  .cabinContainer{
+    display: flex;
+    gap: 20px;
+  }

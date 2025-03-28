@@ -11,6 +11,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import Calendar from "./Calendar";
+import BookingConfirmation from "../../components/BookingConfirmation";
 
 library.add(fas, far, fab);
 
@@ -39,7 +40,9 @@ const CabinDetail = () => {
   const [cabin, setCabin] = useState({});
   const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [unavailableDates, setUnavailableDates] = useState([]); // Ejemplo de fechas deshabilitadas
+  const [unavailableDates, setUnavailableDates] = useState([]);
+
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
 
   useEffect(() => {
@@ -110,6 +113,14 @@ const CabinDetail = () => {
       </main>
     )
   }
+
+  const handleShowBooking= () => {
+    setIsBookingOpen(true);
+  };
+
+  const handleCloseBooking = () => {
+    setIsBookingOpen(false);
+  };
 
   return (
     <main className={styles.detail}>
@@ -191,8 +202,12 @@ const CabinDetail = () => {
           </div>
         </div>
       </div>
+      <button onClick={handleShowBooking}>Reservar</button>
       {showModal && (
         <Gallery images={cabin.imagenes} onClose={handleCloseModal} />
+      )}
+      {isBookingOpen && (
+        <BookingConfirmation onClose={handleCloseBooking}  cabin={cabin}/>
       )}
     </main>
   );
