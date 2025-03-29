@@ -47,6 +47,7 @@ const CabinDetail = () => {
   const [unavailableDates, setUnavailableDates] = useState([]);
   const [checkIn, setCheckIn] = useState();
   const [checkOut, setCheckOut] = useState();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { favorite, toggleFavorite } = useFavorite({
     id: cabin.id,
