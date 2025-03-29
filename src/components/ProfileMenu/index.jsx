@@ -56,13 +56,13 @@ const ProfileMenu = () => {
           {user.role === "ADMIN" && (
               <Link to="/administracion" className={styles.menuOption}>
               <Settings className={styles.optionIcon} size={20} />
-              <span>Ver panel de administración</span>
+              <span className={styles.optionText}>Ver panel de administración</span>
             </Link>
           )}
 
             <Link to="/favorite" className={styles.favorite}>
               <FolderHeart className={styles.favorite} size={20} />
-              <span>Mis favoritos</span>
+              <span className={styles.optionText}>Mis favoritos</span>
             </Link>
 
           <div className={styles.logout} onClick={handleLogout}>

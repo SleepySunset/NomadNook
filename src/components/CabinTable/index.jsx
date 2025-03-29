@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "./CabinTable.module.css";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ENDPOINTS } from "../../config/config";
 import { useAuth } from "../../hooks/AuthContext";
 import EditCabin from "../EditCabin";
+import Swal from "sweetalert2";
 
-const CabinTable = () => {
+const CabinTable = ({onAddCabin}) => {
   const { user } = useAuth();
   const [data, setData] = useState([]);
   const [selectedCabinDelete, setSelectedCabinDelete] = useState(null);
@@ -32,12 +32,12 @@ const CabinTable = () => {
       setData(res.data);
       console.log(res.data);
     });
-  }, [END_POINT_GET_CABINS, selectedCabinEdit]);
+  }, [END_POINT_GET_CABINS, selectedCabinEdit, onAddCabin]);
 
 
   const handleDelete = async () => {
     if (!selectedCabinDelete) return;
-
+  
     try {
       await axios.delete(`${END_POINT_DELETE_CABIN}/${selectedCabinDelete.id}`, {
         headers: {
@@ -45,12 +45,25 @@ const CabinTable = () => {
           "Content-Type": "application/json",
         },
       });
-      setData((prevData) =>
+      setData((prevData) => 
         prevData.filter((cabin) => cabin.id !== selectedCabinDelete.id)
       );
+      Swal.fire({
+        title: '¡Eliminada!',
+        text: 'La cabaña ha sido eliminada correctamente.',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+      });
       setSelectedCabinDelete(null);
     } catch (error) {
       console.error("Error al eliminar la cabaña:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo eliminar la cabaña. Por favor, inténtalo de nuevo.',
+        icon: 'error',
+        confirmButtonColor: '#bc6c25',
+      });
     }
   };
 
@@ -79,13 +92,13 @@ const CabinTable = () => {
                   }}
                   className={styles.actionBtn}
                 >
-                  <ModeEditOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
+                  <FontAwesomeIcon icon="fa-solid fa-pen" style={{ color: "#bc6c25", fontSize: "larger"}} />
                 </span>
                 <span
                   onClick={() => setSelectedCabinDelete(cabin)}
                   className={styles.actionBtn}
                 >
-                  <DeleteOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
+                  <FontAwesomeIcon icon="fa-solid fa-trash" style={{ color: "#bc6c25", fontSize: "larger" }} /> 
                 </span>
               </td>
             </tr>

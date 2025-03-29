@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "./AddCabin.module.css";
-import { ENDPOINTS, API_BASE_URL } from "@/config/config";  
+import { ENDPOINTS, API_BASE_URL } from "@/config/config";
 import { useAuth } from "@/hooks/AuthContext";
 import { Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,6 +10,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
+import ImageUploader from "../ImageUploader";
 
 library.add(fas, far, fab);
 
@@ -17,6 +18,7 @@ const AddCabin = ({ onClose }) => {
   const END_POINT_CABIN = ENDPOINTS.ADD_CABIN;
   const END_POINT_CATEGORIES = ENDPOINTS.GET_ALL_CATEGORIES;
   const END_POINT_FEATURES = ENDPOINTS.GET_ALL_FEATURES;
+  const END_POINT_UPLOAD_IMAGES = ENDPOINTS.UPLOAD_IMAGES;
   const { user } = useAuth();
 
   const [title, setTitle] = useState("");
@@ -25,13 +27,12 @@ const AddCabin = ({ onClose }) => {
   const [features, setFeatures] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [capacity, setCapacity] = useState("");
   const [pricePerNight, setPricePerNight] = useState("");
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState("");
-  const [images, setImages] = useState([]);
-  
-  
+
   useEffect(() => {
     if (user?.token) {
       const fetchCategories = async () => {
@@ -42,29 +43,27 @@ const AddCabin = ({ onClose }) => {
           console.error("Error al cargar categorías:", error);
         }
       };
-      
+
       const fetchFeatures = async () => {
         try {
           const response = await axios.get(END_POINT_FEATURES);
           setFeatures(response.data);
-          
         } catch (error) {
           console.error("Error al cargar características:", error);
         }
       };
-      
+
       fetchCategories();
       fetchFeatures();
-    }else{
+    } else {
       return <Navigate to="/login" replace />;
     }
   }, [END_POINT_CATEGORIES, END_POINT_FEATURES, user?.token]);
-  
 
   const handleCategoryChange = (categoryId) => {
-    setSelectedCategories(prev => {
+    setSelectedCategories((prev) => {
       if (prev.includes(categoryId)) {
-        return prev.filter(id => id !== categoryId);
+        return prev.filter((id) => id !== categoryId);
       } else {
         return [...prev, categoryId];
       }
@@ -72,34 +71,18 @@ const AddCabin = ({ onClose }) => {
   };
 
   const handleFeatureChange = (featureId) => {
-    setSelectedFeatures(prev => {
+    setSelectedFeatures((prev) => {
       if (prev.includes(featureId)) {
-        return prev.filter(id => id !== featureId);
+        return prev.filter((id) => id !== featureId);
       } else {
         return [...prev, featureId];
       }
     });
   };
 
-  const addImageInput = () => {
-    setImages([...images, ""]);
-  };
-
-  const deleteImageInput = (index) => {
-    if (images.length > 1) {
-      setImages(images.filter((_, i) => i !== index));
-    }
-  };
-
-  const handleImageChange = (index, value) => {
-    const updatedImages = [...images];
-    updatedImages[index] = value;
-    setImages(updatedImages);
-  };
-
   const getIconComponent = (iconName) => {
     try {
-      const iconExists = Object.keys(library.definitions).some(prefix =>
+      const iconExists = Object.keys(library.definitions).some((prefix) =>
         Object.keys(library.definitions[prefix]).includes(iconName)
       );
 
@@ -121,8 +104,8 @@ const AddCabin = ({ onClose }) => {
         method: "post",
         url: END_POINT_CABIN,
         headers: {
-          'Authorization': `Bearer ${user.token}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
         },
         data: {
           titulo: title,
@@ -133,41 +116,65 @@ const AddCabin = ({ onClose }) => {
           direccion: address,
           disponible: true,
           propietario: {
-            id: 2
-          }
-        }
+            id: 2,
+          },
+        },
       });
 
       const cabinId = response.data.id;
       console.log("Cabaña creada con ID:", cabinId);
-      // Mensaje de Cabaña Añadida
-            Swal.fire({
-                      title: "Cabaña añadida!",
-                      icon: "success",
-                      timer: 2000,
-                      showConfirmButton: false,
-                    });
 
-      const categoryPromises = selectedCategories.map(categoryId => 
+      Swal.fire({
+        title: "Cabaña añadida!",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      const categoryPromises = selectedCategories.map((categoryId) =>
         axios({
           method: "post",
           url: `${API_BASE_URL}/api/alojamientos/${cabinId}/categorias/${categoryId}`,
           headers: {
-            'Authorization': `Bearer ${user.token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
         })
       );
-      const featuresPromises = selectedFeatures.map(featureId => 
+      const featuresPromises = selectedFeatures.map((featureId) =>
         axios({
           method: "post",
           url: `${API_BASE_URL}/api/alojamientos/${cabinId}/caracteristicas/${featureId}`,
           headers: {
-            'Authorization': `Bearer ${user.token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
         })
       );
+      if (selectedImages.length !== 0) {
+        const formData = new FormData();
+        formData.append("alojamiento", cabinId);
+        selectedImages.forEach((image) => {
+          formData.append("files", image);
+        });
+        console.log("Imágenes antes de enviar:", selectedImages);
+
+        try {
+          const responseImage = await axios.post(
+            END_POINT_UPLOAD_IMAGES,
+            formData,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log("Imagenes cargadas correctamente: ",responseImage);
+        } catch (error) {
+          console.log("Error al cargar imagenes: ", error);
+        }
+      }
 
       try {
         await Promise.all(categoryPromises);
@@ -175,27 +182,6 @@ const AddCabin = ({ onClose }) => {
 
         await Promise.all(featuresPromises);
         console.log("Todas las características fueron asignadas correctamente");
-
-        const imagePromises = images.map(imageUrl => 
-          axios({
-            method: "post",
-            url: `${API_BASE_URL}/api/imagenes/guardar`,
-            headers: {
-              'Authorization': `Bearer ${user.token}`,
-              'Content-Type': 'application/json'
-            },
-            data: {
-              url: imageUrl,
-              alojamiento: {
-                id: cabinId
-              }
-            }
-          })
-        );
-
-        await Promise.all(imagePromises);
-        console.log("Todas las imágenes fueron guardadas correctamente");
-
       } catch (error) {
         if (error.response) {
           console.error("Error con la respuesta:", error.response.data);
@@ -212,13 +198,15 @@ const AddCabin = ({ onClose }) => {
       setPricePerNight("");
       setLocation("");
       setAddress("");
-      setImages([]);
       setSelectedCategories([]);
       setSelectedFeatures([]);
+      setSelectedImages([]);
       onClose();
-
     } catch (err) {
-        console.error("Error al crear la cabaña:", err.response?.data || err.message);
+      console.error(
+        "Error al crear la cabaña:",
+        err.response?.data || err.message
+      );
     }
   };
 
@@ -249,30 +237,49 @@ const AddCabin = ({ onClose }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <label className={styles.label}>Seleccione las categorías</label>
-          <div className={styles.categoriesContainer}>
+          <div className={styles.optionsContainer}>
             {categories.map((category) => (
-              <label key={category.id} className={styles.categoryLabel}>
+              <label
+                key={category.id}
+                className={`${styles.optionLabel} ${
+                  selectedCategories.includes(category.id)
+                    ? styles.selected
+                    : ""
+                }`}
+              >
                 <input
                   type="checkbox"
                   checked={selectedCategories.includes(category.id)}
                   onChange={() => handleCategoryChange(category.id)}
+                  className={styles.hiddenCheckbox}
+                />
+                <FontAwesomeIcon
+                  icon={getIconComponent(category.icono)}
+                  size="lg"
+                  className={styles.icon}
                 />
                 {category.nombre}
               </label>
             ))}
           </div>
           <label className={styles.label}>Seleccione las características</label>
-          <div className={styles.featuresContainer}>
+          <div className={styles.optionsContainer}>
             {features.map((feature) => (
-              <label key={feature.id} className={styles.featureLabel}>
+              <label
+                key={feature.id}
+                className={`${styles.optionLabel} ${
+                  selectedFeatures.includes(feature.id) ? styles.selected : ""
+                }`}
+              >
                 <input
                   type="checkbox"
                   checked={selectedFeatures.includes(feature.id)}
                   onChange={() => handleFeatureChange(feature.id)}
+                  className={styles.hiddenCheckbox}
                 />
-                <FontAwesomeIcon 
-                  icon={getIconComponent(feature.icono)} 
-                  className={styles.featureIcon} 
+                <FontAwesomeIcon
+                  icon={getIconComponent(feature.icono)}
+                  className={styles.icon}
                 />
                 {feature.nombre}
               </label>
@@ -326,43 +333,13 @@ const AddCabin = ({ onClose }) => {
             onChange={(e) => setAddress(e.target.value)}
           />
           <label className={styles.label}>
-            Cargue aquí las imágenes correspondientes a su cabaña
+            Cargue aquí las imágenes de su cabaña
           </label>
-          {images.map((image, index) => (
-            <div key={index} className={styles.imageInputContainer}>
-              <input
-                required
-                className={styles.input}
-                type="text"
-                value={image}
-                onChange={(e) => handleImageChange(index, e.target.value)}
-                placeholder={`URL de imagen ${index + 1}`}
-              />
-              <button
-                type="button"
-                className={styles.imgInputBtn}
-                onClick={() => deleteImageInput(index)}
-              >
-                -
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            className={styles.imgInputBtn}
-            onClick={addImageInput}
-          >
-            Agregar url
-          </button>
+          <ImageUploader onImagesSelected={setSelectedImages} />
 
           <button className={styles.submitBtn} type="submit">
             Guardar cabaña
           </button>
-          {/* {responseStatus == "success" ? (
-            <div>Cabaña agregada con éxito</div>
-          ) : (
-            <div>No se ha podido agregar la cabaña</div>
-          )} */}
         </form>
       </div>
     </div>

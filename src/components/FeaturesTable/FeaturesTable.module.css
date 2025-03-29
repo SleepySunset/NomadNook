@@ -20,10 +20,16 @@
 
     .deleteBtn {
         cursor: pointer;
+        
     }
 
     .editBtn {
       cursor: pointer;
+      margin-right: 10px;
+    }
+    
+    .featureIcon{
+      color: #565656
     }
   }
   
