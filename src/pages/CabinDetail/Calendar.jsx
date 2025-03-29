@@ -1,75 +1,105 @@
-import { useState, useEffect } from 'react';
-import styles from './Calendar.module.css'; // Asegúrate de crear este archivo CSS
+import { useState, useEffect, useRef } from 'react';
+import { DateRangePicker } from 'rsuite';
+import dayjs from 'dayjs';
+import styles from './Calendar.module.css';
+import 'rsuite/dist/rsuite.min.css';
 
-const Calendar = ({ disabledDates }) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [days, setDays] = useState([]);
+function Calendar({
+  setCheckIn,
+  setCheckOut,
+  checkIn,
+  checkOut,
+  disabledDates = [], // Parámetro para las fechas no disponibles (array de fechas)
+}) {
+    const containerRef = useRef(null)
+  const today = dayjs().startOf('day');
+  const [dateRange, setDateRange] = useState([
+    checkIn ? dayjs(checkIn).toDate() : null,
+    checkOut ? dayjs(checkOut).toDate() : null,
+  ]);
 
   useEffect(() => {
-    generateCalendar();
-  }, [currentDate, disabledDates]);
+    setDateRange([
+      checkIn ? dayjs(checkIn).toDate() : null,
+      checkOut ? dayjs(checkOut).toDate() : null,
+    ]);
+  }, [checkIn, checkOut]);
 
-  const generateCalendar = () => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const firstDayOfMonth = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const handleDateChange = (newValues) => {
+    if (newValues && newValues.length === 2) {
+      const startDate = newValues[0];
+      const endDate = newValues[1];
 
-    const calendarDays = [];
-    for (let i = 0; i < firstDayOfMonth; i++) {
-      calendarDays.push({ day: '', disabled: true });
+      setDateRange(newValues);
+
+      // Formatear las fechas a YYYY-MM-DD y manejar nulls correctamente
+      setCheckIn(startDate ? dayjs(startDate).format('YYYY-MM-DD') : null);
+      setCheckOut(endDate ? dayjs(endDate).format('YYYY-MM-DD') : null);
+
+      console.log("Check-in: ", checkIn); //para debug
+      console.log("Check-out: ",checkOut); // para debug
+
+    } else {
+      setCheckIn(null);
+      setCheckOut(null);
+      setDateRange([null, null]);
     }
-    for (let i = 1; i <= daysInMonth; i++) {
-      const date = new Date(year, month, i);
-      const dateString = date.toISOString().split('T')[0];
-      const isDisabled = disabledDates.includes(dateString);
-      calendarDays.push({ day: i, date: dateString, disabled: isDisabled });
+  };
+
+  const handleRenderValue = (value) => {
+    if (value && value.length === 2) {
+      const startDate = value[0] ? dayjs(value[0]).format('DD MMM') : 'Check-in';
+      const endDate = value[1] ? dayjs(value[1]).format('DD MMM') : 'Check-out';
+      return `${startDate} - ${endDate}`;
     }
-    setDays(calendarDays);
+    return 'Check-in - Check-out';
   };
 
-  const goToPreviousMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+  const disabledDate = (date) => {
+    const isBeforeToday = dayjs(date).startOf('day').isBefore(today);
+    const isDisabled = disabledDates.some((disabledDateItem) =>
+      dayjs(date).isSame(dayjs(disabledDateItem), 'day')
+    );
+    return isBeforeToday || isDisabled;
   };
+  const renderCell = (date) => {
+    const isWeekend = dayjs(date).day() === 0 || dayjs(date).day() === 6;
+    const isDisbaled = disabledDates.some(disabledDateItem => dayjs(date).isSame(dayjs(disabledDateItem), 'day'))
 
-  const goToNextMonth = () => {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
-  };
-
-  const getMonthName = (date) => {
-    return date.toLocaleString('es-ES', { month: 'long' });
-  };
+    return (
+        <div
+            style={{
+                color: isDisbaled ? '#f0f0f0' : 'black',
+                fontWeight: isWeekend ? '600' : '500',
+            }}
+        >
+            {date.getDate()}
+            {isDisbaled && <span style={{fontSize: "0.8rem"}}></span>}
+        </div>
+    );
+};
 
   return (
-    <div className={styles.calendar}>
-      <div className={styles.header}>
-        <button className={styles.navButton} onClick={goToPreviousMonth}>{'<'}</button>
-        <div className={styles.monthYear}>
-          {getMonthName(currentDate)} {currentDate.getFullYear()}
-        </div>
-        <button className={styles.navButton} onClick={goToNextMonth}>{'>'}</button>
-      </div>
-      <div className={styles.weekdays}>
-        <div>Dom</div>
-        <div>Lun</div>
-        <div>Mar</div>
-        <div>Mié</div>
-        <div>Jue</div>
-        <div>Vie</div>
-        <div>Sáb</div>
-      </div>
-      <div className={styles.days}>
-        {days.map((day, index) => (
-          <div
-            key={index}
-            className={`${styles.day} ${day.disabled ? styles.disabled : ''}`}
-          >
-            {day.day}
-          </div>
-        ))}
-      </div>
+    <div className={styles.container} ref={containerRef}>
+      <DateRangePicker
+        className={styles.calendar}
+        value={dateRange}
+        onChange={handleDateChange}
+        format="yyyy-MM-dd"
+        editable={false}
+        placeholder="Check-in / Check-out"
+        renderValue={handleRenderValue}
+        shouldDisableDate={disabledDate}
+        ranges={[]}
+        container={() => containerRef.current}
+        placement='leftStart'
+        size='lg'
+        renderCell={renderCell}
+        showHeader={false}
+        weekStart={1}
+      />
     </div>
   );
-};
+}
 
 export default Calendar;

@@ -20,6 +20,7 @@
     "@mui/icons-material": "^6.4.5",
     "@mui/material": "^6.4.5",
     "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.476.0",
     "react": "^19.0.0",
@@ -29,6 +30,7 @@
     "react-initials-avatar": "^1.1.2",
     "react-paginate": "^8.3.0",
     "react-router-dom": "^7.1.5",
+    "rsuite": "^5.79.0",
     "sweetalert2": "^11.17.2"
   },
   "devDependencies": {
