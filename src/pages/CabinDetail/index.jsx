@@ -39,7 +39,9 @@ const CabinDetail = () => {
   const [cabin, setCabin] = useState({});
   const [features, setFeatures] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [unavailableDates, setUnavailableDates] = useState([]); // Ejemplo de fechas deshabilitadas
+  const [unavailableDates, setUnavailableDates] = useState([]);
+  const [checkIn, setCheckIn] = useState();
+  const [checkOut, setCheckOut] = useState();
 
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const CabinDetail = () => {
           
         }).then((res) => {
           setUnavailableDates(res.data.diasNoDisponibles);
-          console.log(res.data) // Asumiendo que res.data es un array de strings 'yyyy-mm-dd'
+          console.log(res.data) 
         })
         .catch((err) => {
           console.error("Error fetching unavailable dates:", err);
@@ -69,7 +71,6 @@ const CabinDetail = () => {
     });
   }, [END_POINT]);
   
-
   useEffect(() => {
     // Al abrir el modal, oculta el scroll del body
     if (showModal) {
@@ -78,20 +79,25 @@ const CabinDetail = () => {
       // Al cerrar, restablece el scroll del body
       document.body.style.overflow = "auto";
     }
-
+    
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [showModal]);
+  
+  useEffect(()=>{
+      console.log("Check-in: "+checkIn)
+      console.log("Check-out: "+checkOut)
+  },[checkIn, checkOut])
 
   const handleShowModal = () => {
     setShowModal(true);
   };
-
+  
   const handleCloseModal = () => {
     setShowModal(false);
   };
-
+  
   if (loading) {
     return (
       <main className={styles.detail}>
@@ -110,7 +116,8 @@ const CabinDetail = () => {
       </main>
     )
   }
-
+  
+  
   return (
     <main className={styles.detail}>
       <div className={styles.container}>
@@ -176,17 +183,7 @@ const CabinDetail = () => {
               </p>
             </div>
             <div className={styles.reserve}>
-              <Calendar disabledDates={unavailableDates} />
-              <div className={styles.legend}>
-                <div className={styles.legendItem}>
-                  <div className={styles.availableLegend}></div>
-                  <span>Disponible</span>
-                </div>
-                <div className={styles.legendItem}>
-                  <div className={styles.unavailableLegend}></div>
-                  <span>No disponible</span>
-                </div>
-              </div>
+              <Calendar disabledDates={unavailableDates} checkIn={checkIn} setCheckIn={setCheckIn} checkOut={checkOut} setCheckOut={setCheckOut} />
             </div>
           </div>
         </div>
