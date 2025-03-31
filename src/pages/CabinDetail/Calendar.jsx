@@ -62,27 +62,12 @@ function Calendar({
     );
     return isBeforeToday || isDisabled;
   };
-  const renderCell = (date) => {
-    const isWeekend = dayjs(date).day() === 0 || dayjs(date).day() === 6;
-    const isDisbaled = disabledDates.some(disabledDateItem => dayjs(date).isSame(dayjs(disabledDateItem), 'day'))
 
-    return (
-        <div
-            style={{
-                color: isDisbaled ? '#f0f0f0' : 'black',
-                fontWeight: isWeekend ? '600' : '500',
-            }}
-        >
-            {date.getDate()}
-            {isDisbaled && <span style={{fontSize: "0.8rem"}}></span>}
-        </div>
-    );
-};
 
   return (
     <div className={styles.container} ref={containerRef}>
       <DateRangePicker
-        className={styles.calendar}
+        className={styles.dateRangePicker}
         value={dateRange}
         onChange={handleDateChange}
         format="yyyy-MM-dd"
@@ -94,7 +79,6 @@ function Calendar({
         container={() => containerRef.current}
         placement='leftStart'
         size='lg'
-        renderCell={renderCell}
         showHeader={false}
         weekStart={1}
       />
