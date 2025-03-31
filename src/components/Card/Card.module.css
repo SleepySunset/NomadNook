@@ -132,13 +132,27 @@
     gap: 8px;
   }
 
-  .description{
+.ubicacionContainer{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .ubicacionIcon {
+    position: relative;
+    width: 20px;
+    height: 20px;
+  }
+
+  .ubicacion{
     color:#6b6b6b; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
     max-width: 100%;
   }
+
+
 
   .rating {
     display: flex;

@@ -93,7 +93,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
   transition: color 0.3s;
@@ -102,16 +102,6 @@
 .favorite {
   display:flex;
   gap: 5px;
-}
-
-.adminOpt {
-  color: var(--color5);
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-.adminOpt:hover {
-  color: #ff5733;
 }
 
 .logout {
@@ -131,8 +121,8 @@
 .close {
   position: absolute;
   top: 10px;
-  right: 10px;
-  font-size: 20px;
+  right: 15px;
+  font-size: 30px;
   cursor: pointer;
   transition: color 0.3s;
 }

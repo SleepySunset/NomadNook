@@ -43,7 +43,7 @@ const CardsGrid = ({cabins, allCabins}) => {
                 key={cabin.id}
                 id={cabin.id}
                 title={cabin.titulo}
-                description={cabin.descripcion}
+                ubicacion={cabin.ubicacion}
                 images={cabin.imagenes}
                 pricePerNight={cabin.precioPorNoche}
             />))

@@ -45,5 +45,8 @@ export const ENDPOINTS = {
     //FAVORITOS
     GET_ALL_FAVORITES: `${API_BASE_URL}/api/favoritos/usuario`,
     ADD_FAVORITE: `${API_BASE_URL}/api/favoritos/marcar`,
-    REMOVE_FAVORITE: `${API_BASE_URL}/api/favoritos/quitar`
+    REMOVE_FAVORITE: `${API_BASE_URL}/api/favoritos/quitar`,
+
+    //RESERVA
+    ADD_BOOKING: `${API_BASE_URL}/api/Reservas/guardar`
 }; 

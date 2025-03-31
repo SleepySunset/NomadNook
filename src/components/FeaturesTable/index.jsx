@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styles from "./FeaturesTable.module.css";
-import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { ENDPOINTS } from "../../config/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -119,7 +117,7 @@ const FeaturesTable = () => {
                 <FontAwesomeIcon 
                   icon={getIconComponent(feature.icono)}
                   size="lg" 
-                  className={styles.featureIcon} 
+                  className={styles.featureIcon}
                 />
               </td>
               <td>{feature.nombre}</td>
@@ -128,13 +126,13 @@ const FeaturesTable = () => {
                   className={styles.editBtn}
                   onClick={() => handleEdit(feature)}
                 >
-                  <ModeEditOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
+                  <FontAwesomeIcon icon="fa-solid fa-pen" style={{ color: "#bc6c25", fontSize: "larger"}} />
                 </span>
                 <span 
                   className={styles.deleteBtn}
                   onClick={() => handleDelete(feature.id, feature.nombre)}
                 >
-                  <DeleteOutlineOutlinedIcon sx={{ color: "#bc6c25" }} />
+                  <FontAwesomeIcon icon="fa-solid fa-trash" style={{ color: "#bc6c25", fontSize: "larger" }} />
                 </span>
               </td>
             </tr>
