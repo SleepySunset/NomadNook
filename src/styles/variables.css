@@ -5,6 +5,7 @@
   --color4: #dda15e;
   --color5: #bc6c25;
   --color6: #efece9;
+  --color1-transparent: rgba(96, 108, 56, 0.5);
   --headerHeight: 140px;
   --headerHeightMobile: 135px;
 }
