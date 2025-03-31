@@ -429,6 +429,22 @@
             color: var(--color1);
         }
     }
+    .bookingButton{
+        background-color: var(--color5);
+        color: #FFF;
+        font-size: 18px;
+        border-radius: 10px;
+        padding: 17px 10px;
+        opacity: 100;
+        margin-top: 20px;
+        width: 310px;
+    }
+
+    .errorMessage{
+        margin-top: 15px;
+        color:#c10e1d;
+        transition: all 3s ease-in-out;
+    }
 
     @media (max-width: 768px) {
         padding-top: var(--headerHeightMobile);
