@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import styles from "./Login.module.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +7,8 @@ import Swal from "sweetalert2";
 import { useAuth } from "../../hooks/AuthContext";
 
 const Login = () => {
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo');
   const { login, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -46,19 +49,15 @@ const Login = () => {
     try {
       await login(formData);
       Swal.fire({
-                title: "Ingreso Exitoso!",
-                text: "Redirigiéndote a la página de inicio...",
-                icon: "success",
-                timer: 2000,
-                showConfirmButton: false,
-              });
-              setTimeout(() => navigate("/"), 2000);
+        title: "Ingreso Exitoso!",
+        text: "Redirigiéndote...",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      }).then(() => navigate(redirectTo || "/"), 2000);
     } catch (error) {
       console.error("Error de autenticación:", error);
-      
-      const errorMessage =
-        error.response?.data?.message || "Credenciales inválidas.";
-      
+      const errorMessage = error.response?.data?.message || "Credenciales inválidas.";
       setLoginError(errorMessage);
     }
   };
