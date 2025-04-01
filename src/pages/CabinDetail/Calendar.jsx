@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { DateRangePicker } from "rsuite";
 import dayjs from "dayjs";
+import Swal from 'sweetalert2';
 import styles from "./Calendar.module.css";
 import "rsuite/dist/rsuite.min.css";
 
@@ -25,14 +26,38 @@ function Calendar({
     ]);
   }, [checkIn, checkOut]);
 
+  const hasDisabledDateInRange = (startDate, endDate) => {
+    if (!startDate || !endDate) return false;
+    
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
+    
+    return disabledDates.some(disabledDate => {
+      const date = dayjs(disabledDate);
+      return date.isAfter(start) && date.isBefore(end) || 
+             date.isSame(start, 'day') || 
+             date.isSame(end, 'day');
+    });
+  };
+
   const handleDateChange = (newValues) => {
     if (newValues && newValues.length === 2) {
       const startDate = newValues[0];
       const endDate = newValues[1];
 
-      setDateRange(newValues);
+      if (hasDisabledDateInRange(startDate, endDate)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Rango de fechas inválido.',
+          text: 'No puedes seleccionar un rango de fechas que incluya días ocupados.',
+        });
+        setDateRange([null, null]);
+        setCheckIn(null);
+        setCheckOut(null);
+        return;
+      }
 
-      // Formatear las fechas a YYYY-MM-DD y manejar nulls correctamente
+      setDateRange(newValues);
       setCheckIn(startDate ? dayjs(startDate).format("YYYY-MM-DD") : null);
       setCheckOut(endDate ? dayjs(endDate).format("YYYY-MM-DD") : null);
 

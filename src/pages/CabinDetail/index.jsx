@@ -1,24 +1,24 @@
 import styles from "./CabinDetail.module.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Gallery from "@/components/Gallery";
 import axios from "axios";
-import { ENDPOINTS } from "../../config/config";
+import { ENDPOINTS } from "@/config/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import Calendar from "./Calendar";
-import BookingConfirmation from "../../components/BookingConfirmation";
+import BookingConfirmation from "@/components/BookingConfirmation";
 import { useAuth } from "@/hooks/AuthContext";
-
 import { Heart, Share2, Copy } from "lucide-react";
 import { FaFacebook, FaWhatsapp } from "react-icons/fa";
-import { useFavorite } from "../../hooks/useFavorite";
-import { shareOnSocial, copyToClipboard } from "../../utils/shareUtils";
+import { useFavorite } from "@/hooks/useFavorite";
+import { shareOnSocial, copyToClipboard } from "@/utils/shareUtils";
 import Swal from "sweetalert2";
+import dayjs from "dayjs"; // Make sure this import exists
 
 library.add(fas, far, fab);
 
@@ -53,8 +53,8 @@ const CabinDetail = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
   const { user } = useAuth();
+  const navigate  = useNavigate();
 
   const shareUrl = window.location.href;
 
@@ -75,12 +75,17 @@ const CabinDetail = () => {
           console.log(res.data);
           setFeatures(res.data);
         });
+
+        // Fechas dinamicas
+        const startDate = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+        const endDate = dayjs().add(2, 'year').format('YYYY-MM-DD');
+
         axios({
           method: "get",
           url: ENDPOINTS.GET_UNAVAILABLE_DATES(
             res.data.id,
-            "2025-03-01",
-            "2025-05-01"
+            startDate,
+            endDate
           ),
         })
           .then((res) => {
@@ -168,13 +173,11 @@ const CabinDetail = () => {
           icon: "warning",
           timer: 2000,
           showConfirmButton: false,
-        });
-      }else{
+        }).then(() => navigate(`/login?redirectTo=/cabin/${id}`));
+      } else {
         setErrorMessage("Por favor seleccione las fechas de su estadía");
       }
-      
     }
-    
   };
 
   const handleCloseBooking = () => {
