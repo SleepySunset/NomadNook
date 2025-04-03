@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import Calendar from "@/components/calendar";
+import Calendar from "@/components/Calendar";
 import { useState, useEffect, useRef } from "react";
 import styles from "./Searchbar.module.css";
 
