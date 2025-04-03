@@ -124,7 +124,7 @@ const AdminNav = ({ activeOpt }) => {
                 activeOpt === "categories" ? styles.activeText : styles.navText
               }
             >
-              Gestión de categorias
+              Gestión de categorías
             </span>
           </li>
         </Link>

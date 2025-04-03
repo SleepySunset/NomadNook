@@ -1,627 +1,640 @@
 @import "@/styles/variables.css";
 
 .detail {
-    padding-top: var(--headerHeight);
+  padding-top: var(--headerHeight);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-bottom: 10rem;
+
+  .container {
+    width: 80%;
+    max-width: 1200px;
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    margin-bottom: 10rem;
+    gap: 1rem;
 
-    .container {
-        width: 80%;
-        max-width: 1200px;
-        position: relative;
+    .back {
+      position: relative;
+      top: 2rem;
+      transform: translateY(-50%);
+      left: 0;
+      padding: 15px 15px;
+      border-radius: 15px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 100ms ease;
+      width: fit-content;
+      align-self: flex-end;
+
+      &:hover {
+        background-color: var(--color1);
+      }
+    }
+
+    .back::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 3px 0 0 0;
+      transform: translate(-40%, -50%) rotate(-45deg);
+      width: 12px;
+      height: 12px;
+      border-top: 3px solid rgb(50, 50, 50);
+      border-left: 3px solid rgb(50, 50, 50);
+      z-index: 2;
+    }
+
+    .titleRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .title {
+      text-align: left;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .iconButtons {
+      display: flex;
+      gap: 8px;
+      position: relative;
+      z-index: 10;
+
+      .iconButton {
+        background-color: transparent;
+        border: none;
+        border-radius: 4px;
+        padding: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        cursor: pointer;
+
+        .heartIcon {
+          color: #444;
+          transition: color 0.2s ease, fill 0.2s ease;
+          fill: transparent;
+          transition: all 150ms ease;
+          &:hover {
+            stroke-width: 3px;
+            color: #dd4956;
+            fill: #e63946;
+          }
+        }
+    
+        .favoriteActive {
+          color: #d61f2f;
+          fill: #e63946;
+        }
+      }
+      .shareIcon {
+        transition: all 150ms ease;
+        &:hover {
+          stroke-width: 3px;
+        }
+
+      }
+    }
+    
+    
+    .shareButton {
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 20px;
+     
+    }
+    .sharePopup {
+      position: absolute;
+      width: 120px;
+      top: 40px;
+      right: 0;
+      background: white;
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: all 0.3s ease;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .facebook {
+      width: 20px;
+    }
+
+    .whatsapp {
+      width: 20px;
+    }
+    .x {
+      background: none;
+      border: none;
+      cursor: pointer;
+      object-fit: contain;
+      width: 35px;
+      height: 20px;
+    }
+
+    .whatsapp {
+      color: green;
+    }
+    .instagram {
+      color: #e1306c;
+    }
+    .facebook {
+      color: #1877f2;
+    }
+
+    .imagesContainer {
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      display: flex;
+      flex-direction: row;
+      border-radius: 0.7rem;
+      overflow: hidden;
+      gap: 0.5rem;
+      position: relative;
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-gap: 0.5rem;
+        width: 50%;
+        height: 100%;
+
+        .galleryImg {
+          height: 100%;
+          object-fit: cover;
+          cursor: pointer;
+          aspect-ratio: 1 / 1;
+          transition: all 100ms ease;
+          opacity: 0;
+          animation: fadeIn .5s ease forwards;
+
+          &:hover {
+            filter: brightness(0.8);
+          }
+        }
+      }
+
+      .mainImage {
+        width: 50%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: all 100ms ease;
+        opacity: 0;
+        animation: fadeIn .5s ease forwards;
+
+        &:hover {
+          filter: brightness(0.8);
+        }
+      }
+
+      .showAllImagesBtn {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0.5rem;
+        padding: 0.4rem 0.8rem;
+        height: 1.7rem;
+        border-radius: 0.4rem;
+        background-color: var(--color6);
+        border: 1px solid var(--color2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 500;
+
+        &:hover {
+          background-color: var(--color1);
+        }
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .info {
+        width: 60%;
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        /* margin-top: 0.5rem; */
 
-        .back {
-            position: relative;
-            top: 2rem;
-            transform: translateY(-50%);
-            left: 0;
-            padding: 15px 15px;
-            border-radius: 15px;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-            transition: all 100ms ease;
-            width: fit-content;
-            align-self: flex-end;
+        .description {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
 
-            &:hover {
-                background-color: var(--color1);
-            }
-        }
-
-        .back::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border-radius: 3px 0 0 0;
-            transform: translate(-40%, -50%) rotate(-45deg);
-            width: 12px;
-            height: 12px;
-            border-top: 3px solid rgb(50, 50, 50);
-            border-left: 3px solid rgb(50, 50, 50);
-            z-index: 2;
-        }
-
-        .titleRow {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            
-        }
-
-        .title {
-            text-align: left;
-            align-items: center;
-            font-size: 1.8rem;
+          .title {
+            font-size: 1.4rem;
             font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%; 
+          }
+
+          .text {
+            font-size: 1rem;
+            font-weight: 500;
+          }
         }
 
-        .iconButtons {
-            display: flex;
-            gap: 8px;
-            position: relative;
-            z-index: 10;
-        }
+        .featuresContainer {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 1rem;
+          background-color: var(--color3);
 
-        .iconButton {
-            background-color: transparent;
-            border: none;
-            border-radius: 4px;
-            padding: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #333;
-        }
+          &::before {
+            content: "";
+            display: block;
+            height: 1.5px;
+            width: 80%;
+            background-color: #b5b5b5;
+            margin-bottom: 0.5rem;
+          }
 
-        .iconButton:hover {
-            background-color: transparent;
-        }
+          .title {
+            font-size: 1.4rem;
+            font-weight: 600;
+          }
 
-        .heartIcon {
-            color: #444;
-            transition: color 0.2s ease, fill 0.2s ease;
-            fill: transparent;
-        }
+          .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            max-width: max-content;
+            row-gap: 0.7rem;
+            column-gap: 0.5rem;
 
-        .favoriteActive {
-            color: #d61f2f;
-            fill: #e63946;  
-        }
+            .feature {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              gap: 0.5rem;
 
-        .sharePopup {
-            position: absolute;
-            width: 120px;
-            top: 40px;
-            right: 0;
-            background: white;
-            border-radius: 8px;
-            padding: 8px;
-            display: flex;
-            gap: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .shareButton {
-            background: none;
-            border: none;
-            cursor: pointer;
-            width:20px;
-        }
-        .facebook {
-            width:20px;
-        }
-
-        .whatsapp {
-            width:20px;
-        }
-        .x  {
-            background: none;
-            border: none;
-            cursor: pointer;
-            object-fit: contain;
-            width:35px;
-            height: 20px;
-        }
-
-        .whatsapp { color: green; }
-        .instagram { color: #E1306C; }
-        .facebook { color: #1877F2; }
-
-        .imagesContainer {
-            width: 100%;
-            aspect-ratio: 2 / 1;
-            display: flex;
-            flex-direction: row;
-            border-radius: 0.7rem;
-            overflow: hidden;
-            gap: 0.5rem;
-            position: relative;
-
-            .gallery {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(2, 1fr);
-                grid-gap: 0.5rem;
-                width: 50%;
-                height: 100%;
-
-                .galleryImg {
-                    height: 100%;
-                    object-fit: cover;
-                    cursor: pointer;
-                    aspect-ratio: 1 / 1;
-                    transition: all 100ms ease;
-
-                    &:hover {
-                        filter: brightness(0.8);
-                    }
-                }
-            }
-
-            .mainImage {
-                width: 50%;
-                height: 100%;
-                object-fit: cover;
-                cursor: pointer;
-                transition: all 100ms ease;
-
-                &:hover {
-                    filter: brightness(0.8);
-                }
-            }
-
-            .showAllImagesBtn {
-                position: absolute;
-                bottom: 0.5rem;
-                right: 0.5rem;
-                padding: 0.4rem 0.8rem;
-                height: 1.7rem;
-                border-radius: 0.4rem;
-                background-color: var(--color6);
-                border: 1px solid var(--color2);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                cursor: pointer;
+              .text {
                 font-size: 0.8rem;
                 font-weight: 500;
-
-                &:hover {
-                    background-color: var(--color1);
-                }
+              }
             }
+          }
         }
+      }
+      .sideContainer {
+        display: flex;
+        flex-direction: column;
+        width: 35%;
+        min-width: max-content;
+        gap: 2rem;
 
-        .content {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+        .priceContainer {
+          display: flex;
+          align-items: flex-start;
+          width: 100%;
+          height: max-content;
+          background-color: white;
+          border-radius: 0.7rem;
+          padding: 1rem;
+          gap: 1.5rem;
+          box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
 
-            .info {
-                width: 60%;
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
+          .price {
+            font-size: 0.9rem;
+            font-weight: 400;
 
-                .description {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.5rem;
-
-                    .title {
-                        font-size: 1.4rem;
-                        font-weight: 600;
-                    }
-
-                    .text {
-                        font-size: 1rem;
-                        font-weight: 500;
-                    }
-                }
-
-                .featuresContainer {
-                    display: flex;
-                    flex-direction: column;
-                    width: 100%;
-                    gap: 1rem;
-                    background-color: var(--color3);
-
-                    &::before {
-                        content: "";
-                        display: block;
-                        height: 1.5px;
-                        width: 80%;
-                        background-color: #b5b5b5;
-                        margin-bottom: 0.5rem;
-                    }
-
-                    .title {
-                        font-size: 1.4rem;
-                        font-weight: 600;
-                    }
-
-                    .features {
-                        display: grid;
-                        grid-template-columns: repeat(2, 1fr);
-                        max-width: max-content;
-                        row-gap: 0.7rem;
-                        column-gap: 0.5rem;
-
-                        .feature {
-                            display: flex;
-                            flex-direction: row;
-                            align-items: center;
-                            gap: 0.5rem;
-
-                            .text {
-                                font-size: 0.8rem;
-                                font-weight: 500;
-                            }
-                        }
-                    }
-                }
+            .value {
+              font-size: 1.1rem;
+              font-weight: 700;
             }
-            .sideContainer{
-                display: flex;
-                flex-direction: column;
-                width: 35%;
-                gap: 2rem;
-
-                .priceContainer {
-                    display: flex;
-                    align-items: flex-start;
-                    width: 100%;
-                    height: max-content;
-                    background-color: white;
-                    border-radius: 0.7rem;
-                    padding: 1rem;
-                    gap: 1.5rem;
-                    box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
-
-                    .price {
-                        font-size: 0.9rem;
-                        font-weight: 400;
-
-                        .value {
-                            font-size: 1.1rem;
-                            font-weight: 700;
-                        }
-                    }
-                }
-                .reserve{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    background-color: #ffffff;
-                    padding: 1.5rem 0.5rem;
-                    width: 100%;
-                    border-radius: 0.7rem;
-                    box-shadow: 0px 15px 24px rgba(0, 0, 0, 0.2);
-
-                    .legend {
-                        display: flex;
-                        gap: 1rem;
-                        margin-top: 0.5rem;
-
-                        .legendItem {
-                            display: flex;
-                            align-items: center;
-                            gap: 0.5rem;
-                            font-size: 0.9rem;
-
-                            .availableLegend {
-                                width: 15px;
-                                height: 15px;
-                                background-color: white;
-                                border: 1px solid #ddd;
-                                border-radius: 50%;
-                            }
-
-                            .unavailableLegend {
-                                width: 15px;
-                                height: 15px;
-                                background-color: var(--color1);
-                                border: 1px solid #ddd;
-                                border-radius: 50%;
-                                position: relative;
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
+        .reserve {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #ffffff;
+          padding: 1.5rem 0.5rem;
+          width: 100%;
+          min-width: min-content;
+          border-radius: 0.7rem;
+          box-shadow: 0px 15px 24px rgba(0, 0, 0, 0.2);
+
+          .bookingButton {
+            background-color: var(--color5);
+            color: #fff;
+            font-size: 18px;
+            border-radius: 10px;
+            padding: 17px 10px;
+            opacity: 100;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+          }
+          .errorMessage {
+            margin-top: 15px;
+            color: #c10e1d;
+            transition: all 3s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+
+  .politicsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0;
+    gap: 2rem;
+
+    &::before {
+      content: "";
+      display: block;
+      height: 2.5px;
+      width: 100%;
+      background-color: #b5b5b5;
     }
 
-    .politicsContainer {
-        width: 100%;
-        padding: 2rem 21rem;
-        position: relative;
-      }
-      
-      /* Línea decorativa */
-      .politicsContainer::before {
-        content: "";
-        display: block;
-        height: 2.5px;
-        width: 100%;
-        background-color: #b5b5b5;
-        margin-bottom: 0.5rem;
-      }
+    .title {
+      font-size: 1.5rem;
+      text-align: center;
+    }
 
-      /* Título */
-      .title {
-        font-size: 1.5rem;
-        text-align: center;
-        margin: 30px 0;
-      }
-      
-      /* Grid con dos columnas: izquierda y derecha */
-      .politics {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-      
-      /* Contenedor de cada columna */
+    .politics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+
+
+
       .politicsColumn {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
 
-      }
-      
-      /* Caja individual de política */
-      .politicItem {
-        background-color: #ffffff;
-        border-radius: 8px;
-        padding: 1rem;
-        box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
-        border-radius: 0.7rem;
-      }
-      
-      .politicsTitle {
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-      }
-      
-    .loadingContainer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        margin-top: 2rem;
+        .politicItem {
+          background-color: #ffffff;
+          border-radius: 0.7rem;
+          padding: 1rem;
+          box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
 
-        .loading {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--color1);
-        }
-    }
+          .politicsTitle {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
 
-    .notFound {
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: var(--color1);
-        margin-top: 2rem;
-        display: flex;
-
-        .notFoundText {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--color1);
-        }
-    }
-    .bookingButton{
-        background-color: var(--color5);
-        color: #FFF;
-        font-size: 18px;
-        border-radius: 10px;
-        padding: 17px 10px;
-        opacity: 100;
-        margin-top: 20px;
-        width: 310px;
-    }
-
-    .errorMessage{
-        margin-top: 15px;
-        color:#c10e1d;
-        transition: all 3s ease-in-out;
-    }
-
-    .iconoHandCoins {
-        font-size: 1.5rem; 
-        margin-right: 8px; 
-        vertical-align: middle;
-        padding: 0 0 5px 0;
-      }
-
-      .iconoLock {
-        font-size: 1.5rem; 
-        margin-right: 8px; 
-        vertical-align: middle;
-        padding: 0 0 5px 0;
-      }
-    
-      .iconoEyeOff {
-        font-size: 1.5rem; 
-        margin-right: 8px; 
-        vertical-align: middle;
-        padding: 0 0 5px 0;
-      }
-
-      .iconoHouse {
-        font-size: 1.5rem; 
-        margin-right: 8px; 
-        vertical-align: middle;
-        padding: 0 0 5px 0;
-      }
-
-      @media (max-width: 768px) {
-        padding-top: var(--headerHeightMobile);
-      
-        .container {
-          margin-top: 1rem;
-          width: 90%;
-      
-          .back {
-            top: 1rem;
+            .policyIcon {
+              font-size: 1.5rem;
+              margin-right: 8px;
+              vertical-align: middle;
+              padding: 0 0 5px 0;
+            }
           }
-      
-          .titleRow {
+
+        }
+      }
+    }
+  }
+
+  .sharePopup {
+    position: absolute;
+    width: 120px;
+    top: 40px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    .shareButton {
+      border: none;
+      cursor: pointer;
+      width: 20px;
+    }
+
+    .socialIcon {
+      width: 20px;
+
+      &.whatsapp { color: green; }
+      &.facebook { color: #1877f2; }
+      &.x {
+        object-fit: contain;
+        width: 35px;
+        height: 20px;
+      }
+    }
+  }
+
+  .loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 2rem;
+
+    .loading {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color1);
+    }
+  }
+
+  .notFound {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color1);
+    margin-top: 2rem;
+    display: flex;
+
+    .notFoundText {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--color1);
+    }
+  }
+
+  
+
+  @media (max-width: 768px) {
+    padding-top: var(--headerHeightMobile);
+
+    .container {
+      margin-top: 1rem;
+      width: 90%;
+
+      .back {
+        top: 1rem;
+      }
+
+      .titleRow {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .content {
+        flex-direction: column-reverse;
+        margin-top: 0;
+
+        .info {
+          width: 100%;
+
+          .description {
+            .title {
+              margin-top: 1.5rem;
+              font-size: 1.3rem;
+            }
+
+            .text {
+              font-size: 1rem;
+            }
+          }
+
+          .featuresContainer {
+            .title {
+              font-size: 1.3rem;
+            }
+
+            .features {
+              .feature .text {
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+
+        .sideContainer {
+          width: 100%;
+          gap: 1.5rem;
+
+          .priceContainer {
             flex-direction: column;
             align-items: flex-start;
-          }
-      
-          .content {
-            flex-direction: column-reverse;
-            margin-top: 0;
-      
-            .info {
-              width: 100%;
-      
-              .description {
-                .title {
-                  margin-top: 1.5rem;
-                  font-size: 1.3rem;
-                }
-      
-                .text {
-                  font-size: 1rem;
-                }
-              }
-      
-              .featuresContainer {
-                .title {
-                  font-size: 1.3rem;
-                }
-      
-                .features {
-                  grid-template-columns: 1fr; /* una sola columna */
-                  .feature .text {
-                    font-size: 1rem;
-                  }
-                }
-              }
-            }
-      
-            .sideContainer {
-              width: 100%;
-              gap: 1.5rem;
-      
-              .priceContainer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-              }
-      
-              .reserve {
-                padding: 1rem;
-              }
-            }
-          }
-        }
-      
-        .politicsContainer {
-          padding: 1rem;
-        }
-      
-        .politics {
-          grid-template-columns: 1fr;
-        }
-      }
-      
-      @media (max-width: 425px) {
-        .container {
-          width: 95%;
-          gap: 0.5rem;
-      
-          .titleRow {
-            flex-direction: column;
-            gap: 0.5rem;
-          }
-      
-          .title {
-            font-size: 1.5rem;
-          }
-      
-          .iconButtons {
-            justify-content: flex-start;
-          }
-      
-          .imagesContainer {
-            flex-direction: column;
-            aspect-ratio: auto;
-      
-            .mainImage,
-            .gallery {
-              width: 100%;
-              height: auto;
-            }
-      
-            .gallery {
-              grid-template-columns: 1fr 1fr;
-            }
-      
-            .showAllImagesBtn {
-              font-size: 0.7rem;
-              padding: 0.3rem 0.6rem;
-            }
-          }
-      
-          .content {
-            flex-direction: column;
-      
-            .info {
-              .description .text {
-                font-size: 0.9rem;
-              }
-      
-              .features .feature .text {
-                font-size: 0.9rem;
-              }
-            }
-      
-            .sideContainer {
-              width: 100%;
-              gap: 1rem;
-      
-              .priceContainer {
-                padding: 0.8rem;
-              }
-      
-              .reserve {
-                padding: 1rem 0.5rem;
-              }
-            }
-          }
-      
-          .politicsContainer {
-            padding: 1rem;
-          }
-      
-          .politics {
-            grid-template-columns: 1fr;
             gap: 1rem;
           }
+
+          .reserve {
+            padding: 1rem;
+          }
         }
       }
-     }
+    }
+
+    .politicsContainer {
+      
+      .politics {
+        grid-template-columns: 1fr;
+
+      }
+    }
+
+  }
+
+  @media (max-width: 425px) {
+    .container {
+      gap: 1rem;
+      .titleRow {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .title {
+        font-size: 1.5rem;
+      }
+
+      .iconButtons {
+        justify-content: flex-start;
+      }
+
+      .imagesContainer {
+        flex-direction: column;
+        aspect-ratio: auto;
+
+        .mainImage,
+        .gallery {
+          width: 100%;
+          height: auto;
+        }
+
+        .gallery {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .showAllImagesBtn {
+          font-size: 0.7rem;
+          padding: 0.3rem 0.6rem;
+        }
+      }
+
+      .content {
+        .info {
+          .description .text {
+            font-size: 0.9rem;
+          }
+
+          .features .feature .text {
+            font-size: 0.9rem;
+          }
+        }
+
+        .sideContainer {
+          width: 100%;
+          gap: 1rem;
+
+          .priceContainer {
+            padding: 0.8rem;
+          }
+
+          .reserve {
+            padding: 1rem 0.5rem;
+          }
+        }
+      }
+
+      .politicsContainer {
+        .politics {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+
+    }
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

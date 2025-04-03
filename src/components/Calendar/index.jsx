@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import Swal from 'sweetalert2';
 import styles from "./Calendar.module.css";
 import "rsuite/dist/rsuite.min.css";
+import useViewport from '@/hooks/useViewport';  // Add this import
 
 function Calendar({
   setCheckIn,
@@ -11,8 +12,10 @@ function Calendar({
   checkIn,
   checkOut,
   disabledDates = [], // Optional array of disabled dates
-  placement = 'bottom' // Optional placement with default value
+  placement = 'bottom', // Optional placement with default value
+  appearance = 'default', // Optional appearance with default value ("default", "subtle")
 }) {
+  const { width } = useViewport();
   const containerRef = useRef(null);
   const today = dayjs().startOf("day");
   const [dateRange, setDateRange] = useState([
@@ -90,7 +93,7 @@ function Calendar({
   return (
     <div className={styles.container} ref={containerRef}>
       <DateRangePicker
-        className={styles.dateRangePicker}
+        className={`${appearance === 'subtle' ? styles.dateRangePickerSubtle : styles.dateRangePicker} '`}
         value={dateRange}
         onChange={handleDateChange}
         format="yyyy-MM-dd"
@@ -100,9 +103,11 @@ function Calendar({
         shouldDisableDate={disabledDate}
         ranges={[]}
         container={() => containerRef.current}
-        placement={placement}
-        size='lg'
+        placement={width < 768 ? 'bottom' : placement}
+        size={width < 768 ? 'md' : 'lg'}
+        showOneCalendar={width < 768 ? true : false}
         showHeader={false}
+        appearance={appearance}
         weekStart={1}
       />
     </div>

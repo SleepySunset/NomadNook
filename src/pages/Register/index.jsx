@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import Swal from "sweetalert2";
 import { ENDPOINTS } from "../../config/config";
+import { useAuth } from "../../hooks/AuthContext";  // Add this import at the top
 
 const Register = () => {
+  const { login } = useAuth();  // Add this line after useState declarations
   const END_POINT = ENDPOINTS.REGISTER;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -81,14 +83,33 @@ const Register = () => {
       try {
         const response = await axios.post(END_POINT, formData);
         console.log(response);
-        Swal.fire({
-          title: "Usuario creado con éxito!",
-          text: "Redirigiéndote a la página de inicio...",
-          icon: "success",
-          timer: 2000,
-          showConfirmButton: false,
-        });
-        setTimeout(() => navigate("/"), 2000);
+        
+        // Try to login immediately after successful registration
+        try {
+          await login({
+            email: formData.email,
+            password: formData.password
+          });
+          
+          Swal.fire({
+            title: "Usuario creado con éxito!",
+            text: "Redirigiéndote a la página de inicio...",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => navigate("/"));
+          
+        } catch (loginError) {
+          console.error("Error al iniciar sesión automáticamente:", loginError);
+          Swal.fire({
+            title: "Error al iniciar sesión automáticamente",
+            text: "El usuario fue creado correctamente, pero no se pudo iniciar sesión automáticamente. \n Redirigiéndote a la página de login...",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          }).then(() => navigate("/login"));
+        }
+
       } catch (error) {
         if (error.response && error.response.status === 400) {
           Swal.fire({

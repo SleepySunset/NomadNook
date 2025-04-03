@@ -1,5 +1,5 @@
 .container{
-    z-index: 12;
+    z-index: 3;
     width: max-content;
     position: relative;
 
@@ -46,14 +46,13 @@
     }
 
     .dateRangePicker {
-        position: relative;
-        z-index: 120;
+        z-index: 3;
         div{
-            border-color: #F3E3C0 !important;
-            background-color: #F3E3C0;
+            border-color: #c3c3c3 !important;
+            background-color: transparent !important;
         }
         button{
-            background-color: #F3E3C0 !important;
+            background-color: transparent !important;
         }
 
         input {
@@ -62,12 +61,21 @@
            background-color: transparent; /* Hace que el input sea transparente */
            border: none; /* Elimina el borde */
          }
-      }
-}
+    }
+    .dateRangePickerSubtle{
+        div{
+            border: none !important;
+            background-color: transparent!important;
 
-@media (max-width: 768px) {
-.container{
-    width: 680px;
-     }
-
+        }
+        button{
+            background-color: transparent!important;
+        }
+        input {
+           pointer-events: none; /* Deshabilita la interacción con el input */
+           user-select: none; /* Evita la selección de texto */
+           background-color: transparent; /* Hace que el input sea transparente */
+           border: none; /* Elimina el borde */
+         }
+    }
 }

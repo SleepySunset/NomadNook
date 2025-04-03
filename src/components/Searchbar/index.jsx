@@ -169,6 +169,7 @@ const Searchbar = ({ onSearchTermChange, handleSubmit, setDates }) => {
         checkIn={checkIn} 
         checkOut={checkOut} 
         setCheckOut={setCheckOut} 
+        appearance="subtle"
       />
     </div>
 

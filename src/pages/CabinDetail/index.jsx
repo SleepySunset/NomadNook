@@ -65,6 +65,39 @@ const CabinDetail = () => {
     images: cabin.imagenes,
     pricePerNight: cabin.precioPorNoche,
   });
+  const POLICIES = [{
+    title : "Política de Reservas",
+    icon: Lock,
+    points: [
+      "Se requiere un pago total para confirmar la reserva.",
+      "Cambios de fecha sujetos a disponibilidad y posibles costos adicionales."
+    ]
+  },
+  {
+    title: "Política de Uso y Normas del Alojamiento",
+    icon: House,
+    points: [
+      "Se prohíben fiestas y eventos sin autorización previa. Horario de check-in y check-out establecido.",
+      "Responsabilidad por daños durante la estadía."
+    ]
+  },
+  {
+    title: "Política de Privacidad y Datos",
+    icon: EyeOff,
+    points: [
+      "La información de los usuarios será protegida y utilizada solo para gestionar reservas.",
+      "No se compartirán datos con terceros sin consentimiento."
+    ]
+  },
+  {
+    title: "Política de Cancelación y Reembolsos",
+    icon: HandCoins,
+    points: [
+      "Cancelaciones con más de 15 días de anticipación recibirán un reembolso completo/parcial.",
+      "Cancelaciones tardías pueden estar sujetas a cargos."
+    ]
+  }
+  ];
 
   useEffect(() => {
     axios(END_POINT)
@@ -206,7 +239,7 @@ const CabinDetail = () => {
                 setIsOpen(!isOpen);
               }}
             >
-              <Share2 size={20} />
+              <Share2 className={styles.shareIcon} size={20} />
             </button>
             {isOpen && (
               <div
@@ -253,6 +286,7 @@ const CabinDetail = () => {
               onClick={handleShowModal}
               src={cabin.imagenes[0].url}
               alt={`Imagen 1 de ${cabin.titulo}`}
+              style={{animationDelay: 0}}
             />
             <div className={styles.gallery}>
               {cabin.imagenes.slice(1, 5).map((image, index) => (
@@ -262,6 +296,7 @@ const CabinDetail = () => {
                   key={image.id}
                   src={image.url}
                   alt={`Imagen ${index + 2} de ${cabin.title}`}
+                  style={{animationDelay: `${index * 0.1}s`}}
                 />
               ))}
               <button
@@ -331,39 +366,36 @@ const CabinDetail = () => {
             </div>
           </div>
         </div>
+        <div className={styles.politicsContainer}>
+          <h4 className={styles.title}>Lo que necesitas saber antes de reservar</h4>
+          <div className={styles.politics}>
+            <div className={styles.politicsColumn}>
+              {POLICIES.slice(0, 2).map((policy, index) => (
+                <div key={index} className={styles.politicItem}>
+                  <h4 className={styles.politicsTitle}>
+                    <policy.icon className={styles.policyIcon} /> {policy.title}
+                  </h4>
+                  {policy.points.map((point, pointIndex) => (
+                    <p key={pointIndex}>• {point}</p>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className={styles.politicsColumn}>
+              {POLICIES.slice(2, 4).map((policy, index) => (
+                <div key={index} className={styles.politicItem}>
+                  <h4 className={styles.politicsTitle}>
+                    <policy.icon className={styles.policyIcon} /> {policy.title}
+                  </h4>
+                  {policy.points.map((point, pointIndex) => (
+                    <p key={pointIndex}>• {point}</p>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className={styles.politicsContainer}>
-      <h4 className={styles.title}>Lo que necesitas saber antes de reservar</h4>
-  <div className={styles.politics}>
-    {/* Columna izquierda */}
-    <div className={styles.politicsColumn}>
-      <div className={styles.politicItem}>
-        <h4 className={styles.politicsTitle}><Lock className={styles.iconoLock}/> Política de Reservas</h4>
-        <p>• Se requiere un pago total para confirmar la reserva.</p>
-        <p>• Cambios de fecha sujetos a disponibilidad y posibles costos adicionales.</p>
-      </div>
-      <div className={styles.politicItem}>
-        <h4 className={styles.politicsTitle}><House className={styles.iconoHouse}/> Política de Uso y Normas del Alojamiento</h4>
-        <p>• Se prohíben fiestas y eventos sin autorización previa. Horario de check-in y check-out establecido.</p>
-        <p>• Responsabilidad por daños durante la estadía.</p>
-      </div>
-    </div>
-
-    {/* Columna derecha */}
-    <div className={styles.politicsColumn}>
-      <div className={styles.politicItem}>
-        <h4 className={styles.politicsTitle}><EyeOff className={styles.iconoEyeOff}/> Política de Privacidad y Datos</h4>
-        <p>• La información de los usuarios será protegida y utilizada solo para gestionar reservas.</p>
-        <p>• No se compartirán datos con terceros sin consentimiento.</p>
-      </div>
-      <div className={styles.politicItem}>
-        <h4 className={styles.politicsTitle}><HandCoins className={styles.iconoHandCoins} /> Política de Cancelación y Reembolsos</h4>
-        <p>• Cancelaciones con más de 15 días de anticipación recibirán un reembolso completo/parcial.</p>
-        <p>• Cancelaciones tardías pueden estar sujetas a cargos.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
       {showModal && (
         <Gallery images={cabin.imagenes} onClose={handleCloseModal} />

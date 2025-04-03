@@ -68,7 +68,7 @@ const CategoriesTable = () => {
 
         Swal.fire({
           title: '¡Eliminada!',
-          text: 'La característica ha sido eliminada correctamente.',
+          text: 'La categoría ha sido eliminada correctamente.',
           icon: 'success',
           timer: 2000,
           showConfirmButton: false

@@ -60,7 +60,7 @@ const CategoriesManagement = () => {
         <div className={styles.container}>
           <div className={styles.upperContainer}>
             <button className={styles.addBtn} onClick={openModal}>
-              Agregar categoria
+              Agregar categoría
             </button>
             {isModalOpen && <AddCategory onClose={closeModal} />}
           </div>
