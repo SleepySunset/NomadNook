@@ -55,7 +55,7 @@
   flex-direction: column;
   gap: 20px;
   background: white;
-  height: 200px;
+  height: fit-content;
   padding: 30px;
   border-radius: 15px;
   max-width: 500px;
