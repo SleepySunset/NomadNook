@@ -5,41 +5,33 @@ import { MapPin } from "lucide-react";
 import { ENDPOINTS } from "../../config/config";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Calendar from "@/components/Calendar";
+import dayjs from 'dayjs';
 
-const BookingConfirmation = ({ cabin, onClose, checkin, checkout }) => {
+const BookingConfirmation = ({ cabin, onClose, checkIn, checkOut, setCheckIn, setCheckOut, unavailableDates }) => {
   const { user } = useAuth();
   const END_POINT_ADD_BOOKING = ENDPOINTS.ADD_BOOKING;
   const [totalDays, setTotalDays] = useState(0);
-  const [formattedCheckin, setFormattedCheckin] = useState();
-  const [formattedCheckout, setFormattedCheckout] = useState();
   const todaysDate = new Date();
 
   useEffect(() => {
     const calcAmountOfDays = () => {
-      const difOnTime = new Date(checkout) - new Date(checkin);
-      const difOnDays = difOnTime / (1000 * 60 * 60 * 24);
-      setTotalDays(difOnDays);
-    };
-    const formattedDates = () => {
-      const dateIn = new Date(`${checkin}T00:00:00`);
-      const dateOut = new Date(`${checkout}T00:00:00`);
-    
-      const formatter = new Intl.DateTimeFormat("es-MX", {
-        day: "numeric",
-        month: "long",
-      });
-    
-      setFormattedCheckin(formatter.format(dateIn));
-      setFormattedCheckout(formatter.format(dateOut));
+      const start = dayjs(checkIn);
+      const end = dayjs(checkOut);
+      const days = end.diff(start, 'day');
+      setTotalDays(days);
     };
     calcAmountOfDays();
-    formattedDates();
-  }, [checkin, checkout]);
+  }, [checkIn, checkOut]);
 
-  const handleEditDate = () => {};
 
   const handleBookingConfirmation = async () => {
     try {
+      console.log("Reserva")
+      console.log(checkIn)
+      console.log(checkOut)
+      console.log(typeof(checkIn))
+      console.log(typeof(checkIn))
       const response = await axios({
         method: "post",
         url: END_POINT_ADD_BOOKING,
@@ -54,8 +46,8 @@ const BookingConfirmation = ({ cabin, onClose, checkin, checkout }) => {
           alojamiento: {
             id: cabin.id,
           },
-          fechaInicio: checkin,
-          fechaFin: checkout,
+          fechaInicio: checkIn,
+          fechaFin: checkOut,
           total: totalDays,
           estado: "CONFIRMADA",
           fechaReserva: todaysDate
@@ -84,7 +76,7 @@ const BookingConfirmation = ({ cabin, onClose, checkin, checkout }) => {
     }
   };
 
-  return  formattedCheckin && formattedCheckin ? (
+  return  checkIn && checkOut ? (
     <div className={styles.container}>
       <div className={styles.modalContainer}>
         <span className={styles.closeButton} onClick={onClose}>
@@ -98,12 +90,15 @@ const BookingConfirmation = ({ cabin, onClose, checkin, checkout }) => {
               <p className={styles.mainText}>
                 <strong>Fechas</strong>
               </p>
-              <p className={styles.mainText}>
-                {formattedCheckin} - {formattedCheckout}
-              </p>
-              <span className={styles.mainText} onClick={handleEditDate}>
-                Editar
-              </span>
+
+              <Calendar
+                disabledDates={unavailableDates}
+                checkIn={checkIn}
+                setCheckIn={setCheckIn}
+                checkOut={checkOut}
+                setCheckOut={setCheckOut}
+                placement='rightStart'
+              />
             </div>
             <div className={styles.thirdContainer}>
               <h2 className={styles.secondTitle}>Tus datos</h2>
