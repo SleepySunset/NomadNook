@@ -1,126 +1,134 @@
-.categoriesContainer{
-    width: 100%;
-}
-
-.categories {
+.categoriesContainer {
+    width: 860px;
+    background-color: #E1C996;
+    border-radius: 20px 20px 0 0;
+    padding: 18px 20px 8px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+    margin-top: 20px;
+  }
+  
+  .categories {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 10px 10px 10px 10px;
-    position: sticky;
-    top: 80px;
-    background-color: white;
-    z-index: 999;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-
-.categories::-webkit-scrollbar {
-    display: none;
-}
-
-
-.categoryButton {
-    display: flex;
-    justify-content: center;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
+    gap: 14px;
+    flex-wrap: wrap;
+    background-color: #E1C996;
+  }
+  
+  .categoryButton {
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    flex: 0 0 auto;
-    min-width: 100px;
-    opacity: 0;
-    animation: appear 0.5s forwards;
-}
-.selected {
-    background: #BC6C25;
-    color: white;
-    border-color: #BC6C25;
-}
-
-.categoryButton:first-child {
-    margin-left: 10px;
-}
-
-.categoryButton:hover {
-    background: #BC6C25;
-    color: white;
-    border-color: #BC6C25;
-}
-
-
-.categoryIcon {
-    width: 20px;
-    height: 20px;
-}
-.clearButton{
-    display: flex;
-    aspect-ratio: 1/1;
-    justify-content: center;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    padding: 8px 12px;
+    gap: 6px;
+    border: none;
+    border-radius: 18px;
+    padding: 10px 14px;
     font-size: 14px;
+    font-weight: bolder;
+    color: #4a2e14;
+    background-color: #E1C996;
     cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0;
-    animation: appear 0.5s forwards;
-
-    &:hover {
-        background-color: #BC6C25;
-        color: white;
-        border-color: #BC6C25;
-    }
-}
-
-@keyframes appear {
+    transition: transform 0.2s ease, font-weight 0.2s ease;
+    outline: none;
+  }
+  
+  .categoryButton:hover {
+    font-weight: bold;
+    transform: scale(1.09);
+  }
+  
+  .selected {
+    background-color: #bc6c25;
+    color: white;
+  }
+  
+  .clearButton {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #f1e7db;
+    color: #4a2e14;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .clearButton:hover {
+    background-color: #bc6c25;
+    color: white;
+  }
+  
+  @keyframes appear {
     from {
-        opacity: 0;
+      opacity: 0;
     }
     to {
-        opacity: 1;
+      opacity: 1;
     }
-    
-}
-
-@media (max-width: 768px) {
+  }
+  
+  /* Tablet */
+  @media (max-width: 768px) {
+    .categoriesContainer {
+      width: 90%;
+      border-radius: 16px 16px 0 0;
+      padding: 16px;
+    }
+  
     .categories {
-        flex-flow: row wrap;
-        gap: 10px;
-        overflow-x: hidden;
-        padding: 10px;
-
-        .categoryButton {
-            width: min-content;
-            min-width: auto;
-            font-size: 13px;
-            height: 2rem;
-            justify-content: center;
-            align-items: center;
-
-            .categoryIcon {
-                width: 18px;
-                height: 18px;
-            }
-        }
-
-
-        .clearButton{
-            height: 2rem;
-            min-width: auto;
-            font-size: 13px;
-            justify-content: center;
-            align-items: center;
-        }
+      flex-wrap: wrap;
+      gap: 10px;
+      overflow-x: hidden;
+      padding: 10px;
+      justify-content: center;
     }
-
-
-}
+  
+    .categoryButton {
+      font-size: 13px;
+      height: 2rem;
+      padding: 8px 12px;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .categoryIcon {
+      width: 18px;
+      height: 18px;
+    }
+  
+    .clearButton {
+      width: 2rem;
+      height: 2rem;
+      font-size: 13px;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  
+  /* Mobile */
+  @media (max-width: 425px) {
+    .categoriesContainer {
+      width: 90%;
+      border-radius: 14px 14px 0 0;
+      padding: 14px 12px 6px 12px;
+    }
+  
+    .categories {
+      gap: 8px;
+      padding: 8px;
+    }
+  
+    .categoryButton {
+      font-size: 12px;
+      padding: 6px 10px;
+      height: auto;
+    }
+  
+    .clearButton {
+      width: 28px;
+      height: 28px;
+      font-size: 12px;
+    }
+  }
+  

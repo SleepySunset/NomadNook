@@ -1,146 +1,162 @@
 .searchbarContainer {
-    position: relative;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    /* Aseguramos que el contenedor tenga un z-index apropiado */
-    z-index: 150;
-    margin-top: 1rem;
+  width: 860px;
+  background-color: #ECD9AF;
+  padding: 12px 20px 20px 20px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+}
+
+.inputWrapper {
+  flex: 1;
+  border: 1px solid #F3E3C0;
+  border-radius: 12px;
+  background-color: #F3E3C0;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 12px;
+  position: relative;
+}
+
+.input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 15px;
+  background-color: transparent;
+  color: #4a2e14;
+}
+
+.icon {
+  background-color: #bc6c25;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  width: 100px;
+  height: 48px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.icon:hover {
+  background-color: #a85b1e;
+}
+
+.suggestionsList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 230px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 153;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.suggestionItem {
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  color: #4a2e14;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestionItem:hover {
+  background-color: #f4ede3;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .searchbarContainer {
+    width: 90%;
+    padding: 12px 16px 16px 16px;
+    flex-direction: column;
+    align-items: center;
+    display:flex;
+    gap: 12px;
   }
-    
+
+  .container .dateRangePicker div {
+    width: 600px;
+  }
+  
   .form {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    margin: 0 auto;
-    padding: 0 10px;
-    border-radius: 25px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 151; /* Más alto que el contenedor */
+    flex-direction: column;
+    gap: 12px;
   }
-  
+
   .inputWrapper {
-    position: relative;
-    flex-grow: 1;
-    height: 100%;
+    height: 44px;
+    padding: 0 10px;
+
   }
-    
+
   .input {
-    width: 100%;
-    height: 100%;
-    padding: 0 15px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    background: transparent;
+    font-size: 14px;
   }
-   
+
   .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-
-    background-color: #556B2F;
-    color: white;
-    cursor: pointer;
-    position: relative;
-    z-index: 152; /* Para asegurarnos que está sobre las sugerencias */
-  }
-  .calendarButton {
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    height: 100%;
-    border: none;
-    border-left: 1px solid #e0e0e0;
-    background: none;
-    cursor: pointer;
-    color: #333;
-    position: relative;
-    z-index: 152; /* Para asegurarnos que está sobre las sugerencias */
-  }
-    
-  .calendarButton:hover {
-    background-color: #f5f5f5;
-  }
-    
-  .dateText {
-    margin-right: 10px;
-    font-size: 14px;
-  }
-    
-
-  .calendarPopup {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    z-index: 100; 
-    margin-top: 10px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-    visibility: hidden;
-  }
-    
-
-  .calendarPopupVisible {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-  }
-  
-  /* Estilos para las sugerencias de autocompletado */
-  .suggestionsList {
-    position: absolute;
-    top: 100%;
-    left: 0;
     width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 153; /* Menor que el calendario pero mayor que elementos generales */
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .suggestionItem {
-    padding: 12px 15px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    height: 44px;
     font-size: 14px;
-    color: #333;
-    border-bottom: 1px solid #f0f0f0;
   }
-  
-  .suggestionItem:last-child {
-    border-bottom: none;
+
+  .dateText {
+    display: none;
   }
-  
-  .suggestionItem:hover {
-    background-color: #f5f5f5;
-    color: #556B2F;
+
+  .calendarButton {
+    padding: 0 10px;
   }
-    
-  @media (max-width: 768px) {
-    .dateText {
-      display: none;
-    }
-    .calendarButton {
-      padding: 0 10px;
-    }
-    .suggestionItem {
-      padding: 10px;
-    }
+
+  .suggestionItem {
+    padding: 10px 14px;
+    font-size: 13px;
   }
+}
+
+/* Mobile */
+@media (max-width: 425px) {
+  .searchbarContainer {
+    width: 90%;
+    padding: 10px 12px 14px 12px;
+    gap: 10px;
+  }
+
+  .inputWrapper {
+    height: 42px;
+    padding: 0 8px;
+  }
+
+  .input {
+    font-size: 13px;
+  }
+
+  .icon {
+    height: 42px;
+    font-size: 13px;
+  }
+
+  .suggestionItem {
+    padding: 10px 12px;
+    font-size: 12.5px;
+  }
+}

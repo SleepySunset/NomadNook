@@ -1,7 +1,8 @@
 .footer {
   width: 100%;
   background-color: #bc6c25;
-  color: white;
+  color: black;
+  font-weight: bold;
   padding: 20px;
   display: flex;
   justify-content: space-between;

@@ -13,7 +13,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import Calendar from "./Calendar";
 import BookingConfirmation from "@/components/BookingConfirmation";
 import { useAuth } from "@/hooks/AuthContext";
-import { Heart, Share2, Copy } from "lucide-react";
+import { Heart, Share2, Copy, Lock, EyeOff, House, HandCoins } from "lucide-react";
 import { FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { useFavorite } from "@/hooks/useFavorite";
 import { shareOnSocial, copyToClipboard } from "@/utils/shareUtils";
@@ -333,57 +333,37 @@ const CabinDetail = () => {
         </div>
       </div>
       <div className={styles.politicsContainer}>
-        <h4 className={styles.title}>
-          Lo que necesitas saber antes de reservar
-        </h4>
-        <div className={styles.politics}>
-          {/* Columna izquierda */}
-          <div className={styles.politicsColumn}>
-            <div className={styles.politicItem}>
-              <h4 className={styles.politicsTitle}>Política de Reservas</h4>
-              <p>Se requiere un pago total para confirmar la reserva.</p>
-              <p>
-                Cambios de fecha sujetos a disponibilidad y posibles costos
-                adicionales.
-              </p>
-            </div>
-            <div className={styles.politicItem}>
-              <h4 className={styles.politicsTitle}>
-                Política de Uso y Normas del Alojamiento
-              </h4>
-              <p>
-                Se prohíben fiestas y eventos sin autorización previa. Horario
-                de check-in y check-out establecido. Responsabilidad por daños
-                durante la estadía.
-              </p>
-            </div>
-          </div>
-
-          {/* Columna derecha */}
-          <div className={styles.politicsColumn}>
-            <div className={styles.politicItem}>
-              <h4 className={styles.politicsTitle}>
-                Política de Privacidad y Datos
-              </h4>
-              <p>
-                La información de los usuarios será protegida y utilizada solo
-                para gestionar reservas. No se compartirán datos con terceros
-                sin consentimiento.
-              </p>
-            </div>
-            <div className={styles.politicItem}>
-              <h4 className={styles.politicsTitle}>
-                Política de Cancelación y Reembolsos
-              </h4>
-              <p>
-                Cancelaciones con más de 15 días de anticipación recibirán un
-                reembolso completo/parcial. Cancelaciones tardías pueden estar
-                sujetas a cargos.
-              </p>
-            </div>
-          </div>
-        </div>
+      <h4 className={styles.title}>Lo que necesitas saber antes de reservar</h4>
+  <div className={styles.politics}>
+    {/* Columna izquierda */}
+    <div className={styles.politicsColumn}>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}><Lock className={styles.iconoLock}/> Política de Reservas</h4>
+        <p>• Se requiere un pago total para confirmar la reserva.</p>
+        <p>• Cambios de fecha sujetos a disponibilidad y posibles costos adicionales.</p>
       </div>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}><House className={styles.iconoHouse}/> Política de Uso y Normas del Alojamiento</h4>
+        <p>• Se prohíben fiestas y eventos sin autorización previa. Horario de check-in y check-out establecido.</p>
+        <p>• Responsabilidad por daños durante la estadía.</p>
+      </div>
+    </div>
+
+    {/* Columna derecha */}
+    <div className={styles.politicsColumn}>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}><EyeOff className={styles.iconoEyeOff}/> Política de Privacidad y Datos</h4>
+        <p>• La información de los usuarios será protegida y utilizada solo para gestionar reservas.</p>
+        <p>• No se compartirán datos con terceros sin consentimiento.</p>
+      </div>
+      <div className={styles.politicItem}>
+        <h4 className={styles.politicsTitle}><HandCoins className={styles.iconoHandCoins} /> Política de Cancelación y Reembolsos</h4>
+        <p>• Cancelaciones con más de 15 días de anticipación recibirán un reembolso completo/parcial.</p>
+        <p>• Cancelaciones tardías pueden estar sujetas a cargos.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
       {showModal && (
         <Gallery images={cabin.imagenes} onClose={handleCloseModal} />

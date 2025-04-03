@@ -5,8 +5,9 @@
 body {
   font-family: 'Montserrat', sans-serif;
 }
-a{
-  text-decoration: none;
+a {
+  color: inherit !important;
+  text-decoration: none !important;
 }
 a:visited{
   color: inherit;
