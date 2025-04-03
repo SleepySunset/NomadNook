@@ -10,7 +10,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import Calendar from "./Calendar";
+import Calendar from "@/components/Calendar";
 import BookingConfirmation from "@/components/BookingConfirmation";
 import { useAuth } from "@/hooks/AuthContext";
 import { Heart, Share2, Copy } from "lucide-react";
@@ -54,7 +54,7 @@ const CabinDetail = () => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { user } = useAuth();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   const shareUrl = window.location.href;
 
@@ -193,9 +193,8 @@ const CabinDetail = () => {
           <div className={styles.iconButtons}>
             <button className={styles.iconButton} onClick={toggleFavorite}>
               <Heart
-                className={`${styles.heartIcon} ${
-                  favorite ? styles.favoriteActive : ""
-                }`}
+                className={`${styles.heartIcon} ${favorite ? styles.favoriteActive : ""
+                  }`}
                 size={20}
               />
             </button>
@@ -318,6 +317,7 @@ const CabinDetail = () => {
                 setCheckIn={setCheckIn}
                 checkOut={checkOut}
                 setCheckOut={setCheckOut}
+                placement='leftStart'
               />
               <button
                 onClick={handleOpenBooking}
@@ -390,10 +390,13 @@ const CabinDetail = () => {
       )}
       {isBookingOpen && (
         <BookingConfirmation
-          onClose={handleCloseBooking}
           cabin={cabin}
-          checkin={checkIn}
-          checkout={checkOut}
+          checkIn={checkIn}
+          checkOut={checkOut}
+          setCheckIn={setCheckIn}
+          setCheckOut={setCheckOut}
+          onClose={handleCloseBooking}
+          unavailableDates={unavailableDates}
         />
       )}
     </main>

@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import Calendar from "../Calendar/Calendar";
+import Calendar from "@/components/calendar";
 import { useState, useEffect, useRef } from "react";
 import styles from "./Searchbar.module.css";
 
@@ -19,24 +19,11 @@ const Searchbar = ({ onSearchTermChange, handleSubmit, setDates }) => {
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
 
-  const formatDate = (date) => {
-    if (date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-    return null;
-  };
   useEffect(()=>{
-    const formattedCheckIn = formatDate(checkIn);
-    const formattedCheckOut = formatDate(checkOut);
-
-    if (formattedCheckIn && formattedCheckOut) {
-      console.log('Fecha de Check-in:', formattedCheckIn);
-      console.log('Fecha de Check-out:', formattedCheckOut);
-      // Aquí puedes retornar o utilizar las fechas formateadas como necesites
-      setDates({ checkIn: formattedCheckIn, checkOut: formattedCheckOut });
+    if (checkIn && checkOut) {
+      console.log('Fecha de Check-in:', checkIn);
+      console.log('Fecha de Check-out:', checkOut);
+      setDates({ checkIn: checkIn, checkOut: checkOut });
     } else {
       console.log('Por favor, selecciona ambas fechas.');
       setDates({ checkIn: null, checkOut: null });

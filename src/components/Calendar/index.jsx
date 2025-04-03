@@ -10,7 +10,8 @@ function Calendar({
   setCheckOut,
   checkIn,
   checkOut,
-  disabledDates = [], // Parámetro para las fechas no disponibles (array de fechas)
+  disabledDates = [], // Optional array of disabled dates
+  placement = 'bottom' // Optional placement with default value
 }) {
   const containerRef = useRef(null);
   const today = dayjs().startOf("day");
@@ -27,7 +28,7 @@ function Calendar({
   }, [checkIn, checkOut]);
 
   const hasDisabledDateInRange = (startDate, endDate) => {
-    if (!startDate || !endDate) return false;
+    if (!startDate || !endDate || disabledDates.length === 0) return false;
     
     const start = dayjs(startDate);
     const end = dayjs(endDate);
@@ -48,7 +49,7 @@ function Calendar({
       if (hasDisabledDateInRange(startDate, endDate)) {
         Swal.fire({
           icon: 'error',
-          title: 'Rango de fechas inválido.',
+          title: 'Rango de fechas inválido',
           text: 'No puedes seleccionar un rango de fechas que incluya días ocupados.',
         });
         setDateRange([null, null]);
@@ -60,9 +61,6 @@ function Calendar({
       setDateRange(newValues);
       setCheckIn(startDate ? dayjs(startDate).format("YYYY-MM-DD") : null);
       setCheckOut(endDate ? dayjs(endDate).format("YYYY-MM-DD") : null);
-
-      console.log("Check-in: ", checkIn); //para debug
-      console.log("Check-out: ", checkOut); // para debug
     } else {
       setCheckIn(null);
       setCheckOut(null);
@@ -83,12 +81,11 @@ function Calendar({
 
   const disabledDate = (date) => {
     const isBeforeToday = dayjs(date).startOf("day").isBefore(today);
-    const isDisabled = disabledDates.some((disabledDateItem) =>
+    const isDisabled = disabledDates.length > 0 && disabledDates.some((disabledDateItem) =>
       dayjs(date).isSame(dayjs(disabledDateItem), "day")
     );
     return isBeforeToday || isDisabled;
   };
-
 
   return (
     <div className={styles.container} ref={containerRef}>
@@ -103,7 +100,7 @@ function Calendar({
         shouldDisableDate={disabledDate}
         ranges={[]}
         container={() => containerRef.current}
-        placement='leftStart'
+        placement={placement}
         size='lg'
         showHeader={false}
         weekStart={1}
@@ -113,3 +110,4 @@ function Calendar({
 }
 
 export default Calendar;
+
