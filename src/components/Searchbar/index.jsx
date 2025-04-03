@@ -136,55 +136,61 @@ const Searchbar = ({ onSearchTermChange, handleSubmit, setDates }) => {
   };
   
   return (
-    <div className={styles.searchbarContainer} ref={searchbarContainerRef}>
-      <form 
-        className={styles.form} 
-        role="search" 
-        aria-label="Buscar"
-        onSubmit={handleSubmit}
-      >
-        <label className={styles.label} htmlFor="search"></label>
-        <div className={styles.inputWrapper}>
-          <input
-            className={styles.input}
-            type="search"
-            id="search"
-            name="q"
-            placeholder="Buscar"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onFocus={handleInputFocus}
-            autoComplete="off"
-            ref={searchInputRef}
-          />
-          
-          {/* Sugerencias fijas */}
-          {showSuggestions && (
-            <ul 
-              className={styles.suggestionsList} 
-              ref={suggestionsRef}
+<div className={styles.searchbarContainer} ref={searchbarContainerRef}>
+  <form 
+    className={styles.form} 
+    role="search" 
+    aria-label="Buscar"
+    onSubmit={handleSubmit}
+  >
+    {/* Campo de búsqueda */}
+    <div className={styles.inputWrapper}>
+      <SearchIcon style={{ color: "#bc6c25", marginRight: "8px" }} />
+      <input
+        className={styles.input}
+        type="search"
+        id="search"
+        name="q"
+        placeholder="Buscar"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        onFocus={handleInputFocus}
+        autoComplete="off"
+        ref={searchInputRef}
+      />
+
+      {/* Sugerencias fijas */}
+      {showSuggestions && (
+        <ul className={styles.suggestionsList} ref={suggestionsRef}>
+          {suggestions.map((suggestion, index) => (
+            <li 
+              key={index} 
+              className={styles.suggestionItem}
+              onClick={() => handleSuggestionClick(suggestion)}
             >
-              {suggestions.map((suggestion, index) => (
-                <li 
-                  key={index} 
-                  className={styles.suggestionItem}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                >
-                  {suggestion}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        
-        <Calendar setCheckIn={setCheckIn} checkIn={checkIn} checkOut={checkOut} setCheckOut={setCheckOut}/>
-
-        <button type="submit" className={styles.icon}>
-          <SearchIcon />
-        </button>
-      </form>
-
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
+
+    {/* Selector de fechas */}
+    <div className={styles.inputWrapper}>
+      <Calendar 
+        setCheckIn={setCheckIn} 
+        checkIn={checkIn} 
+        checkOut={checkOut} 
+        setCheckOut={setCheckOut} 
+      />
+    </div>
+
+    {/* Botón de búsqueda */}
+    <button type="submit" className={styles.icon}>
+      Buscar
+    </button>
+  </form>
+</div>
   );
 };
 

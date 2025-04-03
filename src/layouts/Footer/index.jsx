@@ -14,7 +14,7 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.logoContainer}>
         <img
-          src="/white_full_logo.png"
+          src="/black_full_logo.png"
           alt="White-logo"
           className={styles.whitelogo}
         />

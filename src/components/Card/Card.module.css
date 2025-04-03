@@ -9,7 +9,7 @@
 }
 
 .text {
-    padding: 20px;
+    padding: 2px 15px 15px 10px;
     text-align: left;
 }
 
@@ -123,6 +123,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%; 
+    font-size: 22px;
+
  }
 
  .header {
