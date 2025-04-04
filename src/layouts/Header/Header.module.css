@@ -14,6 +14,7 @@
 .headerUser {
   background-color: var(--color2);
 }
+
 .headerAdmin {
   background-color: var(--color4);
 }
@@ -50,31 +51,104 @@
 .authButton:hover {
   background-color: var(--color4);
 }
-.textBtn{
+
+.textBtn {
   color: white;
   font-weight: bolder;
 }
+
 .authLinksHeader {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-
-.buttonMobile{
-  display:none;
+.buttonMobile {
+  display: none;
 }
 
-.mobileMenu{
-  display:none;
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--color6);
+  width: 310px;
+  min-height: 180px;
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  padding: 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 13px rgba(127, 127, 126, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.mobileMenu.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #565656;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+  color: red;
+}
+
+.mobileMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0 0 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mobileMenu li {
+  width: 100%;
+}
+
+.mobileMenu a {
+  display: block;
+  background-color: white;
+  color: var(--color2);
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.mobileMenu a:hover {
+  background-color: var(--color5);
+  color: white;
+  transform: scale(1.03);
 }
 
 @media (max-width: 768px) {
   .header {
     width: 100%;
     padding: 10px 5%;
-    text-align: center;
     height: var(--headerHeightMobile);
+    text-align: center;
   }
 
   .slogan {
@@ -85,93 +159,89 @@
     display: none;
   }
 
-  .menuMobile {
-    display: none;
-  }
-
-  .menuMobile {
+  .buttonMobile {
     display: block;
+    background-color: var(--color5);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
   }
 
-  .authLinksHeader > .hidden {
-    display: none;
+  .buttonMobile:hover {
+    background-color: var(--color4);
+    transform: scale(1.05);
   }
 
   .mobileMenu {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: start;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    right: -100%;
+    background-color: white;
     width: 250px;
-    height: 100vh;
-    background-color: #222;
-    border-left: 3px solid #f4a261;
-    transition: right 0.3s ease-in-out;
-    z-index: 1000;
+    min-height: 120px;
+    position: absolute;
+    top: 90px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
   .mobileMenu.active {
-    right: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .closeButton {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
+  display: none;
+  }
+
+  .closeButton:hover {
+    color: #555;
   }
 
   .mobileMenu ul {
     list-style: none;
     padding: 0;
-    margin: 50px 0 0 0;
+    margin: 5px 0 0 0;
+    background-color: var(--color3);
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   }
 
   .mobileMenu li {
     width: 100%;
-    text-align: center;
-    margin-bottom: 10px;
   }
 
   .mobileMenu a {
-    color: #ffffff;
-    background-color: #dda15e;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 15px;
     display: block;
-    width: 80%;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: var(--color6);
+    text-align: center;
+    padding: 12px 18px;
+    border-radius: 10 0px 0 10px;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 15px;
+    transition: 
+      background-color 0.3s ease,
+      transform 0.2s ease,
+      font-size 0.2s ease;
   }
 
   .mobileMenu a:hover {
-    background-color: #d67607;
-    transform: scale(1.05);
-  }
-
-  .buttonMobile {
-    display: block;
-    background-color: #dda15e;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-
-  .buttonMobile:hover {
-    background-color: #d67607;
-    transform: scale(1.05);
+    background-color: var(--color6);
+    transform: translateY(-2px);
+    font-size: 17px;
   }
 }
