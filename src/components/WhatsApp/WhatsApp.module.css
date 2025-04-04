@@ -1,10 +1,29 @@
+.whatsapp {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+  /* Clase adicional para cuando está cerca del final */
 .container {
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     bottom: 20px;
-    right: 30px;
+    right: 20px;
     z-index: 1000;
-    margin-bottom: 130px;
-  }
+    transition: bottom 0.3s ease; /* Agregado para suavizar el cambio de posición */
+    }
+    
+    /* Clase adicional para cuando está cerca del final */
+    .containerAtBottom {
+    bottom: 150px;
+    }
   
   .widget {
     background-color: #fff;
@@ -99,13 +118,19 @@
   
 @media (max-width: 768px) {
     .container{
-    bottom:-35px
+    bottom: 30px
     }
+    .containerAtBottom {
+      bottom: 160px;
+      }
 }
 
 @media (max-width: 425px) {
     .container{
-    bottom:135px;
-    right:05px;
+    bottom: 20px;
+    right: 05px;
     }
+    .containerAtBottom {
+      bottom: 160px;
+      }
 }
