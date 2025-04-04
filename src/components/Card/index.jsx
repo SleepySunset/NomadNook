@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"; //useNavigate
-import { Heart, Share2, Copy, MapPin } from "lucide-react"; //Star
+import { Link } from "react-router-dom";
+import { Heart, Share2, Copy, MapPin } from "lucide-react";
 import styles from "./Card.module.css";
-import { useFavorite } from "../../hooks/useFavorite";
 import { FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { shareOnSocial, copyToClipboard } from '../../utils/shareUtils.js';
 
@@ -12,19 +11,22 @@ const Card = ({
   ubicacion,
   images,
   pricePerNight,
-  removeFromFavorites
+  isFavorite,
+  onToggleFavorite
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [favorite, setFavorite] = useState(isFavorite);
   const url = window.location.origin + `/cabin/${id}`;
 
-  const { favorite, toggleFavorite } = useFavorite({
-    id,
-    title,
-    ubicacion,
-    images,
-    pricePerNight,
-    removeFromFavorites,
-  });
+  const handleFavoriteClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const result = await onToggleFavorite();
+    if (result !== undefined) {
+      setFavorite(result);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -37,7 +39,7 @@ const Card = ({
             Precio por noche ${pricePerNight}
           </span>
           <div className={styles.iconButtons}>
-            <button className={styles.iconButton} onClick={toggleFavorite}>
+            <button className={styles.iconButton} onClick={handleFavoriteClick}>
               <Heart
                 className={`${styles.heartIcon} ${
                   favorite ? styles.favoriteActive : ""
@@ -52,10 +54,10 @@ const Card = ({
                 e.stopPropagation();
                 setIsOpen(!isOpen);
               }}
-              >
-                <Share2 size={20} />
-              </button>
-            </div>
+            >
+              <Share2 size={20} />
+            </button>
+          </div>
             {isOpen && (
               <div
                 className={styles.sharePopup}
@@ -107,165 +109,3 @@ const Card = ({
 };
 
 export default Card;
-  // const { user } = useAuth();
-  // let isAuthenticated = !!user?.token;
-  // const navigate = useNavigate();
-  // const rating = 4.96; //de momento para ver valoración
-
-  // const [favorite, setFavorite] = useState(false);
-
-  // useEffect(() => {
-  //   const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  //   const isFav = storedFavorites.some((fav) => fav.id === id);
-  //   setFavorite(isFav);
-  // }, [id]);
-  
-
-  // const handleFavoriteClick = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   if (!isAuthenticated) {
-  //     Swal.fire({
-  //       title: "¡Atención!",
-  //       icon: "info",
-  //       iconColor: "var(--color1)",
-  //       html: `Para agregar a favoritos, primero debes identificarte.`,
-  //       showCloseButton: true,
-  //       showCancelButton: true,
-  //       focusConfirm: false,
-  //       confirmButtonText: "Identificarme",
-  //       confirmButtonColor: "var(--color4)",
-  //       cancelButtonText: "Omitir",
-  //       cancelButtonColor: "#444",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         navigate("/login");
-  //       }
-  //     });
-
-  //     return;
-  //   }
-
-  //   let updatedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-  //   if (favorite) {
-  //     updatedFavorites = updatedFavorites.filter((fav) => fav.id !== id);
-  //     removeFromFavorites && removeFromFavorites(id);
-  //   } else {
-  //     updatedFavorites.push({ id, title, ubicacion, images, pricePerNight });
-  //   }
-
-  //   // 🌟 Guardar en localStorage y actualizar estado
-  //   localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-  //   setFavorite(!favorite);
-  // };
-
-
-
-  // const shareOnSocial = (e, platform) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   switch (platform) {
-  //     case "whatsapp":
-  //       window.open(
-  //         `https://api.whatsapp.com/send?text=${encodeURIComponent(
-  //           "Descubrí este rincón increíble para una escapada perfecta. Su nombre es " +
-  //             title +
-  //             ". ¿Más información?: " +
-  //             url
-  //         )}`,
-  //         "_blank"
-  //       );
-  //       break;
-  //     case "copy":
-  //       alert(
-  //         "Instagram no admite compartir directamente links. Copiá y compartí el enlace manualmente: " +
-  //           url
-  //       );
-  //       break;
-  //     case "x":
-  //       window.open(
-  //         `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-  //           "Descubrí este rincón increíble para una escapada perfecta. Su nombre es " +
-  //             title +
-  //             ". ¿Más información?: " +
-  //             url
-  //         )}`,
-  //         "_blank"
-  //       );
-  //       break;
-  //     case "facebook":
-  //       window.open(
-  //         `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-  //           url +
-  //             "Descubrí este rincón increíble para una escapada perfecta. Su nombre es "
-  //         )}`,
-  //         "_blank"
-  //       );
-  //       break;
-  //     default:
-  //       alert("Red social no válida.");
-  //   }
-  // };
-
-  // const copyToClipboard = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   navigator.clipboard
-  //     .writeText(url)
-  //     .then(() => {
-  //       const Toast = Swal.mixin({
-  //         toast: true,
-  //         position: "top-end",
-  //         showConfirmButton: false,
-  //         timer: 3000,
-  //         timerProgressBar: true,
-  //         didOpen: (toast) => {
-  //           toast.onmouseenter = Swal.stopTimer;
-  //           toast.onmouseleave = Swal.resumeTimer;
-  //         },
-  //       });
-  //       Toast.fire({
-  //         icon: "success",
-  //         title: "Enlace copiado al portapapeles",
-  //       });
-  //     })
-  //     .catch((err) => console.error("Error al copiar:", err));
-  // };
-
-
-
-  //   try {
-  //     if (favorite) {
-  //       removeFromFavorites && removeFromFavorites(id);
-  //       setFavorite(false);
-
-  //       await axios.delete(END_POINT_REMOVE_FAV, {
-  //         params: { usuario_id: user.id, alojamiento_id: id },
-  //         headers: {
-  //           Authorization: `Bearer ${user.token}`,
-  //         },
-  //       });
-
-  //     } else {
-  //       addToFavorites && addToFavorites({ id, title, description, images, pricePerNight });
-  //       setFavorite(true);
-
-  //       await axios.post(
-  //         END_POINT_ADD_FAV,
-  //         { usuario_id: user.id, alojamiento_id: id },
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${user.token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error ${favorite ? "eliminando" : "agregando"} favorito: `, error);
-  //   }
-
-  // Compartir

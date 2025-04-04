@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import styles from "./CardsGrid.module.css";
 import Card from "@/components/Card";
 
-const CardsGrid = ({cabins, allCabins}) => {
+const CardsGrid = ({cabins, allCabins, onToggleFavorite}) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [pageCabins, setPageCabins] = useState([]);
   const productsPerPage = 10;
@@ -45,6 +45,8 @@ const CardsGrid = ({cabins, allCabins}) => {
                 ubicacion={cabin.ubicacion}
                 images={cabin.imagenes}
                 pricePerNight={cabin.precioPorNoche}
+                isFavorite={cabin.isFavorite}
+                onToggleFavorite={() => onToggleFavorite(cabin)}
             />))
           ) : (
             Array.from({ length: 10 }).map((_, i) => (

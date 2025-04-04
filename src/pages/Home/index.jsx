@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { ENDPOINTS } from '../../config/config';
 import WhatsAppFloatButton from "../../components/WhatsApp";
+import { useApiFavorites } from "@/hooks/useApiFavorites";
 
 const Home = () => {
   const [allCabins, setAllCabins] = useState([]);
@@ -17,13 +18,18 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { favorites, toggleFavorite } = useApiFavorites();
+
   // Obtener todas las cabañas
   useEffect(() => {
     const fetchCabins = async () => {
       try {
         setIsLoading(true);
         const response = await axios(ENDPOINTS.GET_ALL_CABINS);
-        const cabinsData = response.data.sort(() => Math.random() - 0.5);
+        const cabinsData = response.data.sort(() => Math.random() - 0.5).map(cabin => ({
+          ...cabin,
+          isFavorite: favorites.some(fav => fav.id === cabin.id)
+        }));
         setAllCabins(cabinsData);
         setDisplayedCabins(cabinsData);
         setIsLoading(false);
@@ -35,7 +41,7 @@ const Home = () => {
     };
 
     fetchCabins();
-  }, []);
+  }, [favorites]); // Add favorites as dependency
 
   // Extraer categorías únicas
   useEffect(() => {
@@ -109,6 +115,31 @@ const Home = () => {
     }
   };
 
+  
+
+  // // Modify the fetchCabins function inside the first useEffect
+  // useEffect(() => {
+  //   const fetchCabins = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await axios(ENDPOINTS.GET_ALL_CABINS);
+  //       const cabinsData = response.data.sort(() => Math.random() - 0.5).map(cabin => ({
+  //         ...cabin,
+  //         isFavorite: favorites.some(fav => fav.id === cabin.id)
+  //       }));
+  //       setAllCabins(cabinsData);
+  //       setDisplayedCabins(cabinsData);
+  //       setIsLoading(false);
+  //     } catch (error) {
+  //       console.error("Error al obtener las cabañas:", error);
+  //       setError("Error al cargar las cabañas. Por favor, intenta nuevamente más tarde.");
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchCabins();
+  // }, [favorites]); // Add favorites as dependency
+
   return (
     <main className={styles.home}>
       <Categories 
@@ -136,6 +167,7 @@ const Home = () => {
         <CardsGrid 
           cabins={displayedCabins}
           allCabins={allCabins}
+          onToggleFavorite={toggleFavorite}
         />
       ) : (
         <div className={styles.noResultsContainer || ""}>
