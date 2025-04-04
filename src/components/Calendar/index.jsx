@@ -103,9 +103,9 @@ function Calendar({
         shouldDisableDate={disabledDate}
         ranges={[]}
         container={() => containerRef.current}
-        placement={width < 768 ? 'bottom' : placement}
-        size={width < 768 ? 'md' : 'lg'}
-        showOneCalendar={width < 768 ? true : false}
+        placement={width <= 768 ? 'bottom' : placement}
+        size={width <= 768 ? 'md' : 'lg'}
+        showOneCalendar={width <= 768 ? true : false}
         showHeader={false}
         appearance={appearance}
         weekStart={1}
