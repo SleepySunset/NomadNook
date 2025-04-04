@@ -266,7 +266,6 @@
           flex-direction: column;
           width: 100%;
           gap: 1rem;
-          background-color: var(--color3);
 
           &::before {
             content: "";
