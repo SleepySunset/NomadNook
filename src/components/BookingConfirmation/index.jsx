@@ -119,7 +119,7 @@ const BookingConfirmation = ({ cabin, onClose, checkIn, checkOut, setCheckIn, se
                   <span>{cabin.ubicacion}</span>
                 </div>
 
-                <p>{cabin.descripcion.length > 60 ? cabin.descripcion.slice(0, 60) + "..." : cabin.descripcion}</p>
+                <p className={styles.description}>{cabin.descripcion.length > 60 ? cabin.descripcion.slice(0, 60) + "..." : cabin.descripcion}</p>
               </div>
             </div>
             <hr></hr>
