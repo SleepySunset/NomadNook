@@ -24,7 +24,6 @@ const CardsGrid = ({cabins, allCabins}) => {
   };
 
   useEffect(()=>{
-    console.log("jajaja" + getCabinsForCurrentPage())
     setPageCabins(getCabinsForCurrentPage());
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage])
