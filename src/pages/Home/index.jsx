@@ -5,6 +5,7 @@ import CardsGrid from "@/layouts/CardsGrid";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { ENDPOINTS } from '../../config/config';
+import WhatsAppFloatButton from "../../components/WhatsApp";
 
 const Home = () => {
   const [allCabins, setAllCabins] = useState([]);
@@ -121,6 +122,8 @@ const Home = () => {
         onSearchTermChange={handleSearchTermChange}
         handleSubmit={handleSubmit}
       />
+
+      <WhatsAppFloatButton />
       {isLoading ? (
         <div className={styles.loadingContainer || ""}>
           <p>Cargando cabañas...</p>

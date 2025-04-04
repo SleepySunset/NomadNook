@@ -19,6 +19,7 @@ import { useFavorite } from "@/hooks/useFavorite";
 import { shareOnSocial, copyToClipboard } from "@/utils/shareUtils";
 import Swal from "sweetalert2";
 import dayjs from "dayjs"; // Make sure this import exists
+import WhatsAppFloatButton from "../../components/WhatsApp";
 
 library.add(fas, far, fab);
 
@@ -366,6 +367,8 @@ const CabinDetail = () => {
             </div>
           </div>
         </div>
+        <WhatsAppFloatButton
+  defaultMessage={`"Hola, estoy interesado/a en la cabaña ${cabin.titulo},  y me gustaría contactarme con ustedes para obtener más información.`}/>
         <div className={styles.politicsContainer}>
           <h4 className={styles.title}>Lo que necesitas saber antes de reservar</h4>
           <div className={styles.politics}>
